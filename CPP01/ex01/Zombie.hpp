@@ -1,32 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Zombie.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 13:38:09 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/06 15:47:30 by magrabko         ###   ########.fr       */
+/*   Created: 2025/03/06 15:23:30 by magrabko          #+#    #+#             */
+/*   Updated: 2025/03/06 19:24:16 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
+#ifndef ZOMBIE_HPP
+# define ZOMBIE_HPP
 
-Zombie	*newZombie(std::string name)
-{
-	Zombie *newbie = new Zombie(name);
-	return (newbie);
-}
+# include <cstdlib>
+# include <iostream>
+# include <string>
 
-void	randomChump(std::string name)
-{
-	Zombie random(name);
-}
+# define ARG_MSG "try ./zombie or ./zombie [number of zombies]"
+# define NBR_MSG "Let's do 10 instead!\n"
 
-int main(void)
+class Zombie
 {
-	Zombie *newbie = newZombie("newbie");
-	delete newbie;
-	randomChump("random");
-	return (0);
-}
+	public:
+
+	Zombie(void);
+	Zombie(std::string name);
+	~Zombie(void);
+
+	void announce(void);
+
+	private:
+
+	std::string name;
+	
+};
+
+Zombie* zombieHorde(int N, std::string name);
+
+#endif

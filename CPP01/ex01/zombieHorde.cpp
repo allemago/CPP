@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   zombieHorde.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 13:38:09 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/06 15:47:30 by magrabko         ###   ########.fr       */
+/*   Created: 2025/03/06 15:23:28 by magrabko          #+#    #+#             */
+/*   Updated: 2025/03/06 19:23:54 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Zombie.hpp"
 
-Zombie	*newZombie(std::string name)
+Zombie* zombieHorde(int N, std::string name)
 {
-	Zombie *newbie = new Zombie(name);
-	return (newbie);
-}
+	Zombie* horde = new Zombie[N];
 
-void	randomChump(std::string name)
-{
-	Zombie random(name);
-}
-
-int main(void)
-{
-	Zombie *newbie = newZombie("newbie");
-	delete newbie;
-	randomChump("random");
-	return (0);
+	for (int i = 0; i < N; i++)
+		new (&horde[i]) Zombie(name);
+	return (horde);
 }
