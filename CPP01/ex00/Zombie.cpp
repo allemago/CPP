@@ -6,11 +6,11 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:38:16 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/06 15:47:19 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:41:56 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
+#include "Zombie.hpp" 
 
 Zombie::Zombie(std::string name)
 {

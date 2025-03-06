@@ -6,7 +6,13 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:38:14 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/06 13:38:15 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:38:14 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Zombie.hpp"
+
+void	randomChump(std::string name)
+{
+	Zombie random(name);
+}

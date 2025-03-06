@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:38:18 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/06 15:14:15 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:38:46 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,8 @@ class Zombie
 	
 	std::string	name;
 };
+
+Zombie	*newZombie(std::string name);
+void	randomChump(std::string name);
 
 #endif

@@ -6,11 +6,11 @@
 #    By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 13:35:45 by magrabko          #+#    #+#              #
-#    Updated: 2025/03/06 15:07:49 by magrabko         ###   ########.fr        #
+#    Updated: 2025/03/06 19:40:09 by magrabko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME=			zombie
+NAME=			brainz
 
 CXX=			c++
 
@@ -44,6 +44,8 @@ $(NAME): $(OBJ)
 	@printf "   ░█▀▀░▄▀▄░█░█░█░█\n"
 	@printf "   ░▀▀▀░▀░▀░▀▀▀░▀▀▀\n"
 	@printf "\n\n${RESET}"
+	@printf "   \033[1musage: ./brainz\033[0m"
+	@printf "\n\n"
 
 clean:
 	@rm -rf $(OBJ_PATH)
@@ -58,7 +60,4 @@ fclean: clean
 
 re: fclean all
 
-brain: $(NAME) 
-	@./zombie
-
-.PHONY: all clean fclean re brain
+.PHONY: all clean fclean re
