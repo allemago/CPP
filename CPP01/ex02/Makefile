@@ -5,12 +5,12 @@
 #                                                     +:+ +:+         +:+      #
 #    By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/03/06 13:35:45 by magrabko          #+#    #+#              #
-#    Updated: 2025/03/07 14:12:47 by magrabko         ###   ########.fr        #
+#    Created: 2025/03/06 19:44:43 by magrabko          #+#    #+#              #
+#    Updated: 2025/03/06 19:47:03 by magrabko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME=			zombie
+NAME=			brain
 
 CXX=			c++
 
@@ -22,10 +22,7 @@ RESET= 			\033[0m
 
 OBJ_PATH= 		obj
 
-SRC=			main.cpp		\
-				Zombie.cpp		\
-				newZombie.cpp	\
-				randomChump.cpp	\
+SRC=			main.cpp	\
 				
 OBJ= 			$(addprefix $(OBJ_PATH)/, $(notdir $(SRC:.cpp=.o)))
 
@@ -40,11 +37,11 @@ $(OBJ_PATH):
 $(NAME): $(OBJ)
 	@$(CXX) $(OBJ) -o $(NAME)
 	@printf "\n${CYAN}"
-	@printf "   ░█▀▀░█░█░█▀█░█▀█\n"
-	@printf "   ░█▀▀░▄▀▄░█░█░█░█\n"
+	@printf "   ░█▀▀░█░█░█▀█░▀▀▄\n"
+	@printf "   ░█▀▀░▄▀▄░█░█░▄▀░\n"
 	@printf "   ░▀▀▀░▀░▀░▀▀▀░▀▀▀\n"
 	@printf "\n\n${RESET}"
-	@printf "   \033[1musage: ./zombie\033[0m"
+	@printf "   \033[1musage: ./brain\033[0m"
 	@printf "\n\n"
 
 clean:
