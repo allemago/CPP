@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 14:37:45 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/07 15:22:09 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:39:57 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ class HumanA
 {
 	public:
 	
-	HumanA(std::string name, Weapon club);
+	HumanA(std::string name, Weapon &club);
 	~HumanA(void);
 
 	void attack(void);
 	
 	private:
 	
-	std::string	name;
-	Weapon weapon;
+	std::string	HumanName;
+	Weapon &CurrentWeapon;
 };
 
 #endif
