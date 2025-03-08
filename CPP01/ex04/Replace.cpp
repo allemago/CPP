@@ -6,15 +6,16 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 14:37:41 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/08 18:15:52 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:45:44 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Replace.hpp"
 
-FileEditor::FileEditor(void) {}
+FileEditor::FileEditor(const std::string &inFileName, const std::string &s1,
+	const std::string &s2) : inFileName(inFileName), s1(s1), s2(s2) {}
 
-void	FileEditor::replaceLine(const std::string& line, size_t start)
+void FileEditor::replaceLine(const std::string &line, size_t start)
 {
 	size_t	end;
 
@@ -25,7 +26,7 @@ void	FileEditor::replaceLine(const std::string& line, size_t start)
 		outFile << s2;
 		start = line.find(s1, end);
 		if (start != std::string::npos)
-			outFile.write(line.substr(end, start - end).c_str(), start - end);	
+			outFile.write(line.substr(end, start - end).c_str(), start - end);
 	}
 	if (end < line.length())
 	{
@@ -34,7 +35,7 @@ void	FileEditor::replaceLine(const std::string& line, size_t start)
 	outFile << std::endl;
 }
 
-int	FileEditor::openFile(void)
+int FileEditor::openFile(void)
 {
 	inFile.open(inFileName.c_str());
 	if (!inFile.is_open())
@@ -47,17 +48,16 @@ int	FileEditor::openFile(void)
 	if (!outFile.is_open())
 	{
 		std::cout << outFileName << ": " << strerror(errno) << std::endl;
-		inFile.close();
 		return (1);
 	}
 	return (0);
 }
 
-int	FileEditor::editFile(void)
+int FileEditor::editFile(void)
 {
+	size_t	start;
+
 	std::string line;
-	size_t		start;
-	
 	if (openFile())
 		return (1);
 	while (std::getline(inFile, line))
@@ -68,9 +68,13 @@ int	FileEditor::editFile(void)
 		else
 			outFile << line << std::endl;
 	}
-	inFile.close();
-	outFile.close();
 	return (0);
 }
 
-FileEditor::~FileEditor(void) {}
+FileEditor::~FileEditor(void)
+{
+	if (inFile.is_open())
+		inFile.close();
+	if (outFile.is_open())
+		outFile.close();
+}

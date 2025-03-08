@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 14:27:01 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/08 18:03:34 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:49:23 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,14 @@
 # include <fstream>
 # include <cerrno>
 
-# define ARG_MSG "usage: ./replace [file] [old line] [new line]"
+# define ARG_MSG "./replace [file] [string to replace] [new string]"
 
 class FileEditor
 {
 	public:
-
-	FileEditor(void);
-	~FileEditor(void);
 	
-	std::string inFileName;
-	std::string outFileName;
-	std::string s1;
-	std::string s2;
+	FileEditor(const std::string &inFileName, const std::string &s1, const std::string &s2);
+	~FileEditor(void);
 	
 	int		openFile(void);
 	int		editFile(void);
@@ -42,6 +37,10 @@ class FileEditor
 	
 	std::ifstream inFile;
 	std::ofstream outFile;
+	std::string inFileName;
+	std::string outFileName;
+	std::string s1;
+	std::string s2;
 };
 
 #endif
