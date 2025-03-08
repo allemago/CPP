@@ -6,7 +6,7 @@
 #    By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/08 14:18:36 by magrabko          #+#    #+#              #
-#    Updated: 2025/03/08 16:38:22 by magrabko         ###   ########.fr        #
+#    Updated: 2025/03/08 18:29:18 by magrabko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ $(NAME): $(OBJ)
 	@printf "   ░█▀▀░▄▀▄░█░█░░▀█\n"
 	@printf "   ░▀▀▀░▀░▀░▀▀▀░░░▀\n"
 	@printf "\n\n${RESET}"
-	@printf "   \033[1musage: ./replace [file] [old line] [new line]\033[0m"
+	@printf "   \033[1musage: ./replace [file] [string to replace] [new string]\033[0m"
 	@printf "\n\n"
 
 clean:
@@ -55,7 +55,7 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
-#	@rm -rf .vscode
+	@rm -rf .vscode
 
 re: fclean all
 
