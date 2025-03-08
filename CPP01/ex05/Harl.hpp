@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 21:08:53 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/08 22:22:00 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/08 22:32:48 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define WARNING_MSG "\033[1m[WARNING]\033[0m\nthink I deserve to have some extra bacon for free. I’ve been coming for years whereas you started working here since last month."
 # define ERROR_MSG "\033[1m[ERROR]\033[0m\nThis is unacceptable! I want to speak to the manager now."
 # define UNKNOWN_MSG1 "\033[1m["
-# define UNKOWNK_MSG2 "]\033[0m\nNot recognized."
+# define UNKOWNK_MSG2 "]\033[0m\nProbably complaining about insignificant problems."
 
 class Harl
 {
