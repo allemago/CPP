@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 00:03:31 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/10 11:24:00 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:01:28 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ Fixed::Fixed(void)
     std::cout << "Default constructor called" << std::endl;
 }
 
-Fixed::Fixed(const Fixed &object) : value(object.value)
+Fixed::Fixed(const Fixed &object)
 {
     std::cout << "Copy constructor called" << std::endl;
     operator=(object);
