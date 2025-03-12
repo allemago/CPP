@@ -1,23 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Point.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 15:32:29 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/12 16:08:58 by magrabko         ###   ########.fr       */
+/*   Created: 2025/03/12 15:34:59 by magrabko          #+#    #+#             */
+/*   Updated: 2025/03/12 15:45:42 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Point.hpp"
+#ifndef POINT_HPP
+# define POINT_HPP
 
-bool	bsp(Point const a, Point const b, Point const c, Point const point)
-{
-    
-}
+# include "Fixed.hpp"
 
-int main(void)
+class Point
 {
-    return (0);
-}
+    public:
+
+    Point(void);
+    Point(const float& value1, const float& value2);
+    Point(const Point& object);
+    ~Point(void);
+
+    Point&  operator=(const Point& right);
+
+    private:
+
+    Fixed const x;
+    Fixed const y;
+    int         pos;
+};
+
+#endif

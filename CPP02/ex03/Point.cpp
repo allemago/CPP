@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Point.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 15:32:29 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/12 16:08:58 by magrabko         ###   ########.fr       */
+/*   Created: 2025/03/12 15:34:14 by magrabko          #+#    #+#             */
+/*   Updated: 2025/03/12 16:07:25 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Point.hpp"
 
-bool	bsp(Point const a, Point const b, Point const c, Point const point)
+Point::Point(void) : x(0), y(0), pos(0) {}
+
+Point::Point(const float& value1, const float& value2) : x(value1), y(value2) {}
+
+Point::Point(const Point& object) {}
+
+Point&  Point::operator=(const Point& right)
 {
-    
+    if (this != &right)
+    {
+        this->pos = right.pos;
+    }
 }
 
-int main(void)
-{
-    return (0);
-}
+Point::~Point(void) {}

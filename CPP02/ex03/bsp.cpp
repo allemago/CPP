@@ -1,23 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   bsp.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 15:32:29 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/12 16:08:58 by magrabko         ###   ########.fr       */
+/*   Created: 2025/03/12 15:36:07 by magrabko          #+#    #+#             */
+/*   Updated: 2025/03/12 15:37:26 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Point.hpp"
 
-bool	bsp(Point const a, Point const b, Point const c, Point const point)
-{
-    
-}
 
-int main(void)
-{
-    return (0);
-}
