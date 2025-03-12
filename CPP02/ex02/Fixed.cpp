@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 09:36:17 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/12 14:46:43 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:01:33 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ Fixed::Fixed(const Fixed& object)
     operator=(object);
 }
 
-Fixed&  Fixed::operator=(const Fixed& object)
+Fixed&  Fixed::operator=(const Fixed& right)
 {
-    if (&object != this)
+    if (&right != this)
     {
-        this->value = object.value;
+        this->value = right.value;
     }
     return (*this);
 }
@@ -107,6 +107,9 @@ Fixed   Fixed::operator/(const Fixed& right)
     return (result);
 }
 
+/******************************
+*          PREFIXES           *
+*******************************/
 Fixed&  Fixed::operator++(void)
 {
     this->value++;
@@ -118,7 +121,11 @@ Fixed&  Fixed::operator--(void)
     this->value--;
     return (*this);
 }
+/******************************/
 
+/******************************
+*          SUFFIXES           *
+*******************************/
 Fixed   Fixed::operator++(int)
 {
     Fixed tmp(*this);
@@ -134,6 +141,7 @@ Fixed   Fixed::operator--(int)
     this->value--;
     return (tmp);
 }
+/******************************/
 
 Fixed& Fixed::min(Fixed& object1, Fixed& object2)
 {

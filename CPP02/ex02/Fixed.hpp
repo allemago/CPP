@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 09:36:09 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/12 14:29:15 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:53:16 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ class Fixed
     Fixed(const Fixed& object);
     ~Fixed(void);
 
-    Fixed&  operator=(const Fixed& object);
+    Fixed&  operator=(const Fixed& right);
     
     friend  std::ostream& operator<<(std::ostream& os, const Fixed& object);
     
@@ -45,8 +45,10 @@ class Fixed
     bool    operator==(const Fixed& right);
     bool    operator!=(const Fixed& right);
 
+    /* PREFIXES */
     Fixed& operator++(void);
     Fixed& operator--(void); 
+    /* SUFFIXES */
     Fixed operator++(int);
     Fixed operator--(int);
 
