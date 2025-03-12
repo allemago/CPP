@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 09:36:09 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/11 16:05:16 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:29:15 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 # define FIXED_HPP
 
 # include <iostream>
-# include <cstring>
-# include <string>
-#include <variant>
 # include <cmath>
 
 class Fixed
 {
+    /************
+     *  PUBLIC  *
+     ************/
     public:
 
     Fixed(void);
@@ -30,21 +30,37 @@ class Fixed
     ~Fixed(void);
 
     Fixed&  operator=(const Fixed& object);
+    
     friend  std::ostream& operator<<(std::ostream& os, const Fixed& object);
     
-    bool operator>(const Fixed& other) const;
-    bool operator<(const Fixed& other) const;
-    bool operator>=(const Fixed& other) const;
-    bool operator<=(const Fixed& other) const;
-    bool operator==(const Fixed& other) const;
-    bool operator!=(const Fixed& other) const;
+    Fixed operator+(const Fixed& right);
+    Fixed operator-(const Fixed& right);
+    Fixed operator*(const Fixed& right);
+    Fixed operator/(const Fixed& right);
 
-    int operator(const Fixed& other) const;
+    bool    operator>(const Fixed& right);
+    bool    operator<(const Fixed& right);
+    bool    operator>=(const Fixed& right);
+    bool    operator<=(const Fixed& right);
+    bool    operator==(const Fixed& right);
+    bool    operator!=(const Fixed& right);
 
+    Fixed& operator++(void);
+    Fixed& operator--(void); 
+    Fixed operator++(int);
+    Fixed operator--(int);
 
-    float   toFloat(void) const;
-    int     toInt(void) const;
+    static Fixed& min(Fixed& object1, Fixed& object2);
+    static const Fixed& min(const Fixed& object, const Fixed& object2);
+
+    static Fixed& max(Fixed& object1, Fixed& object2);
+    static const Fixed& max(const Fixed& object1, const Fixed& object2);
     
+    float   toFloat(void) const;
+    
+    /*************
+     *  PRIVATE  *
+     *************/
     private:
 
     int                 value;
