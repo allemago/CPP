@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 09:36:17 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/12 15:02:20 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:08:01 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,21 @@ const Fixed&   Fixed::max(const Fixed& object1, const Fixed& object2)
 float   Fixed::toFloat(void) const
 {
     return (static_cast<float>(value) / (1 << bits));
+}
+
+int   Fixed::toInt(void) const
+{
+    return (value / (1 << bits));
+}
+
+float     Fixed::returnFloatValue(void) const
+{
+    return (toFloat());
+}
+
+int     Fixed::returnIntValue(void) const
+{
+    return (toInt());
 }
 
 Fixed::~Fixed(void) {}

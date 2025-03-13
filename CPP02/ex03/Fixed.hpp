@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 09:36:09 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/12 15:52:55 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:07:59 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FIXED_HPP
 
 # include <iostream>
+# include <iomanip>
 # include <cmath>
 
 class Fixed
@@ -30,8 +31,6 @@ class Fixed
     ~Fixed(void);
 
     Fixed&  operator=(const Fixed& right);
-    
-    friend  std::ostream& operator<<(std::ostream& os, const Fixed& object);
     
     Fixed operator+(const Fixed& right);
     Fixed operator-(const Fixed& right);
@@ -58,7 +57,10 @@ class Fixed
     static Fixed& max(Fixed& object1, Fixed& object2);
     static const Fixed& max(const Fixed& object1, const Fixed& object2);
     
+    float   returnFloatValue(void) const;
+    int     returnIntValue(void) const;
     float   toFloat(void) const;
+    int     toInt(void) const;
     
     /*************
      *  PRIVATE  *
@@ -68,5 +70,7 @@ class Fixed
     int                 value;
     static const int    bits;
 };
+
+std::ostream& operator<<(std::ostream& os, const Fixed& object);
 
 #endif
