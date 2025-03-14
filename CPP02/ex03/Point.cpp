@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:34:14 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/13 16:51:24 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:23:50 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,16 @@ void    Point::printTriangle(Point const a, Point const b, Point const c, Point 
             std::cout << tab[i][j];
         std::cout << std::endl;
     }
+}
+
+Fixed	Point::getX(void) const
+{
+	return (this->x);
+}
+
+Fixed	Point::getY(void) const
+{
+	return (this->y);
 }
 
 Point::~Point(void) {}
