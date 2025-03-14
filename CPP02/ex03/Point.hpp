@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:34:59 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/13 18:21:42 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/14 14:58:07 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ class Point
 	Fixed	getX(void) const;
     Fixed	getY(void) const;
 
-    void    printTriangle(Point const a, Point const b, Point const c, Point const point);
+    void    printTriangle(Point const a, Point const b, Point const c, Point const point) const;
 
 	/*************
      *  PRIVATE  *

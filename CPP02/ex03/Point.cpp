@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:34:14 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/13 18:23:50 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/14 14:58:16 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,19 @@ Point::Point(const float& value1, const float& value2) : x(value1), y(value2) {}
 
 /* Point::Point(const Point& object) : x(object.getFloatValue('x')), y(object.getFloatValue('y')) {} */
 
-void    Point::printTriangle(Point const a, Point const b, Point const c, Point const point)
+void    Point::printTriangle(Point const a, Point const b, Point const c, Point const point) const
 {
-    Fixed tmp1 = x.max(a.x, b.x);
-    Fixed tmp2 = x.max(c.x, point.x);
-
-    Fixed tmp3 = y.max(a.y, b.y);
-    Fixed tmp4 = y.max(c.y, point.y);
+    Fixed tmp1 = y.max(a.y, b.y);
+    Fixed tmp2 = y.max(c.y, point.y);
+	
+    Fixed tmp3 = x.max(a.x, b.x);
+    Fixed tmp4 = x.max(c.x, point.x);
     
-    Fixed xMax = x.max(tmp1, tmp2);
     Fixed yMax = y.max(tmp1, tmp2);
+    Fixed xMax = x.max(tmp3, tmp4);
     
-    int x = xMax.returnIntValue() + 1;
-    int y = yMax.returnIntValue() + 1;
+    int y = yMax.toInt() + 1;
+    int x = xMax.toInt() + 1;
 
     char tab[y][x];
 
@@ -40,10 +40,10 @@ void    Point::printTriangle(Point const a, Point const b, Point const c, Point 
             tab[i][j] = ' ';
     }
 
-    tab[a.y.returnIntValue()][a.x.returnIntValue()] = 'a';
-    tab[b.y.returnIntValue()][b.x.returnIntValue()] = 'b';
-    tab[c.y.returnIntValue()][c.x.returnIntValue()] = 'c';
-    tab[point.y.returnIntValue()][point.x.returnIntValue()] = '.';
+    tab[a.y.toInt()][a.x.toInt()] = 'a';
+    tab[b.y.toInt()][b.x.toInt()] = 'b';
+    tab[c.y.toInt()][c.x.toInt()] = 'c';
+    tab[point.y.toInt()][point.x.toInt()] = '.';
     
     for (int i = 0; i < y; i++)
     {
@@ -51,6 +51,7 @@ void    Point::printTriangle(Point const a, Point const b, Point const c, Point 
             std::cout << tab[i][j];
         std::cout << std::endl;
     }
+	std::cout << std::endl;
 }
 
 Fixed	Point::getX(void) const
@@ -64,12 +65,3 @@ Fixed	Point::getY(void) const
 }
 
 Point::~Point(void) {}
-
-/* 
-
-    OUTILS:
-
-    ->  pow(x, y);
-    ->  sqrt(x);
-
-*/

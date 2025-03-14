@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 09:36:09 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/13 18:06:13 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/14 14:12:25 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,10 @@ class Fixed
 
     static Fixed& max(Fixed& object1, Fixed& object2);
     static const Fixed& max(const Fixed& object1, const Fixed& object2);
-    
-    float   returnFloatValue(void) const;
-    int     returnIntValue(void) const;
+
     float   toFloat(void) const;
     int     toInt(void) const;
+    int     getValue(void) const;
     
     /*************
      *  PRIVATE  *

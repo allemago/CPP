@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:32:29 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/13 19:47:59 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:40:08 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,57 @@
 
 int main(void) 
 {
-	Point A(3, 4);
-	Point B(8, 4);
-	Point C(2, -2);
-	
-	Point D(float(4), float(3)); 				// Point inside the triangle
-	Point F(float(4), float(4)); 				// Point in the border of the triangle
-	Point E(float(4.0183), float(3.9)); 		// Point inside the triangle close to the border
-	Point G(float(4.00389), float(4.4035)); 	// Point outside the triangle close to the border
-	Point H(float(-4.00389), float(-4.4035)); 	// Point outside the triangle
-	Point I(float(2), float(-2)); 				// Point is on the vertex of the triangle
+/* 	Point A(3, 4);
+    Point B(8, 4);
+    Point C(2, 2);
 
+    Point P1(4, 3);  // inside
+    Point P2(10, 4); // outside
+    Point P3(3, 4);  // on vertex -> outside
+    Point P4(8, 4);  // on vertex -> outside
+    Point P5(2, 2);  // on vertex -> outside
+    Point P6(5, 4);  // on edge -> outside
+    Point P7(2, 3);  // outside
+    Point P8(6, 3);  // inside
+    Point P9(0, 0);  // outside
+    Point P10(4, 5); // outside */
 
-	std::cout << "\n____________________________________" << std::endl;
-	
-	A.printTriangle(A, B, C, D);
-    std::cout << ((bsp(A, B, C, D)) ? "true." : "false.") << std::endl;
+	Point A(0.5, 0.5);
+	Point B(5.5, 0.5);
+	Point C(3.5, 4.5);
 
-	std::cout << "\n____________________________________" << std::endl;
-	
-    A.printTriangle(A, B, C, F);
-    std::cout << ((bsp(A, B, C, F)) ? "true." : "false.") << std::endl;
+	Point P1(2.5, 2.5);  // inside
+	Point P2(0.5, 0.5);  // on vertex -> outside
+	Point P3(5.5, 0.5);  // on vertex -> outside
+	Point P4(3.5, 4.5);  // on vertex -> outside
+	Point P5(1.0, 1.0);  // inside
+	Point P6(4.0, 2.0);  // inside
+	Point P7(6.0, 0.5);  // outside
+	Point P8(3.0, 3.5);  // inside
+	Point P9(2.0, 1.0);  // inside
+	Point P10(4.0, 5.5); // outside
 
-	std::cout << "\n____________________________________" << std::endl;
-
-    A.printTriangle(A, B, C, E);
-    std::cout << ((bsp(A, B, C, E)) ? "true." : "false.") << std::endl;
-
-	std::cout << "\n____________________________________" << std::endl;
-	
-    A.printTriangle(A, B, C, G);
-    std::cout << ((bsp(A, B, C, G)) ? "true." : "false.") << std::endl;
-
-	std::cout << "\n____________________________________" << std::endl;
-	
-    A.printTriangle(A, B, C, H);
-    std::cout << ((bsp(A, B, C, H)) ? "true." : "false.") << std::endl;
-
-	std::cout << "\n____________________________________" << std::endl;
-
-	A.printTriangle(A, B, C, I);
-    std::cout << ((bsp(A, B, C, I)) ? "true." : "false.") << std::endl;
-	
-	std::cout << "\n____________________________________" << std::endl;
+	std::cout << "\n____________________________________\n" << std::endl;
+    std::cout << "P1 is:\n\n" << ((bsp(A, B, C, P1)) ? "inside." : "outside.") << std::endl;
+	std::cout << "____________________________________\n" << std::endl;
+    std::cout << "P2 is:\n\n" << ((bsp(A, B, C, P2)) ? "inside." : "outside.") << std::endl;
+	std::cout << "____________________________________\n" << std::endl;
+    std::cout << "P3 is:\n\n" << ((bsp(A, B, C, P3)) ? "inside." : "outside.") << std::endl;
+	std::cout << "____________________________________\n" << std::endl;
+    std::cout << "P4 is:\n\n" << ((bsp(A, B, C, P4)) ? "inside." : "outside.") << std::endl;
+	std::cout << "____________________________________\n" << std::endl;
+    std::cout << "P5 is:\n\n" << ((bsp(A, B, C, P5)) ? "inside." : "outside.") << std::endl;
+	std::cout << "____________________________________\n" << std::endl;
+    std::cout << "P6 is:\n\n" << ((bsp(A, B, C, P6)) ? "inside." : "outside.") << std::endl;
+	std::cout << "____________________________________\n" << std::endl;
+    std::cout << "P7 is:\n\n" << ((bsp(A, B, C, P7)) ? "inside." : "outside.") << std::endl;
+	std::cout << "____________________________________\n" << std::endl;
+    std::cout << "P8 is:\n\n" << ((bsp(A, B, C, P8)) ? "inside." : "outside.") << std::endl;
+	std::cout << "____________________________________\n" << std::endl;
+    std::cout << "P9 is:\n\n" << ((bsp(A, B, C, P9)) ? "inside." : "outside.") << std::endl;
+	std::cout << "____________________________________\n" << std::endl;
+    std::cout << "P10 is:\n\n" << ((bsp(A, B, C, P10)) ? "inside." : "outside.") << std::endl;
+	std::cout << "____________________________________\n" << std::endl;
 	
 	return (0);
 }

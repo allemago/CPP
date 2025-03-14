@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 09:36:17 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/13 16:08:01 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/14 14:11:28 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,14 +173,9 @@ int   Fixed::toInt(void) const
     return (value / (1 << bits));
 }
 
-float     Fixed::returnFloatValue(void) const
+int     Fixed::getValue(void) const
 {
-    return (toFloat());
-}
-
-int     Fixed::returnIntValue(void) const
-{
-    return (toInt());
+    return (this->value);
 }
 
 Fixed::~Fixed(void) {}

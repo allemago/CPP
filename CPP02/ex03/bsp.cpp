@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:36:07 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/13 19:52:46 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:30:21 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,31 @@
 
 bool	bsp(Point const a, Point const b, Point const c, Point const point)
 {
-	float aX = a.getX().returnFloatValue();
-	float aY = a.getY().returnFloatValue();
+	int aX = a.getX().getValue();
+	int aY = a.getY().getValue();
 	
-	float bX = b.getX().returnFloatValue();
-	float bY = b.getY().returnFloatValue();
+	int bX = b.getX().getValue();
+	int bY = b.getY().getValue();
 
-	float cX = c.getX().returnFloatValue();
-	float cY = c.getY().returnFloatValue();
+	int cX = c.getX().getValue();
+	int cY = c.getY().getValue();
 
-	float pointX = point.getX().returnFloatValue();
-	float pointY = point.getY().returnFloatValue();
+	int pointX = point.getX().getValue();
+	int pointY = point.getY().getValue();
 	
 	if (aX < 0 || aY < 0 || bX < 0 || bY < 0 || cX < 0 || cY < 0 || pointX < 0 || pointY < 0)
 		return (std::cerr << "Error: must be a positive value." << std::endl, false);
 	
-	float _a = fabs((aX * (bY - cY) + bX * (cY - aY) + cX * (aY - bY)) / 2.0);
+	int _a = abs((aX * (bY - cY) + bX * (cY - aY) + cX * (aY - bY)));
 	
-	float _b = fabs((pointX * (bY - cY) + bX * (cY - pointY) + cX * (pointY - bY)) / 2.0);
+	int _b = abs((pointX * (bY - cY) + bX * (cY - pointY) + cX * (pointY - bY)));
 	
-	float _c = fabs((aX * (pointY - cY) + pointX * (cY - aY) + cX * (aY - pointY)) / 2.0);
+	int _c = abs((aX * (pointY - cY) + pointX * (cY - aY) + cX * (aY - pointY)));
 	
-	float _point = fabs((aX * (bY - pointY) + bX * (pointY - aY) + pointX * (aY - bY)) / 2.0);
+	int _point = abs((aX * (bY - pointY) + bX * (pointY - aY) + pointX * (aY - bY)));
 	
 	a.printTriangle(a, b, c, point);
+	if (_b == 0 || _c == 0 || _point == 0)
+        return (false);
     return (_a == _b + _c + _point);
 }
