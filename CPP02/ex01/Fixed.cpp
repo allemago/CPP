@@ -6,25 +6,25 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:27:56 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/10 15:59:23 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/18 19:23:47 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
-const int Fixed::bits = 8;
+const int Fixed::_bits = 8;
 
 Fixed::Fixed(void)
 {
     std::cout << "Default constructor called" << std::endl;
 }
 
-Fixed::Fixed(const int value) : value(value << bits)
+Fixed::Fixed(const int value) : _value(value << _bits)
 {
     std::cout << "Int constructor called" << std::endl;
 }
 
-Fixed::Fixed(const float value) : value(roundf(value * (1 << bits)))
+Fixed::Fixed(const float value) : _value(roundf(value * (1 << _bits)))
 {
     std::cout << "Float constructor called" << std::endl;
 }
@@ -40,25 +40,35 @@ Fixed&  Fixed::operator=(const Fixed& object)
     if (&object != this)
     {
         std::cout << "Copy assignment operator called" << std::endl;
-        this->value = object.value;
+        this->_value = object.getRawBits();
     }
     return (*this);
 }
 
-std::ostream&   operator<<(std::ostream& os, const Fixed& object)
+std::ostream&	operator<<(std::ostream& os, const Fixed& object)
 {
     os << object.toFloat();
     return (os);
 }
 
+int Fixed::getRawBits(void) const
+{
+    return (_value);
+}
+
+void    Fixed::setRawBits(int const raw)
+{
+    _value = raw;
+}
+
 float   Fixed::toFloat(void) const
 {
-    return (value / (float)(1 << bits));
+	return (static_cast<float>(_value) / (1 << _bits));
 }
 
 int   Fixed::toInt(void) const
 {
-    return (value / (1 << bits));
+    return (_value / (1 << _bits));
 }
 
 Fixed::~Fixed(void)
