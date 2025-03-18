@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:34:59 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/14 14:58:07 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:49:18 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 
 class Point
 {
+    /*************
+     *  PRIVATE  *
+     *************/
+    private:
+
+    Fixed const x;
+    Fixed const y;
+    
 	/************
      *  PUBLIC  *
      ************/
@@ -24,26 +32,21 @@ class Point
 
     Point(void);
     Point(const float& value1, const float& value2);
-	/*Point(const Point& object);*/
+	Point(const Point& object);
 	~Point(void);
 
     Point&  operator=(const Point& right);
+    bool    operator==(const Point& right);
 
-	Fixed	getX(void) const;
-    Fixed	getY(void) const;
+	int     getXvalue(void) const;
+    int     getYvalue(void) const;
+
+    Fixed   getX(void) const;
+    Fixed   getY(void) const;
 
     void    printTriangle(Point const a, Point const b, Point const c, Point const point) const;
-
-	/*************
-     *  PRIVATE  *
-     *************/
-    private:
-
-    Fixed const x;
-    Fixed const y;
 };
 
-std::ostream&   operator<<(std::ostream& os, const Point& object);
 bool	        bsp(Point const a, Point const b, Point const c, Point const point);
 
 #endif

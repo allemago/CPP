@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 09:36:09 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/14 14:12:25 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:48:28 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@
 
 class Fixed
 {
+    /*************
+     *  PRIVATE  *
+     *************/
+    private:
+
+    int                 value;
+    static const int    bits;
+    
     /************
      *  PUBLIC  *
      ************/
@@ -60,14 +68,6 @@ class Fixed
     float   toFloat(void) const;
     int     toInt(void) const;
     int     getValue(void) const;
-    
-    /*************
-     *  PRIVATE  *
-     *************/
-    private:
-
-    int                 value;
-    static const int    bits;
 };
 
 std::ostream& operator<<(std::ostream& os, const Fixed& object);

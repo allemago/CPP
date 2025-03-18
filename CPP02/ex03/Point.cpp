@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:34:14 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/14 14:58:16 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/17 13:02:51 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,41 @@ Point::Point(void) : x(0), y(0) {}
 
 Point::Point(const float& value1, const float& value2) : x(value1), y(value2) {}
 
-/* Point::Point(const Point& object) : x(object.getFloatValue('x')), y(object.getFloatValue('y')) {} */
+Point::Point(const Point& object) : x(object.x), y(object.y) {}
+
+Point&  Point::operator=(const Point& right)
+{
+    if (&right != this)
+        std::cerr << "Error: cannot assign objects with const members." << std::endl;
+    return (*this);
+}
+
+bool    Point::operator==(const Point& right)
+{
+    return (this->x.getValue() == right.x.getValue() && this->y.getValue() == right.y.getValue());
+}
+
+Fixed  Point::getX(void) const
+{
+    return (this->x);
+}
+
+Fixed  Point::getY(void) const
+{
+    return (this->y);
+}
+
+int	Point::getXvalue(void) const
+{
+	return (this->x.getValue());
+}
+
+int	Point::getYvalue(void) const
+{
+	return (this->y.getValue());
+}
+
+Point::~Point(void) {}
 
 void    Point::printTriangle(Point const a, Point const b, Point const c, Point const point) const
 {
@@ -53,15 +87,3 @@ void    Point::printTriangle(Point const a, Point const b, Point const c, Point 
     }
 	std::cout << std::endl;
 }
-
-Fixed	Point::getX(void) const
-{
-	return (this->x);
-}
-
-Fixed	Point::getY(void) const
-{
-	return (this->y);
-}
-
-Point::~Point(void) {}
