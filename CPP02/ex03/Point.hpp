@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:34:59 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/18 15:49:18 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/18 19:18:42 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,6 @@ class Point
 
     Point&  operator=(const Point& right);
     bool    operator==(const Point& right);
-
-	int     getXvalue(void) const;
-    int     getYvalue(void) const;
 
     Fixed   getX(void) const;
     Fixed   getY(void) const;

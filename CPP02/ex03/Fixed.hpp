@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 09:36:09 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/18 15:48:28 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/18 19:41:39 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ class Fixed
      *************/
     private:
 
-    int                 value;
-    static const int    bits;
+    int                 _value;
+    static const int    _bits;
     
     /************
      *  PUBLIC  *
@@ -40,17 +40,17 @@ class Fixed
 
     Fixed&  operator=(const Fixed& right);
     
-    Fixed operator+(const Fixed& right);
-    Fixed operator-(const Fixed& right);
-    Fixed operator*(const Fixed& right);
-    Fixed operator/(const Fixed& right);
+    Fixed	operator+(const Fixed& right) const;
+    Fixed	operator-(const Fixed& right) const;
+    Fixed	operator*(const Fixed& right) const;
+    Fixed	operator/(const Fixed& right) const;
 
-    bool    operator>(const Fixed& right);
-    bool    operator<(const Fixed& right);
-    bool    operator>=(const Fixed& right);
-    bool    operator<=(const Fixed& right);
-    bool    operator==(const Fixed& right);
-    bool    operator!=(const Fixed& right);
+    bool    operator>(const Fixed& right) const;
+    bool    operator<(const Fixed& right) const;
+    bool    operator>=(const Fixed& right) const;
+    bool    operator<=(const Fixed& right) const;
+    bool    operator==(const Fixed& right) const;
+    bool    operator!=(const Fixed& right) const;
 
     /* PREFIXES */
     Fixed& operator++(void);
@@ -65,9 +65,11 @@ class Fixed
     static Fixed& max(Fixed& object1, Fixed& object2);
     static const Fixed& max(const Fixed& object1, const Fixed& object2);
 
-    float   toFloat(void) const;
-    int     toInt(void) const;
-    int     getValue(void) const;
+	void	setRawBits(int const raw);
+	int		getRawBits(void) const;
+
+	float	toFloat(void) const;
+	int     toInt(void) const;
 };
 
 std::ostream& operator<<(std::ostream& os, const Fixed& object);

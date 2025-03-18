@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:34:14 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/17 13:02:51 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/03/18 19:21:01 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ Point::Point(const float& value1, const float& value2) : x(value1), y(value2) {}
 
 Point::Point(const Point& object) : x(object.x), y(object.y) {}
 
+Point::~Point(void) {}
+
 Point&  Point::operator=(const Point& right)
 {
     if (&right != this)
@@ -27,7 +29,7 @@ Point&  Point::operator=(const Point& right)
 
 bool    Point::operator==(const Point& right)
 {
-    return (this->x.getValue() == right.x.getValue() && this->y.getValue() == right.y.getValue());
+    return (this->x.getRawBits() == right.x.getRawBits() && this->y.getRawBits() == right.y.getRawBits());
 }
 
 Fixed  Point::getX(void) const
@@ -39,18 +41,6 @@ Fixed  Point::getY(void) const
 {
     return (this->y);
 }
-
-int	Point::getXvalue(void) const
-{
-	return (this->x.getValue());
-}
-
-int	Point::getYvalue(void) const
-{
-	return (this->y.getValue());
-}
-
-Point::~Point(void) {}
 
 void    Point::printTriangle(Point const a, Point const b, Point const c, Point const point) const
 {
