@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:32:26 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/02 18:23:41 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/04/02 18:32:18 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,4 +115,3 @@ void	ClapTrap::displayStatus(void) const
 	std::cout << std::setfill('-') << std::setw(25) << '-' << std::endl;
 	std::cout << std::endl;
 }
-
