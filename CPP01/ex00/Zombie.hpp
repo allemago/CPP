@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:38:18 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/06 19:43:18 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:02:07 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,22 @@
 
 class Zombie
 {
+	/*************
+     *  PRIVATE  *
+     *************/
+	private:
+	
+	std::string	_name;
+	
+	/************
+     *  PUBLIC  *
+     ************/
 	public:
 
 	Zombie(std::string name);
 	~Zombie(void);
 	
 	void announce(void);
-
-	private:
-	
-	std::string	name;
 };
 
 Zombie	*newZombie(std::string name);

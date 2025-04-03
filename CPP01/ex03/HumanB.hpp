@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 14:38:13 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/08 13:40:49 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:05:34 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,23 @@
 # define HUMANB_HPP
 
 # include "Weapon.hpp"
+# include <cstdlib>
+# include <iostream>
+# include <string>
 
 class HumanB
 {
+	/*************
+     *  PRIVATE  *
+     *************/
+	private:
+	
+	std::string		_humanName;
+	Weapon			*_currentWeapon;
+	
+	/************
+     *  PUBLIC  *
+     ************/
 	public:
 	
 	HumanB(std::string name);
@@ -24,11 +38,6 @@ class HumanB
 
 	void attack(void);
 	void setWeapon(Weapon &club);
-
-	private:
-	
-	std::string	HumanName;
-	Weapon *CurrentWeapon;
 };
 
 #endif

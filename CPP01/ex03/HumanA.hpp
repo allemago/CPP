@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 14:37:45 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/08 13:39:57 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:04:42 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,29 @@
 # define HUMANA_HPP
 
 # include "Weapon.hpp"
+# include <cstdlib>
+# include <iostream>
+# include <string>
 
 class HumanA
 {
+	/*************
+     *  PRIVATE  *
+     *************/
+	private:
+	
+	std::string		_humanName;
+	Weapon			&_currentWeapon;
+	
+	/************
+     *  PUBLIC  *
+     ************/
 	public:
 	
 	HumanA(std::string name, Weapon &club);
 	~HumanA(void);
 
 	void attack(void);
-	
-	private:
-	
-	std::string	HumanName;
-	Weapon &CurrentWeapon;
 };
 
 #endif

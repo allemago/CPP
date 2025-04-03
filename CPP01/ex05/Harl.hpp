@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 21:08:53 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/08 22:48:42 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:10:26 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,28 @@
 
 class Harl
 {
-  public:
-  
-  	Harl(void);
-	~Harl(void);
-
-	std::string levels[4];
-	void (Harl::*functions[4])();
-	
-	void complain(std::string level);
-
-  private:
+	/*************
+     *  PRIVATE  *
+     *************/
+	private:
 
 	void debug(void);
 	void info(void);
 	void warning(void);
 	void error(void);
+	
+	/************
+     *  PUBLIC  *
+     ************/
+	public:
+
+	Harl(void);
+	~Harl(void);
+
+	std::string levels[4];
+	void (Harl::*functions[4])();
+
+	void complain(std::string level);
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 14:27:01 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/08 18:49:23 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:08:15 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,21 @@
 
 class FileEditor
 {
+	/*************
+     *  PRIVATE  *
+     *************/
+	private:
+	
+	std::ifstream	_inFile;
+	std::ofstream	_outFile;
+	std::string		_inFileName;
+	std::string		_outFileName;
+	std::string		_s1;
+	std::string		_s2;
+	
+	/************
+     *  PUBLIC  *
+     ************/
 	public:
 	
 	FileEditor(const std::string &inFileName, const std::string &s1, const std::string &s2);
@@ -31,16 +46,6 @@ class FileEditor
 	int		openFile(void);
 	int		editFile(void);
 	void	replaceLine(const std::string& line, size_t start);
-	
-	
-	private:
-	
-	std::ifstream inFile;
-	std::ofstream outFile;
-	std::string inFileName;
-	std::string outFileName;
-	std::string s1;
-	std::string s2;
 };
 
 #endif
