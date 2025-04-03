@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:27:56 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/18 19:23:47 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/04/03 13:40:01 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ Fixed::Fixed(const float value) : _value(roundf(value * (1 << _bits)))
 Fixed::Fixed(const Fixed& object)
 {
     std::cout << "Copy constructor called" << std::endl;
-    operator=(object);
+    *this = object;
 }
 
 Fixed&  Fixed::operator=(const Fixed& object)
