@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:32:40 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/02 18:22:30 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:52:41 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ class ClapTrap
 	public:
 
 	ClapTrap(void);
-	ClapTrap(const ClapTrap& object);
 	ClapTrap(const std::string& name);
+	ClapTrap(const ClapTrap& object);
 	~ClapTrap(void);
 
 	ClapTrap&	operator=(const ClapTrap& object);

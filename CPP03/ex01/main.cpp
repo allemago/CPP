@@ -6,11 +6,12 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:31:58 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/02 18:30:49 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:57:44 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
+#include "ScavTrap.hpp"
 
 int	main(void)
 {
@@ -22,12 +23,15 @@ int	main(void)
 		a.attack(b.getName());
 		b.takeDamage(1);
 	}
+
+	ScavTrap c("robot");
+	ScavTrap d("foo");
 	
-	a.attack(b.getName());
-	b.takeDamage(1);
-	b.beRepaired(1);
-	a.attack(b.getName());
-	b.takeDamage(1);
+	c.attack(d.getName());
+	d.takeDamage(110);
+	d.beRepaired(1);
+	c.attack(d.getName());
+	d.takeDamage(1);
 	
 	return (0);
 }

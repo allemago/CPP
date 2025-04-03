@@ -6,7 +6,7 @@
 #    By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 18:34:15 by magrabko          #+#    #+#              #
-#    Updated: 2025/04/02 18:35:23 by magrabko         ###   ########.fr        #
+#    Updated: 2025/04/03 15:35:00 by magrabko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ OBJ_PATH= 		obj
 
 SRC=			main.cpp		\
 				ClapTrap.cpp	\
+				ScavTrap.cpp	\
 				
 OBJ= 			$(addprefix $(OBJ_PATH)/, $(notdir $(SRC:.cpp=.o)))
 
