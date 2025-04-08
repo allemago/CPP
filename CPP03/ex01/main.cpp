@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:31:58 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/03 15:57:44 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/04/08 19:27:21 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	main(void)
 		b.takeDamage(1);
 	}
 
-	ScavTrap c("robot");
-	ScavTrap d("foo");
+	ScavTrap c("bender");
+	ScavTrap d("R2-D2");
 	
 	c.attack(d.getName());
 	d.takeDamage(110);
