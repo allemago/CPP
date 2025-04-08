@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:32:40 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/03 15:45:41 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/04/09 01:11:01 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define RED "\033[1;31m"
 # define YELLOW "\033[1;93m"
 # define GREEN "\033[1;32m"
-# define BLUE "\033[1;36m"
+# define CYAN "\033[1;36m"
 # define RESET "\033[0m"
 
 class ClapTrap

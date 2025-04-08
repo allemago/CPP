@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:36:05 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/03 15:56:17 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/04/09 01:11:01 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ ScavTrap::ScavTrap(const ScavTrap& object) : ClapTrap(object)
 ScavTrap::~ScavTrap(void)
 {
     std::cout << std::setfill('-') << std::setw(25) << '-' << std::endl;
-    std::cout << BLUE << "ScavTrap " << RESET BOLD << "destructor called" << std::endl;
+    std::cout << CYAN << "ScavTrap " << RESET BOLD << "destructor called" << std::endl;
 	std::cout << this->_name << RED << " was destroyed" << RESET << std::endl;
 	std::cout << std::setfill('-') << std::setw(25) << '-' << std::endl;
 	std::cout << std::endl;
@@ -59,7 +59,7 @@ ScavTrap&   ScavTrap::operator=(const ScavTrap& object)
 
 void	ScavTrap::attack(const std::string& target)
 {
-    std::cout << BLUE << "ScavTrap " << RESET BOLD << "attack called" << std::endl;
+    std::cout << CYAN << "ScavTrap " << RESET BOLD << "attack called" << std::endl;
 	if (_hitPoints == 0)
 	{
 		std::cout << "Cannot attack: " << BOLD << _name << RESET << " is dead 🤖";
@@ -88,7 +88,7 @@ void    ScavTrap::guardGate(void)
 void    ScavTrap::displayStatus(void) const
 {
 	std::cout << std::setfill('-') << std::setw(25) << '-' << std::endl;
-	std::cout << BLUE << "ScavTrap " << RESET BOLD << "constructor called" << std::endl;
+	std::cout << CYAN << "ScavTrap " << RESET BOLD << "constructor called" << std::endl;
 	std::cout << this->_name << YELLOW << " was created" <<  RESET << std::endl;
 	std::cout << "Hit point(s): " << this->_hitPoints << std::endl;
 	std::cout << "Energy point(s): " << this->_energyPoints << std::endl;
