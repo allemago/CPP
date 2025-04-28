@@ -4,23 +4,26 @@ CXX=			c++
 
 CXXFLAGS= 		-Wall -Wextra -Werror -g3 -std=c++98
 
+INCLD=  		-I ./include/
+
 CYAN= 			\033[1;36m
 GREEN_B=		\033[1;32m
 RESET= 			\033[0m
 
+SRC_PATH= 		src
 OBJ_PATH= 		obj
 
-SRC=			main.cpp		\
-				Animal.cpp		\
-				Cat.cpp			\
-				Dog.cpp			\
+SRC=			$(SRC_PATH)/main.cpp		\
+				$(SRC_PATH)/Animal.cpp		\
+				$(SRC_PATH)/Cat.cpp			\
+				$(SRC_PATH)/Dog.cpp			\
 				
 OBJ= 			$(addprefix $(OBJ_PATH)/, $(notdir $(SRC:.cpp=.o)))
 
 all: $(NAME)
 
-$(OBJ_PATH)/%.o: %.cpp | $(OBJ_PATH)
-	@$(CXX) $(CXXFLAGS) -c $< -o $@
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.cpp | $(OBJ_PATH)
+	@$(CXX) $(CXXFLAGS) $(INCLD) -c $< -o $@
 
 $(OBJ_PATH):
 	@mkdir $(OBJ_PATH)

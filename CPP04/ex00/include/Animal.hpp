@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:42:35 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/27 12:31:54 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/04/28 11:48:18 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,11 @@ class Animal
     public:
     
     Animal(void);
-    Animal(const std::string& name);
     Animal(const Animal& object);
     virtual ~Animal(void);
     Animal& operator=(const Animal& object);
     
-    virtual void                makeSound(void) const;
-    virtual void                displayStatus(std::string constructor) const;
-    virtual const std::string&  getType(void) const;
+    const std::string&  getType(void) const;
+    virtual void        displayStatus(std::string constructor) const;
+    virtual void        makeSound(void) const;
 };

@@ -1,38 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Cat.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/27 10:33:53 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/27 12:43:08 by magrabko         ###   ########.fr       */
+/*   Created: 2025/04/27 10:55:00 by magrabko          #+#    #+#             */
+/*   Updated: 2025/04/28 11:48:26 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Animal.hpp"
-#include "Cat.hpp"
-#include "Dog.hpp"
+#pragma once
 
-int main(void)
+# include "Animal.hpp"
+# include <iostream>
+# include <iomanip>
+
+class Cat : public Animal
 {
-    const Animal* meta = new Animal("Animal0");
-    const Animal* j = new Dog("Dog0");
-    const Animal* i = new Cat("Cat0");
+    /************
+     *  PUBLIC  *
+     ************/
+    public:
+    Cat(void);
+    Cat(const Cat& object);
+    ~Cat(void);
+    
+    Cat& operator=(const Cat& object);
 
-    i->makeSound();
-    j->makeSound();
-    meta->makeSound();
-
-    Dog dog1;
-
-    Dog dog2("dog2");
-
-    Cat cat1("cat1");
-
-    const Cat cat2;
-
-    cat1 = cat2;    
-
-    return (0);
-}
+    void    makeSound(void) const;
+    void    displayStatus(std::string constructor) const;
+};
