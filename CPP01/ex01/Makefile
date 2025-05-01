@@ -1,40 +1,33 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/03/06 13:35:45 by magrabko          #+#    #+#              #
-#    Updated: 2025/03/06 19:30:40 by magrabko         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME=			horde
 
 CXX=			c++
 
-CXXFLAGS= 		-Wall -Wextra -Werror -g3 -std=c++98
+CXXFLAGS= 		-Wall -Wextra -Werror -g3 -std=c++98 -MMD
+
+INCLD=  		-I ./include
 
 CYAN= 			\033[1;36m
 GREEN_B=		\033[1;32m
 RESET= 			\033[0m
 
-OBJ_PATH= 		obj
+SRC_PATH= 		src/
+OBJ_PATH= 		obj/
 
-SRC=			main.cpp		\
-				Zombie.cpp		\
-				zombieHorde.cpp	\
+SRC=			$(SRC_PATH)main.cpp			\
+				$(SRC_PATH)Zombie.cpp		\
+				$(SRC_PATH)zombieHorde.cpp	\
 				
-OBJ= 			$(addprefix $(OBJ_PATH)/, $(notdir $(SRC:.cpp=.o)))
+OBJ= 			$(addprefix $(OBJ_PATH), $(notdir $(SRC:.cpp=.o)))
 
 all: $(NAME)
 
-$(OBJ_PATH)/%.o: %.cpp | $(OBJ_PATH)
-	@$(CXX) $(CXXFLAGS) -c $< -o $@
+-include $(OBJ:.o=.d)
 
 $(OBJ_PATH):
-	@mkdir $(OBJ_PATH)
+	@mkdir -p $(OBJ_PATH)
+
+$(OBJ_PATH)%.o: $(SRC_PATH)%.cpp | $(OBJ_PATH)
+	@$(CXX) $(CXXFLAGS) $(INCLD) -c $< -o $@
 
 $(NAME): $(OBJ)
 	@$(CXX) $(OBJ) -o $(NAME)
@@ -43,8 +36,7 @@ $(NAME): $(OBJ)
 	@printf "   ░█▀▀░▄▀▄░█░█░░█░\n"
 	@printf "   ░▀▀▀░▀░▀░▀▀▀░▀▀▀\n"
 	@printf "\n\n${RESET}"
-	@printf "   \033[1musage: ./horde [number of zombies]\n"
-	@printf "          ./horde\033[0m"
+	@printf "   \033[1musage: ./horde\033[0m"
 	@printf "\n\n"
 
 clean:
@@ -61,3 +53,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+

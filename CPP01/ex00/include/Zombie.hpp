@@ -6,14 +6,13 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:38:18 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/03 16:02:07 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:27:43 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ZOMBIE_HPP
 # define ZOMBIE_HPP
 
-# include <cstdlib>
 # include <iostream>
 # include <string>
 

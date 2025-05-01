@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 22:29:25 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/03 16:11:02 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/01 11:32:12 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define HARL_HPP
 
 # include <iostream>
-# include <cstring>
 # include <string>
 
 # define ARG_MSG "usage: ./harlFilter [DEBUG | INFO | WARNING | ERROR]"

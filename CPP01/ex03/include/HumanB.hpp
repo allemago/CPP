@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 14:38:13 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/03 16:05:34 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:45:53 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define HUMANB_HPP
 
 # include "Weapon.hpp"
-# include <cstdlib>
 # include <iostream>
 # include <string>
 
@@ -37,7 +36,7 @@ class HumanB
 	~HumanB(void);
 
 	void attack(void);
-	void setWeapon(Weapon &club);
+	void setWeapon(Weapon& club);
 };
 
 #endif

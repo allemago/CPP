@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 14:37:41 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/03 16:09:36 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/01 12:45:26 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ int FileEditor::openFile(void)
 	_inFile.open(_inFileName.c_str());
 	if (!_inFile.is_open())
 	{
-		std::cout << _inFileName << ": " << strerror(errno) << std::endl;
+		std::cerr << _inFileName << ": " << strerror(errno) << std::endl;
 		return (1);
 	}
 	_outFileName = _inFileName + (".replace");
 	_outFile.open(_outFileName.c_str());
 	if (!_outFile.is_open())
 	{
-		std::cout << _outFileName << ": " << strerror(errno) << std::endl;
+		std::cerr << _outFileName << ": " << strerror(errno) << std::endl;
 		return (1);
 	}
 	return (0);

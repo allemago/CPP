@@ -5,18 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/08 22:28:29 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/08 23:58:04 by magrabko         ###   ########.fr       */
+/*   Created: 2025/03/08 21:07:06 by magrabko          #+#    #+#             */
+/*   Updated: 2025/05/01 14:38:59 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Harl.hpp"
+#include "../include/Harl.hpp"
 
-int main(int argc, char **argv)
+int main(void)
 {
-	if (argc != 2)
-		return (std::cerr << ARG_MSG << std::endl, 1);
-	Harl complainer(argv[1]);
-	complainer.complain(argv[1]);
+	Harl complains;
+	for (size_t i = 0; i < 4; i++)
+		complains.complain(complains.levels[i]);
+	complains.complain("TEST");
 	return (0);
 }

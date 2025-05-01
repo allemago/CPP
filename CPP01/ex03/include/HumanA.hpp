@@ -1,27 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   HumanB.cpp                                         :+:      :+:    :+:   */
+/*   HumanA.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/07 14:38:18 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/03 16:07:01 by magrabko         ###   ########.fr       */
+/*   Created: 2025/03/07 14:37:45 by magrabko          #+#    #+#             */
+/*   Updated: 2025/05/01 13:45:51 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "HumanB.hpp"
+#ifndef HUMANA_HPP
+# define HUMANA_HPP
 
-HumanB::HumanB(std::string name) : _humanName(name), _currentWeapon(NULL) {}
+# include "Weapon.hpp"
+# include <iostream>
+# include <string>
 
-void	HumanB::setWeapon(Weapon &club)
+class HumanA
 {
-	_currentWeapon = &club;
-}
+	/*************
+     *  PRIVATE  *
+     *************/
+	private:
+	
+	std::string		_humanName;
+	Weapon			&_currentWeapon;
+	
+	/************
+     *  PUBLIC  *
+     ************/
+	public:
+	
+	HumanA(std::string name, Weapon& club);
+	~HumanA(void);
 
-void	HumanB::attack(void)
-{
-	std::cout << _humanName << " attacks with their " << _currentWeapon->getType() << std::endl;
-}
+	void attack(void);
+};
 
-HumanB::~HumanB(void) {}
+#endif

@@ -1,46 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Zombie.hpp                                         :+:      :+:    :+:   */
+/*   Weapon.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 15:23:30 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/03 16:03:27 by magrabko         ###   ########.fr       */
+/*   Created: 2025/03/07 14:37:22 by magrabko          #+#    #+#             */
+/*   Updated: 2025/05/01 13:45:24 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ZOMBIE_HPP
-# define ZOMBIE_HPP
+#ifndef WEAPON_HPP
+# define WEAPON_HPP
 
-# include <cstdlib>
 # include <iostream>
-# include <string>
+# include <cstring>
 
-# define ARG_MSG "try ./zombie or ./zombie [number of zombies]"
-# define NBR_MSG "Let's do 10 instead!\n"
-
-class Zombie
+class Weapon
 {
 	/*************
      *  PRIVATE  *
      *************/
 	private:
 
-	std::string	_name;
-	
+	std::string	_type;
+
 	/************
      *  PUBLIC  *
      ************/
 	public:
 
-	Zombie(void);
-	Zombie(std::string name);
-	~Zombie(void);
+	Weapon(std::string type);
+	~Weapon(void);
 
-	void announce(void);
+	const std::string& getType(void) const;
+	void setType(const std::string& type);
 };
-
-Zombie* zombieHorde(int N, std::string name);
 
 #endif

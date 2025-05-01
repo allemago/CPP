@@ -6,11 +6,11 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 22:29:14 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/08 23:55:00 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:39:10 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Harl.hpp"
+#include "../include/Harl.hpp"
 
 Harl::Harl(const std::string level)
 {
@@ -30,6 +30,8 @@ Harl::Harl(const std::string level)
 	}
 }
 
+Harl::~Harl(void) {}
+
 void	Harl::complain(std::string level)
 {
 	switch (level_index)
@@ -39,22 +41,12 @@ void	Harl::complain(std::string level)
 			break ;
 		case 1:
 			debug();
-			info();
-			warning();
-			error();
-			break ;
 		case 2:
 			info();
-			warning();
-			error();
-			break ;
 		case 3:
 			warning();
-			error();
-			break ;
 		case 4:
 			error();
-			break ;
 	}
 }
 
@@ -77,5 +69,3 @@ void	Harl::error(void)
 {
 	std::cout << ERROR_MSG << std::endl;
 }
-
-Harl::~Harl(void) {}

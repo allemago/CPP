@@ -6,11 +6,11 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 21:08:46 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/08 22:22:09 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:38:54 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Harl.hpp"
+#include "../include/Harl.hpp"
 
 Harl::Harl(void)
 {
@@ -24,6 +24,8 @@ Harl::Harl(void)
 	functions[2] = &Harl::warning;
 	functions[3] = &Harl::error;
 }
+
+Harl::~Harl(void) {}
 
 void	Harl::complain(std::string level)
 {
@@ -57,5 +59,3 @@ void	Harl::error(void)
 {
 	std::cout << ERROR_MSG << std::endl;
 }
-
-Harl::~Harl(void) {}

@@ -6,16 +6,16 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:38:09 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/06 19:43:30 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:40:41 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
+#include "../include/Zombie.hpp"
 
 int main(void)
 {
-	Zombie *newbie = newZombie("newbie");
+	Zombie *newbie = newZombie("heap");
 	delete newbie;
-	randomChump("random");
+	randomChump("stack");
 	return (0);
 }

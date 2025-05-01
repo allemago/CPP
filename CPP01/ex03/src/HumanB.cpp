@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   HumanA.cpp                                         :+:      :+:    :+:   */
+/*   HumanB.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/07 14:37:54 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/03 16:06:37 by magrabko         ###   ########.fr       */
+/*   Created: 2025/03/07 14:38:18 by magrabko          #+#    #+#             */
+/*   Updated: 2025/05/01 13:59:15 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "HumanA.hpp"
+#include "HumanB.hpp"
 
-HumanA::HumanA(std::string name, Weapon &club) : _humanName(name), _currentWeapon(club) {}
+HumanB::HumanB(std::string name) : _humanName(name), _currentWeapon(NULL) {}
 
-void	HumanA::attack(void)
+HumanB::~HumanB(void) {}
+
+void	HumanB::setWeapon(Weapon& club)
 {
-	std::cout << _humanName << " attacks with their " << _currentWeapon.getType() << std::endl;
+	_currentWeapon = &club;
 }
 
-HumanA::~HumanA(void) {}
+void	HumanB::attack(void)
+{
+	if (!_currentWeapon)
+		std::cout << _humanName << " doesn't have a weapon" << std::endl;
+	else
+		std::cout << _humanName << " attacks with their " << _currentWeapon->getType() << std::endl;
+}

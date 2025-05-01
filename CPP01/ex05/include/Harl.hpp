@@ -6,14 +6,13 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 21:08:53 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/03 16:10:26 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/01 12:56:52 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HARL_HPP
 # define HARL_HPP
 
-# include <cstring>
 # include <iostream>
 # include <string>
 
@@ -45,8 +44,8 @@ class Harl
 	~Harl(void);
 
 	std::string levels[4];
+	
 	void (Harl::*functions[4])();
-
 	void complain(std::string level);
 };
 
