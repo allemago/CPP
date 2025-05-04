@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 00:03:36 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/01 17:02:03 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/04 09:58:57 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@
 
 class Fixed
 {
-	/*************
-     *  PRIVATE  *
-     *************/
-	private:
+/*****************
+*    PRIVATE     *
+*****************/
+private:
 	
 	static const int	_bits;
 	int   				_value;
 	
-	/************
-	 *  PUBLIC  *
-     ************/
-	public:
+/*****************
+*     PUBLIC     *
+*****************/
+public:
 
 	Fixed(void);
 	Fixed(const Fixed& object);
