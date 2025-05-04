@@ -6,11 +6,11 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:42:48 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/04 12:36:13 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/01 22:17:01 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "PhoneBook.class.hpp"
+#include "PhoneBook.hpp"
 
 void    handle_eof(void)
 {

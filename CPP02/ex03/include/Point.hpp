@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:34:59 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/18 19:18:42 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:24:37 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define POINT_HPP
 
 # include "Fixed.hpp"
+# include <iostream>
+# include <iomanip>
+# include <cmath>
 
 class Point
 {
@@ -44,6 +47,6 @@ class Point
     void    printTriangle(Point const a, Point const b, Point const c, Point const point) const;
 };
 
-bool	        bsp(Point const a, Point const b, Point const c, Point const point);
+bool        bsp(Point const a, Point const b, Point const c, Point const point);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 11:21:33 by magrabko          #+#    #+#              #
-#    Updated: 2025/03/04 14:00:00 by magrabko         ###   ########.fr        #
+#    Updated: 2025/05/01 22:24:40 by magrabko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME=			phonebook
 
 CXX=			c++
 
-CXXFLAGS= 		-Wall -Wextra -Werror -g3 -std=c++98
+CXXFLAGS= 		-Wall -Wextra -Werror -g3 -std=c++98 -MMD
 
 CYAN= 			\033[1;36m
 GREEN_B=		\033[1;32m
@@ -22,19 +22,21 @@ RESET= 			\033[0m
 
 OBJ_PATH= 		obj
 
-SRC=			PhoneBook.class.cpp	\
-				Contact.class.cpp	\
-				main.cpp			\
+SRC=			PhoneBook.cpp	\
+				Contact.cpp		\
+				main.cpp		\
 
 OBJ= 			$(addprefix $(OBJ_PATH)/, $(notdir $(SRC:.cpp=.o)))
 
 all: $(NAME)
 
-$(OBJ_PATH)/%.o: %.cpp | $(OBJ_PATH)
-	@$(CXX) $(CXXFLAGS) -c $< -o $@
+-include $(OBJ:.o=.d)
 
 $(OBJ_PATH):
 	@mkdir $(OBJ_PATH)
+
+$(OBJ_PATH)/%.o: %.cpp | $(OBJ_PATH)
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
 	@$(CXX) $(OBJ) -o $(NAME)

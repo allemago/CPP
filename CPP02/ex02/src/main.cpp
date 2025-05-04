@@ -6,11 +6,11 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 09:35:55 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/12 14:48:47 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:32:24 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Fixed.hpp"
+#include "../include/Fixed.hpp"
 
 int	main(void)
 {

@@ -6,11 +6,11 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 09:36:17 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/18 19:32:12 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:31:36 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Fixed.hpp"
+#include "../include/Fixed.hpp"
 
 const int Fixed::_bits = 8;
 
@@ -36,7 +36,7 @@ Fixed&  Fixed::operator=(const Fixed& right)
     return (*this);
 }
 
-std::ostream&	operator<<(std::ostream& os, const Fixed& object)
+std::ostream&   operator<<(std::ostream& os, const Fixed& object)
 {
     os << object.toFloat();
     return (os);
@@ -76,7 +76,7 @@ Fixed   Fixed::operator+(const Fixed& right) const
 {
     Fixed result;
     
-	result.setRawBits(this->_value + right._value);
+    result._value = (this->_value + right._value);    
     return (result);
 }
 
@@ -84,7 +84,7 @@ Fixed   Fixed::operator-(const Fixed& right) const
 {
     Fixed result;
 
-	result.setRawBits(this->_value - right._value);
+    result._value = (this->_value - right._value);    
     return (result);
 }
 
@@ -92,7 +92,7 @@ Fixed   Fixed::operator*(const Fixed& right) const
 {
     Fixed result;
     
-	result.setRawBits((this->_value * right._value) >> _bits);
+    result._value = ((this->_value * right._value) >> _bits);
     return (result);
 }
 
@@ -102,10 +102,11 @@ Fixed   Fixed::operator/(const Fixed& right) const
     
     if (right._value == 0)
     {
-        std::cerr << "Error: cannot divide by zero." << std::endl;
+        std::cerr << "Error: cannot divide by zero: ";
+        std::cerr << this->_value << " / " << right._value << std::endl;
         return (result);
     }
-	result.setRawBits((this->_value << _bits) / right._value);
+    result._value = ((this->_value << _bits) / right._value);
     return (result);
 }
 
@@ -145,26 +146,6 @@ Fixed   Fixed::operator--(int)
 }
 /******************************/
 
-int Fixed::getRawBits(void) const
-{
-    return (_value);
-}
-
-void    Fixed::setRawBits(int const raw)
-{
-    _value = raw;
-}
-
-float   Fixed::toFloat(void) const
-{
-	return (static_cast<float>(_value) / (1 << _bits));
-}
-
-int   Fixed::toInt(void) const
-{
-    return (_value / (1 << _bits));
-}
-
 Fixed& Fixed::min(Fixed& object1, Fixed& object2)
 {
     return ((object1._value > object2._value) ? object2 : object1);
@@ -183,4 +164,24 @@ Fixed& Fixed::max(Fixed& object1, Fixed& object2)
 const Fixed&   Fixed::max(const Fixed& object1, const Fixed& object2)
 {
     return ((object1._value > object2._value) ? object1 : object2);
+}
+
+int Fixed::getRawBits(void) const
+{
+    return (_value);
+}
+
+void    Fixed::setRawBits(int const raw)
+{
+    _value = raw;
+}
+
+float   Fixed::toFloat(void) const
+{
+	return (static_cast<float>(_value) / (1 << _bits));
+}
+
+int   Fixed::toInt(void) const
+{
+    return (_value / (1 << _bits));
 }

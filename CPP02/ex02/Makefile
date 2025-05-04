@@ -1,39 +1,32 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/03/11 09:34:48 by magrabko          #+#    #+#              #
-#    Updated: 2025/03/12 14:30:20 by magrabko         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME=			fixed
 
 CXX=			c++
 
-CXXFLAGS= 		-Wall -Wextra -Werror -g3 -std=c++98
+CXXFLAGS= 		-Wall -Wextra -Werror -g3 -std=c++98 -MMD
+
+INCLD=			-I include
 
 CYAN= 			\033[1;36m
 GREEN_B=		\033[1;32m
 RESET= 			\033[0m
 
-OBJ_PATH= 		obj
+SRC_PATH=		src/
+OBJ_PATH= 		obj/
 
-SRC=			main.cpp	\
-				Fixed.cpp	\
+SRC=			$(SRC_PATH)main.cpp		\
+				$(SRC_PATH)Fixed.cpp	\
 				
-OBJ= 			$(addprefix $(OBJ_PATH)/, $(notdir $(SRC:.cpp=.o)))
+OBJ= 			$(addprefix $(OBJ_PATH), $(notdir $(SRC:.cpp=.o)))
 
 all: $(NAME)
 
-$(OBJ_PATH)/%.o: %.cpp | $(OBJ_PATH)
-	@$(CXX) $(CXXFLAGS) -c $< -o $@
+-include $(OBJ:.o=.d)
 
 $(OBJ_PATH):
 	@mkdir $(OBJ_PATH)
+
+$(OBJ_PATH)%.o: $(SRC_PATH)%.cpp | $(OBJ_PATH)
+	@$(CXX) $(CXXFLAGS) $(INCLD) -c $< -o $@
 
 $(NAME): $(OBJ)
 	@$(CXX) $(OBJ) -o $(NAME)

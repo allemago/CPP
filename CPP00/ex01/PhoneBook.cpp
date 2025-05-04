@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   PhoneBook.class.cpp                                :+:      :+:    :+:   */
+/*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:07:52 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/04 13:52:45 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/01 22:22:17 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "PhoneBook.class.hpp"
+# include "PhoneBook.hpp"
 
-PhoneBook::PhoneBook(void)
-{
-	add_count = 0;
-	index = 0;
-}
+PhoneBook::PhoneBook(void) : add_count(0), index(0) {}
 
 void PhoneBook::display_commands(void)
 {
@@ -39,7 +35,7 @@ void PhoneBook::book_prompt(void)
 			std::cin.clear();
 			continue;
 		}
-		if (!input.compare(0, 5, "EXIT"))
+		if (input == "EXIT")
 		{
 			std::cout << CLEAR_SCREEN << std::endl;
 			break ;
@@ -53,38 +49,26 @@ void PhoneBook::search_command(void)
 {
 	static int i = 0;
 	
-	if (input.compare(0, 4, "ADD") == 0)
-	{
+	if (input == "ADD")
 		ask_information(&i);
-	}
-	else if (input.compare(0, 7, "SEARCH") == 0)
-	{
+	else if (input == "SEARCH")
 		search_contact();
-	}
-	else if (input.compare(0, 8, "ADD_ALL") == 0)
-	{
+	else if (input == "ADD_ALL")
 		i = fill_book();
-	}
 	else
-	{
 		std::cout << RED ERR_CMD_MSG RESET;
-	}
 	display_commands();
 }
 
 void PhoneBook::ask_information(int *i)
 {
 	if (*i > 7)
-	{
 		*i = 0;
-	}
 	contacts->clear_contact(contacts[*i]);
 	contacts[*i] = contacts->fill_information();
 	(*i)++;
 	if (add_count < 8)
-	{
 		add_count++;
-	}
 }
 
 void PhoneBook::search_contact(void)
@@ -96,9 +80,7 @@ void PhoneBook::search_contact(void)
 	}
 	draw_header();
 	for (int i = 0; i < add_count; i++)
-	{
 		contacts->display_index(contacts[i], i);
-	}
 	std::cout << std::setfill('*') << std::setw(45) << "*" << std::endl;
 	std::cout << BOLD ASK_INDEX_MSG RESET << "\n-> ";
 	get_index();

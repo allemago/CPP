@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Contact.class.cpp                                  :+:      :+:    :+:   */
+/*   Contact.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:08:08 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/04 12:52:24 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/01 22:22:42 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "Contact.class.hpp"
+# include "Contact.hpp"
 
 bool Contact::is_number_valid(std::string& number)
 {
@@ -153,9 +153,7 @@ void Contact::check_size(std::string& details, std::string& tmp)
 		tmp[9] = '.';
 	}
 	else
-	{
 		tmp = details;
-	}
 }
 
 void Contact::clear_contact(Contact contact)
