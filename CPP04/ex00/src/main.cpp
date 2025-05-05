@@ -6,15 +6,29 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:33:53 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/28 11:49:03 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:20:33 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Animal.hpp"
-#include "Cat.hpp"
-#include "Dog.hpp"
+#include "../include/Animal.hpp"
+#include "../include/Cat.hpp"
+#include "../include/Dog.hpp"
+#include "../include/Wrong.hpp"
 
 int main(void)
+{
+    const WrongAnimal* meta = new WrongAnimal("WRONG_ANIMAL");
+    meta->makeSound();
+    delete meta;
+
+    const WrongAnimal* i = new WrongCat("WRONG_CAT");
+    i->makeSound();
+    delete i;
+    
+    return (0);
+}
+
+/* int main(void)
 {
     const Animal* a = new Animal();
     a->makeSound();
@@ -24,6 +38,10 @@ int main(void)
     
     const Animal* c = new Cat();
     c->makeSound();
+
+    delete a;
+    delete b;
+    delete c;
 
     const Dog e;
     e.makeSound();
@@ -40,9 +58,5 @@ int main(void)
     h = g;
     h.makeSound();
 
-    delete a;
-    delete b;
-    delete c;
-
     return (0);
-}
+} */

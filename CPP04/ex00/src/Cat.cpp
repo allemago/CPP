@@ -6,21 +6,25 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:54:54 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/28 11:51:56 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/05 13:15:49 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cat.hpp"
+#include "../include/Cat.hpp"
 
-Cat::Cat(void)
+Cat::Cat(void) : Animal("Cat")
 {
-    _type = "Cat";
     displayStatus(" default constructor called");
 }
 
-Cat::Cat(const Cat& object) : Animal(object)
+Cat::Cat(const std::string name) : Animal(name)
 {
-    this->_type = object._type;
+    displayStatus(" constructor with parameter called");
+}
+
+Cat::Cat(const Cat& object) : Animal(object._type)
+{
+    *this = object;
     displayStatus(" copy constructor called");
 }
 

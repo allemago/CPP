@@ -10,11 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Animal.hpp"
+#include "../include/Animal.hpp"
 
 Animal::Animal(void) : _type("Animal")
 {
-    displayStatus(" default constructor called");
+    std::cout << CYAN "Animal" RESET << " default constructor called";
+    std::cout << " for " << this->_type << std::endl;
+}
+
+Animal::Animal(const std::string name) : _type(name)
+{
+    std::cout << CYAN "Animal" RESET << " constructor with parameter called";
+    std::cout << " for " << this->_type << std::endl;
 }
 
 Animal::Animal(const Animal& object)
@@ -25,7 +32,6 @@ Animal::Animal(const Animal& object)
 Animal::~Animal(void)
 {
     std::cout << CYAN << "Animal " << RESET << "destructor called" << std::endl;
-	std::cout << std::setfill('-') << std::setw(40) << '-' << std::endl;
 }
 
 Animal& Animal::operator=(const Animal& object)
@@ -34,7 +40,8 @@ Animal& Animal::operator=(const Animal& object)
     {
         this->_type = object._type;
     }
-    displayStatus(" copy assignment operator called");
+    std::cout << CYAN "Animal" RESET << " copy assignment operator called";
+    std::cout << " for " << this->_type << std::endl;
     return (*this);
 }
 
@@ -46,10 +53,4 @@ void    Animal::makeSound(void) const
 const std::string&    Animal::getType(void) const
 {
     return (this->_type);
-}
-
-void    Animal::displayStatus(std::string constructor) const
-{
-	std::cout << std::setfill('-') << std::setw(40) << '-' << std::endl;
-	std::cout << CYAN << "Animal" << RESET << constructor << std::endl;
 }

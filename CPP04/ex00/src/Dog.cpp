@@ -6,21 +6,25 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:54:47 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/28 11:51:54 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/05 13:46:14 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Dog.hpp"
+#include "../include/Dog.hpp"
 
-Dog::Dog(void)
+Dog::Dog(void) : Animal("Dog")
 {
-    _type = "Dog";
     displayStatus(" default constructor called");
 }
 
-Dog::Dog(const Dog& object) : Animal(object)
+Dog::Dog(const std::string name) : Animal(name)
 {
-    this->_type = object._type;
+    displayStatus(" constructor with parameter called");
+}
+
+Dog::Dog(const Dog& object) : Animal(object._type)
+{
+    *this = object;
     displayStatus(" copy constructor called");
 }
 
@@ -32,7 +36,7 @@ Dog::~Dog(void)
 Dog& Dog::operator=(const Dog& object)
 {
     if (this != &object)
-    {\
+    {
         Animal::operator=(object);
     }
     displayStatus(" copy assignment operator called");
