@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 14:37:41 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/01 18:10:04 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/04 10:55:00 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,12 @@ int FileEditor::editFile(void)
 	size_t	start;
 
 	std::string line;
-	if (_s1.empty())
-		return (0);
 	if (openFile())
 		return (1);
 	while (std::getline(_inFile, line))
 	{
 		start = line.find(_s1);
-		if (start != std::string::npos)
+		if (start != std::string::npos && !_s1.empty())
 			replaceLine(line, start);
 		else
 			_outFile << line << std::endl;

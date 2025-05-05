@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 09:36:09 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/18 19:37:27 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/04 10:05:22 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@
 
 class Fixed
 {
-	/*************
-	 *  PRIVATE  *
-	 *************/
-	private:
+/*****************
+*    PRIVATE     *
+*****************/
+private:
 
-	static const int    _bits;
-	int                 _value;
+    static const int    _bits;
+    int                 _value;
 	
-    /************
-     *  PUBLIC  *
-     ************/
-    public:
+/*****************
+*     PUBLIC     *
+*****************/
+public:
 
     Fixed(void);
     Fixed(const int value);
@@ -38,19 +38,19 @@ class Fixed
     ~Fixed(void);
 
     Fixed&  operator=(const Fixed& right);
-	
+
     Fixed 	operator+(const Fixed& right) const;
     Fixed	operator-(const Fixed& right) const;
     Fixed	operator*(const Fixed& right) const;
     Fixed	operator/(const Fixed& right) const;
-	
+
     bool    operator>(const Fixed& right) const;
     bool    operator<(const Fixed& right) const;
     bool    operator>=(const Fixed& right) const;
     bool    operator<=(const Fixed& right) const;
     bool    operator==(const Fixed& right) const;
     bool    operator!=(const Fixed& right) const;
-	
+
     // PREFIXES
     Fixed&	operator++(void);
     Fixed&	operator--(void); 
@@ -58,20 +58,19 @@ class Fixed
     Fixed	operator++(int);
     Fixed	operator--(int);
 
-	void	setRawBits(int const raw);
-	int		getRawBits(void) const;
+    void	setRawBits(int const raw);
+    int		getRawBits(void) const;
 
-	float	toFloat(void) const;
-	int     toInt(void) const;
-	
+    float	toFloat(void) const;
+    int     toInt(void) const;
+
     static Fixed& 		min(Fixed& object1, Fixed& object2);
     static const Fixed& min(const Fixed& object, const Fixed& object2);
-	
+
     static Fixed& 		max(Fixed& object1, Fixed& object2);
-    static const Fixed& max(const Fixed& object1, const Fixed& object2);
-    
+    static const Fixed& max(const Fixed& object1, const Fixed& object2); 
 };
 
-std::ostream&	operator<<(std::ostream& os, const Fixed& object);
+std::ostream&   operator<<(std::ostream& os, const Fixed& object);
 
 #endif

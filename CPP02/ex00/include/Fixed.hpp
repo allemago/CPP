@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 00:03:36 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/04 10:00:55 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/04 10:40:59 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define FIXED_HPP
 
 # include <iostream>
-# include <cstring>
-# include <string>
 
 class Fixed
 {

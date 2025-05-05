@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:34:59 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/01 17:24:37 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/04 10:06:32 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,23 @@
 
 class Point
 {
-    /*************
-     *  PRIVATE  *
-     *************/
-    private:
+/*****************
+*    PRIVATE     *
+*****************/
+private:
 
     Fixed const x;
     Fixed const y;
     
-	/************
-     *  PUBLIC  *
-     ************/
-    public:
+/*****************
+*     PUBLIC     *
+*****************/
+public:
 
     Point(void);
     Point(const float& value1, const float& value2);
-	Point(const Point& object);
-	~Point(void);
+    Point(const Point& object);
+    ~Point(void);
 
     Point&  operator=(const Point& right);
     bool    operator==(const Point& right);

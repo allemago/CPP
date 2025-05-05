@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:34:14 by magrabko          #+#    #+#             */
-/*   Updated: 2025/03/18 19:21:01 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/04 10:34:19 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ Fixed  Point::getY(void) const
 
 void    Point::printTriangle(Point const a, Point const b, Point const c, Point const point) const
 {
-    Fixed tmp1 = y.max(a.y, b.y);
-    Fixed tmp2 = y.max(c.y, point.y);
-	
-    Fixed tmp3 = x.max(a.x, b.x);
-    Fixed tmp4 = x.max(c.x, point.x);
+    Fixed xMax;
+    Fixed yMax;
+
+    x.max(a.x, b.x) > x.max(c.x, point.x) ?
+    (xMax = x.max(a.x, b.x)) : (xMax = x.max(c.x, point.x));
     
-    Fixed yMax = y.max(tmp1, tmp2);
-    Fixed xMax = x.max(tmp3, tmp4);
+    y.max(a.y, b.y) > y.max(c.y, point.y) ?
+    (yMax = y.max(a.y, b.y)) : (yMax = y.max(c.y, point.y));
     
-    int y = yMax.toInt() + 1;
     int x = xMax.toInt() + 1;
+    int y = yMax.toInt() + 1;
 
     char tab[y][x];
 
