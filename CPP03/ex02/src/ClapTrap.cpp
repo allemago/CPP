@@ -6,11 +6,11 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:32:26 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/02 18:32:18 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:18:57 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ClapTrap.hpp"
+#include "../include/ClapTrap.hpp"
 
 ClapTrap::ClapTrap(void) : _name("robot"), _hitPoints(10), _energyPoints(10), _attackDamage(0)
 {
@@ -23,7 +23,7 @@ ClapTrap::ClapTrap(const ClapTrap& object)
 	displayStatus();
 }
 
-ClapTrap::ClapTrap(const std::string& name) : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0)
+ClapTrap::ClapTrap(const std::string name) : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0)
 {
 	displayStatus();
 }
@@ -31,6 +31,7 @@ ClapTrap::ClapTrap(const std::string& name) : _name(name), _hitPoints(10), _ener
 ClapTrap::~ClapTrap(void) 
 {
 	std::cout << std::setfill('-') << std::setw(25) << '-' << std::endl;
+	std::cout <<  GREEN << "ClapTrap " << RESET BOLD << "destructor called" << std::endl;
 	std::cout << BOLD << this->_name << RED << " was destroyed" << RESET << std::endl;
 	std::cout << std::setfill('-') << std::setw(25) << '-' << std::endl;
 	std::cout << std::endl;
@@ -50,6 +51,7 @@ ClapTrap&	ClapTrap::operator=(const ClapTrap& object)
 
 void	ClapTrap::attack(const std::string& target)
 {
+	std::cout << GREEN << "ClapTrap " << RESET BOLD << "attack called" << std::endl;
 	if (_hitPoints == 0)
 	{
 		std::cout << "Cannot attack: " << BOLD << _name << RESET << " is dead 🤖";
@@ -108,7 +110,8 @@ std::string&	ClapTrap::getName(void)
 void	ClapTrap::displayStatus(void) const
 {
 	std::cout << std::setfill('-') << std::setw(25) << '-' << std::endl;
-	std::cout << BOLD << this->_name << YELLOW << " was created" <<  RESET << std::endl;
+	std::cout << GREEN << "ClapTrap " << RESET BOLD << "constructor called" << std::endl;
+	std::cout << this->_name << YELLOW << " was created" <<  RESET << std::endl;
 	std::cout << "Hit point(s): " << this->_hitPoints << std::endl;
 	std::cout << "Energy point(s): " << this->_energyPoints << std::endl;
 	std::cout << "Damage point(s): " << this->_attackDamage << std::endl;

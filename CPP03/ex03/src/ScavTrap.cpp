@@ -6,11 +6,11 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:36:05 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/09 01:11:01 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/05 12:05:33 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScavTrap.hpp"
+#include "../include/ScavTrap.hpp"
 
 ScavTrap::ScavTrap(void)
 {
@@ -18,12 +18,10 @@ ScavTrap::ScavTrap(void)
     this->_energyPoints = 50;
     this->_attackDamage = 20;
 
-    this->_guardMode = false;
-
     displayStatus();
 }
 
-ScavTrap::ScavTrap(const std::string& name) : ClapTrap(name)
+ScavTrap::ScavTrap(const std::string name) : ClapTrap(name)
 {   
     this->_hitPoints = 100;
     this->_energyPoints = 50;
@@ -49,10 +47,7 @@ ScavTrap::~ScavTrap(void)
 ScavTrap&   ScavTrap::operator=(const ScavTrap& object)
 {
     if (this != &object)
-    {
         ClapTrap::operator=(object);
-        this->_guardMode = object._guardMode;
-    }
     displayStatus();
     return (*this);
 }
@@ -82,7 +77,8 @@ void	ScavTrap::attack(const std::string& target)
 
 void    ScavTrap::guardGate(void)
 {
-    this->_guardMode = true;
+	std::cout << CYAN "ScavTrap" RESET << " is now in Gate keeper mode" << std::endl;
+	std::cout << std::endl;
 }
 
 void    ScavTrap::displayStatus(void) const

@@ -6,13 +6,13 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:32:26 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/09 00:53:54 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:48:18 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ClapTrap.hpp"
+#include "../include/ClapTrap.hpp"
 
-ClapTrap::ClapTrap(void) : _name("robot"), _hitPoints(10), _energyPoints(10), _attackDamage(0)
+ClapTrap::ClapTrap(void) : _name("clap_robot"), _hitPoints(10), _energyPoints(10), _attackDamage(0)
 {
 	displayStatus();
 }

@@ -6,11 +6,11 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:31:22 by magrabko          #+#    #+#             */
-/*   Updated: 2025/04/08 20:09:14 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:00:14 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FragTrap.hpp"
+#include "../include/FragTrap.hpp"
 
 FragTrap::FragTrap(void)
 {
@@ -21,7 +21,7 @@ FragTrap::FragTrap(void)
     displayStatus();
 }
 
-FragTrap::FragTrap(const std::string& name) : ClapTrap(name)
+FragTrap::FragTrap(const std::string name) : ClapTrap(name)
 {   
     this->_hitPoints = 100;
     this->_energyPoints = 100;
