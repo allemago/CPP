@@ -17,6 +17,7 @@ SRC=			$(SRC_PATH)main.cpp		\
 				$(SRC_PATH)Animal.cpp	\
 				$(SRC_PATH)Cat.cpp		\
 				$(SRC_PATH)Dog.cpp		\
+				$(SRC_PATH)Brain.cpp	\
 				
 OBJ= 			$(addprefix $(OBJ_PATH), $(notdir $(SRC:.cpp=.o)))
 
