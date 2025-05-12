@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:09:44 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/07 16:50:39 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:08:00 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "ICharacter.hpp"
 # include <iostream>
 
+# define CANNOT_EQUIP_MSG "You cannot equip a Materia, inventory is full"
+
 class Character : public ICharacter
 {
 /*****************
@@ -24,8 +26,10 @@ class Character : public ICharacter
 private:
 
 	std::string	_name;
-	AMateria*	_items;
-	int			_itemCount;
+	AMateria*	_materias[4];
+	AMateria*	_droppedMaterias[20];
+	int			_materiasCount;
+	int			_droppedCount;
 
 /*****************
 *     PUBLIC     *
@@ -44,4 +48,5 @@ public:
 	virtual void				unequip(int idx);
 	virtual void				use(int idx, ICharacter& target);
 
+	void						initMaterias();
 };

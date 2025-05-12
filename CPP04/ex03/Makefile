@@ -13,10 +13,12 @@ RESET= 			\033[0m
 SRC_PATH= 		src/
 OBJ_PATH= 		obj/
 
-SRC=			$(SRC_PATH)main.cpp		\
-				$(SRC_PATH)Animal.cpp	\
-				$(SRC_PATH)Cat.cpp		\
-				$(SRC_PATH)Dog.cpp		\
+SRC=			$(SRC_PATH)main.cpp				\
+				$(SRC_PATH)AMateria.cpp			\
+				$(SRC_PATH)Character.cpp		\
+				$(SRC_PATH)Cure.cpp				\
+				$(SRC_PATH)Ice.cpp				\
+				$(SRC_PATH)MateriaSource.cpp	\
 				
 OBJ= 			$(addprefix $(OBJ_PATH), $(notdir $(SRC:.cpp=.o)))
 

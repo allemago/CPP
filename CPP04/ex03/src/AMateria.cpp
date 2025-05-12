@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:34:34 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/07 16:02:03 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:06:33 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,5 @@ const std::string&	AMateria::getType() const
 	return (this->_type);
 }
 
-void	AMateria::use(ICharacter& target) {}
+void	AMateria::use(ICharacter& target)
+{}

@@ -6,12 +6,13 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:50:05 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/07 16:32:28 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:11:32 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+# include "AMateria.hpp"
 # include <iostream>
 
 class ICharacter

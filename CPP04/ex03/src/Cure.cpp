@@ -6,15 +6,15 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:50:58 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/07 16:07:13 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:32:19 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cure.hpp"
 
-Cure::Cure() : AMateria("Cure") {}
+Cure::Cure() : AMateria("cure") {}
 
-Cure::Cure(const Cure& object) : AMateria("Cure")
+Cure::Cure(const Cure& object) : AMateria("cure")
 {
 	*this = object;
 }

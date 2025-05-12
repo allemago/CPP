@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:50:16 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/07 16:27:36 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:09:19 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ public:
 	virtual ~IMateriaSource() {}
 	
 	virtual void 		learnMateria(AMateria*) = 0;
-	virtual AMateria*	createMateria(std::string const & type) = 0;
+	virtual AMateria*	createMateria(std::string const& type) = 0;
 
 };
