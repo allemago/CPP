@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:50:05 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/12 15:11:32 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:57:05 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ class ICharacter
 public:
 
 	virtual	~ICharacter() {}
-	
+
 	virtual const std::string&	getName() const = 0;
 	virtual void 				equip(AMateria* m) = 0;
 	virtual void				unequip(int idx) = 0;

@@ -6,13 +6,13 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:34:34 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/12 15:06:33 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/13 13:50:01 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "AMateria.hpp"
 
-AMateria::AMateria() : _type("no_type") {}
+AMateria::AMateria() : _type(NULL) {}
 
 AMateria::AMateria(const std::string& type) : _type(type) {}
 
@@ -36,4 +36,6 @@ const std::string&	AMateria::getType() const
 }
 
 void	AMateria::use(ICharacter& target)
-{}
+{
+	(void)target;
+}

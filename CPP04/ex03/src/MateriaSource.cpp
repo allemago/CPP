@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:51:18 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/12 14:19:16 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:51:42 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,21 @@ MateriaSource::MateriaSource(const MateriaSource& object)
 
 MateriaSource::~MateriaSource()
 {
-	delete _learnedMateria;
+	deleteMaterias();
 }
 
 void	MateriaSource::initMaterias()
 {
 	for (int i = 0; i < 4; i ++)
-		_learnedMateria[i] = NULL;
+		_learnedMaterias[i] = NULL;
 	_materiasCount = 0;
+}
+
+void	MateriaSource::deleteMaterias()
+{
+	for (int i = 0; i < _materiasCount; i++)
+		delete _learnedMaterias[i];
+	initMaterias();
 }
 
 MateriaSource&	MateriaSource::operator=(const MateriaSource& object)
@@ -40,27 +47,34 @@ MateriaSource&	MateriaSource::operator=(const MateriaSource& object)
 	if (this != &object)
 	{
 		if (this->_materiasCount)
-			delete _learnedMateria, this->_materiasCount = 0;
-		for (int i = 0; i < object._materiasCount; i++)
-			learnMateria(object._learnedMateria[this->_materiasCount]);
+			deleteMaterias();
+		for (int i = 0; object._learnedMaterias[i] && i < object._materiasCount; i++)
+		{
+			this->_learnedMaterias[i] = object._learnedMaterias[i]->clone();
+			this->_materiasCount++;	
+		}
 	}
+	return (*this);
 }
 
 void	MateriaSource::learnMateria(AMateria* m)
 {
 	if (m && _materiasCount < 4)
-		_learnedMateria[_materiasCount++] = m->clone();
+		_learnedMaterias[_materiasCount++] = m;
 	else if (_materiasCount == 4)
 		std::cout << CANNOT_LEARN_MSG << std::endl;
 }
 
 AMateria*	MateriaSource::createMateria(const std::string& type)
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; !type.empty() && i < 4; i++)
 	{
-		if (_learnedMateria[i] && _learnedMateria[i]->getType() == type)
-			return (_learnedMateria[i]->clone());
-		i++;
+		if (_learnedMaterias[i] && _learnedMaterias[i]->getType() == type)
+			return (_learnedMaterias[i]->clone());
 	}
+	if (type == "ice" | type == "cure")
+		std::cout << NOTLEARNED_TYPE_MSG << std::endl;
+	else
+		std::cout << UNDEFINED_TYPE_MSG << std::endl;
 	return (NULL);
 }

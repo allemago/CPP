@@ -6,20 +6,19 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:50:35 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/12 14:07:34 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:46:42 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 # include "AMateria.hpp"
-# include "ICharacter.hpp"
 # include "IMateriaSource.hpp"
-# include "Ice.hpp"
-# include "Cure.hpp"
 # include <iostream>
 
-# define CANNOT_LEARN_MSG "You cannot learn a Materia, inventory is full"
+# define CANNOT_LEARN_MSG "Cannot learn a Materia, inventory is full"
+# define NOTLEARNED_TYPE_MSG "You have to learn a Materia before creating it, available: [ ice | cure ]."
+# define UNDEFINED_TYPE_MSG "Please choose a valid Materia: [ ice | cure ]."
 
 class MateriaSource : public IMateriaSource
 {
@@ -28,7 +27,7 @@ class MateriaSource : public IMateriaSource
 *****************/
 private:
 
-	AMateria*	_learnedMateria[4];
+	AMateria*	_learnedMaterias[4];
 	int			_materiasCount;
 	
 /*****************
@@ -46,4 +45,5 @@ public:
 	virtual AMateria*	createMateria(const std::string& type);
 
 	void				initMaterias();
+	void				deleteMaterias();
 };
