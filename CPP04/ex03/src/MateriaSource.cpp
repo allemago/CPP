@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:51:18 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/13 15:51:42 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:56:37 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,46 @@ MateriaSource&	MateriaSource::operator=(const MateriaSource& object)
 
 void	MateriaSource::learnMateria(AMateria* m)
 {
-	if (m && _materiasCount < 4)
+	if (!m)
+		return ;
+	std::cout << BOLD << "learnMateria called, " RESET;
+	if (_materiasCount < 4)
+	{
 		_learnedMaterias[_materiasCount++] = m;
+		printLearnedMaterias();
+	}
 	else if (_materiasCount == 4)
-		std::cout << CANNOT_LEARN_MSG << std::endl;
+		delete m, std::cout << CANNOT_LEARN_MSG << std::endl;
+
 }
 
 AMateria*	MateriaSource::createMateria(const std::string& type)
 {
+	std::cout << BOLD << "createMateria called, " RESET;
 	for (int i = 0; !type.empty() && i < 4; i++)
 	{
 		if (_learnedMaterias[i] && _learnedMaterias[i]->getType() == type)
+		{
+			std::cout << "cloning " << type << "..." << std::endl;
 			return (_learnedMaterias[i]->clone());
+		}
 	}
 	if (type == "ice" | type == "cure")
 		std::cout << NOTLEARNED_TYPE_MSG << std::endl;
 	else
 		std::cout << UNDEFINED_TYPE_MSG << std::endl;
 	return (NULL);
+}
+
+void	MateriaSource::printLearnedMaterias() const
+{
+	if (_materiasCount)
+	{
+		std::cout << "learned Materias:" << std::endl;
+		for (int i = 0; i < _materiasCount; i++)
+		{
+			if (_learnedMaterias[i])
+				std::cout << _learnedMaterias[i]->getType() << " -> address " << _learnedMaterias[i] << std::endl;
+		}
+	}
 }

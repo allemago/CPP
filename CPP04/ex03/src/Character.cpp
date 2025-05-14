@@ -6,13 +6,13 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:51:05 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/13 17:38:33 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:44:34 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Character.hpp"
 
-Character::Character() : _name("no one")
+Character::Character() : _name("NO_ONE")
 {
 	initMaterias();
 }
@@ -66,11 +66,6 @@ Character&	Character::operator=(const Character& object)
 	return (*this);
 }
 
-const AMateria*	Character::getMaterias() const
-{
-	return (*this->_materias);
-}
-
 const std::string&	Character::getName() const
 {
 	return (this->_name);
@@ -78,30 +73,46 @@ const std::string&	Character::getName() const
 
 void	Character::equip(AMateria* m)
 {
+	if (!m)
+		return ;
+	std::cout << BOLD "equip called, " RESET;
 	for (int i = 0; i < _materiasCount; i++)
 	{
-		if (_materias[i] == m)
+		if (_materias[i] && _materias[i] == m)
 		{
 			_materias[_materiasCount++] = m->clone();
 			printMaterias();
 			return ;
 		}
+		else if (!_materias[i])
+		{
+			if (_materias[i] == m)
+				_materias[i] = m->clone();
+			else
+				_materias[i] = m;
+			printMaterias();
+			return ;
+		}
 	}
-	if (m && _materiasCount < 4)
+	if (_materiasCount < 4)
+	{
 		_materias[_materiasCount++] = m;
+		printMaterias();
+	}
 	else if (_materiasCount >= 4)
-		std::cout << CANNOT_EQUIP_MSG << std::endl;
-	printMaterias();
+		delete m, std::cout << CANNOT_EQUIP_MSG << std::endl;
 }
 
 void	Character::unequip(int idx)
 {
+	std::cout << BOLD "unequip called, " RESET;
 	if (_materiasCount && idx >= 0 && idx < 4 && idx < _materiasCount)
 	{
 		if (_droppedCount < 20)
 		{
 			_droppedMaterias[_droppedCount++] = _materias[idx];
 			_materias[idx] = NULL;
+			printMaterias();
 		}
 		else
 			std::cout << CANNOT_UNEQUIP_MSG << std::endl;
@@ -109,7 +120,7 @@ void	Character::unequip(int idx)
 	else if (!_materiasCount)
 		std::cout << EMPTY_INVENT_MSG << std::endl;
 	else
-		std::cout << INDEX_UNEQUIP_MSG << _materiasCount << std::endl;
+		std::cout << INDEX_UNEQUIP_MSG << _materiasCount -1 << std::endl;
 }
 
 void	Character::use(int idx, ICharacter& target)
@@ -124,12 +135,16 @@ void	Character::printMaterias() const
 {
 	if (_materiasCount)
 	{
-		std::cout << getName() << "'s inventory:" << std::endl;
+		std::cout << getName() << " inventory:" << std::endl;
 		for (int i = 0; i < _materiasCount; i++)
 		{
-			std::cout << i << " -> " << _materias[i]->getType();
-			std::cout << " -> address " << _materias[i] << std::endl;
+			if (_materias[i])
+				std::cout << _materias[i]->getType() << " -> address " << _materias[i] << std::endl;
 		}
-		std::cout << std::endl;
 	}
+}
+
+const AMateria*	Character::getMaterias() const
+{
+	return (*this->_materias);
 }

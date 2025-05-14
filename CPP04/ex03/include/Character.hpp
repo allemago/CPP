@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:09:44 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/13 17:37:30 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:41:13 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@
 # include "ICharacter.hpp"
 # include <iostream>
 
+# define BOLD "\033[1m"
+# define RESET "\033[0m"
 # define CANNOT_EQUIP_MSG "cannot equip a Materia, inventory is full"
 # define CANNOT_UNEQUIP_MSG "unequip limit has been reach, restart the game if you want to play again!"
 # define INDEX_UNEQUIP_MSG "cannot unequip, select a valid index between 0 and "
+# define UNKNOWN_MATERIA_MSG "please choose a valid Materia: [ ice | cure ]"
 # define NO_MATERIA_MSG " has no materia available at this index *"
-# define EMPTY_INVENT_MSG "cannot unequip, inventory is empty"
+# define EMPTY_INVENT_MSG "nothing to unequip, inventory is empty"
 
 class Character : public ICharacter
 {
@@ -47,15 +50,15 @@ public:
 
 	Character&	operator=(const Character& object);
 
-	virtual const AMateria*		getMaterias() const;
 	virtual const std::string&	getName() const;
 	virtual void 				equip(AMateria* m);
 	virtual void				unequip(int idx);
 	virtual void				use(int idx, ICharacter& target);
-
+	
 	void						initMaterias();
 	void						deleteMaterias();
-
+	
 	// TEST //
 	void						printMaterias() const;
+	const AMateria*				getMaterias() const;
 };
