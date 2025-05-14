@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:50:35 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/14 11:41:20 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:55:56 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,8 @@
 
 # include "AMateria.hpp"
 # include "IMateriaSource.hpp"
+# include "utils.hpp"
 # include <iostream>
-
-# define BOLD "\033[1m"
-# define RESET "\033[0m"
-# define CANNOT_LEARN_MSG "cannot learn a Materia, inventory is full"
-# define NOTLEARNED_TYPE_MSG "you have to learn a Materia before creating it: learnMateria [ ice | cure ]"
-# define UNDEFINED_TYPE_MSG "please choose a valid Materia: [ ice | cure ]"
 
 class MateriaSource : public IMateriaSource
 {

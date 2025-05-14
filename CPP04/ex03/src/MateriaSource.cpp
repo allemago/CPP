@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:51:18 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/14 11:56:37 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:00:11 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	MateriaSource::deleteMaterias()
 {
 	for (int i = 0; i < _materiasCount; i++)
 		delete _learnedMaterias[i];
-	initMaterias();
 }
 
 MateriaSource&	MateriaSource::operator=(const MateriaSource& object)
@@ -47,7 +46,7 @@ MateriaSource&	MateriaSource::operator=(const MateriaSource& object)
 	if (this != &object)
 	{
 		if (this->_materiasCount)
-			deleteMaterias();
+			deleteMaterias(), initMaterias();
 		for (int i = 0; object._learnedMaterias[i] && i < object._materiasCount; i++)
 		{
 			this->_learnedMaterias[i] = object._learnedMaterias[i]->clone();
