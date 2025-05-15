@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:54:47 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/15 10:36:47 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:59:51 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,15 @@ Dog& Dog::operator=(const Dog& object)
 
 void    Dog::makeSound(void) const
 {
-    std::cout << GREEN << _type << RESET << " barks 🐕" << std::endl;
+    std::cout << "barks 🐕" << std::endl;
+}
+
+void    Dog::printIdea(int idx) const
+{
+    if (idx < 0 || idx >= 100 || _brain->getIdea(idx).empty())
+        makeSound();
+    else
+        std::cout << _brain->getIdea(idx) << std::endl;
 }
 
 void    Dog::displayStatus(std::string constructor) const

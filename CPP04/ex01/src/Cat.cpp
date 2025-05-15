@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:54:54 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/15 10:36:57 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:59:48 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,15 @@ Cat& Cat::operator=(const Cat& object)
 
 void    Cat::makeSound(void) const
 {
-    std::cout << PURPLE << _type << RESET << " purrs 🐈" << std::endl;
+    std::cout << "purrs 🐈" << std::endl;
+}
+
+void    Cat::printIdea(int idx) const
+{
+    if (idx < 0 || idx >= 100 || _brain->getIdea(idx).empty())
+        makeSound();
+    else
+        std::cout << _brain->getIdea(idx) << std::endl;
 }
 
 void    Cat::displayStatus(std::string constructor) const

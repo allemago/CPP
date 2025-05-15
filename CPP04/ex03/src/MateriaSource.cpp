@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:51:18 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/14 14:00:11 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:12:24 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void	MateriaSource::learnMateria(AMateria* m)
 	std::cout << BOLD << "learnMateria called, " RESET;
 	if (_materiasCount < 4)
 	{
-		_learnedMaterias[_materiasCount++] = m;
+		_learnedMaterias[_materiasCount] = m;
+		_materiasCount++;
 		printLearnedMaterias();
 	}
 	else if (_materiasCount == 4)

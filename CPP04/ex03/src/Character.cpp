@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:51:05 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/14 16:14:06 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:10:43 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ void	Character::unequip(int idx)
 		std::cout << EMPTY_MATERIA_MSG << std::endl;
 	else
 	{
-		_droppedMaterias[_droppedCount++] = _materias[idx];
+		_droppedMaterias[_droppedCount] = _materias[idx];
+		_droppedCount++;
 		_materias[idx] = NULL;
 		printMaterias();
 	}	

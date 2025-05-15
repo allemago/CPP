@@ -47,8 +47,10 @@ Animal& Animal::operator=(const Animal& object)
 
 void    Animal::makeSound(void) const
 {
-    std::cout << CYAN << _type << RESET << " makes a sound 🐖" << std::endl;
+    std::cout << "makes a sound 🐖" << std::endl;
 }
+
+void    Animal::printIdea(int idx) const { (void)idx; }
 
 const std::string&    Animal::getType(void) const
 {
