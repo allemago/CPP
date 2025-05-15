@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 09:43:14 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/07 14:00:24 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 13:11:57 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@ Brain&	Brain::operator=(const Brain& object)
 void	Brain::setIdea(const std::string& idea, const size_t i)
 {
 	if (!idea.empty() && i >= 0 && i < 100)
-	{
 		this->_ideas[i] = idea;
-		std::cout << BOLD "idea " << i << ": " << this->_ideas[i] << RESET << std::endl;
-	}
+}
+
+const std::string&	Brain::getIdea(int idx) const
+{
+	return (_ideas[idx]);
 }

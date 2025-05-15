@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:33:53 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/15 12:00:16 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 13:18:25 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ void deepCopyTest()
 }
 
 int main()
-{
-    deepCopyTest();
-    std::cout << std::endl;
-    
+{  
     Animal** tab = new Animal*[4];
     
     tab[0] = new Dog();
@@ -48,9 +45,9 @@ int main()
     tab[0]->printIdea(0);
     std::cout << std::endl;
 
-    tab[1] = new Dog("*i'm gonna eat*", 0);
+    tab[1] = new Dog("*i'm gonna eat*", 101);
     std::cout << YELLOW << tab[1]->getType() << " " << RESET;
-    tab[1]->printIdea(0);
+    tab[1]->printIdea(101);
     std::cout << std::endl;
 
     tab[2] = new Cat("*i should find a mouse for lunch*", 18);
@@ -66,6 +63,9 @@ int main()
     for (int i = 0; i < 4; i++)
         delete tab[i];
     delete[] tab;
+
+    std::cout << std::endl;
+    deepCopyTest();
     
     return (0);
 }

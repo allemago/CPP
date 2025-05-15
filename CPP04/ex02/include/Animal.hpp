@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:42:35 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/15 10:47:50 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 13:09:02 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,5 @@ public:
 
     const std::string&  getType(void) const;
     virtual void        makeSound(void) const = 0;
+    virtual void        printIdea(int idx) const;
 };

@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:54:33 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/07 13:55:35 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 13:10:11 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ public:
     Dog& operator=(const Dog& object);
 
     void    makeSound(void) const;
+    void	printIdea(int idx) const;
     void    displayStatus(std::string constructor) const;
 };

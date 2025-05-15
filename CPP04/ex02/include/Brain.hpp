@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 09:34:28 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/07 12:22:22 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 13:10:48 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,5 @@ public:
 	Brain&	operator=(const Brain& object);
 
 	void	setIdea(const std::string& idea, const size_t i);
+	const std::string&	getIdea(int idx) const;
 };
