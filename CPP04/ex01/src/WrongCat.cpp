@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:08:41 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/15 09:55:22 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 10:47:19 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ WrongCat& WrongCat::operator=(const WrongCat& object)
 {
     if (this != &object)
     {
-        WrongAnimal::operator=(object);
+        this->WrongAnimal::operator=(object);
     }
     displayStatus(" copy assignment operator called");
     return (*this);

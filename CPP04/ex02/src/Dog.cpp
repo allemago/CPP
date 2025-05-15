@@ -6,33 +6,29 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:54:47 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/07 13:55:43 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 10:53:50 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Dog.hpp"
 
-Dog::Dog(void) : Animal("Dog")
+Dog::Dog(void) : Animal("Dog"), _brain(new Brain)
 {
-    _brain = new Brain;
     displayStatus(" default constructor called");
 }
 
-Dog::Dog(const std::string name) : Animal(name)
+Dog::Dog(const std::string name) : Animal(name), _brain(new Brain)
 {
-    _brain = new Brain;
     displayStatus(" constructor with parameter called");
 }
 
-Dog::Dog(const std::string idea, const size_t i) : Animal("Dog")
+Dog::Dog(const std::string idea, const size_t i) : Animal("Dog"), _brain(new Brain(idea, i))
 {
-    _brain = new Brain(idea, i);
     displayStatus(" constructor with parameter called");
 }
 
-Dog::Dog(const Dog& object) : Animal(object._type)
+Dog::Dog(const Dog& object) : Animal(object._type), _brain(NULL)
 {
-    this->_brain = NULL;
     *this = object;
     displayStatus(" copy constructor called");
 }
@@ -47,7 +43,7 @@ Dog& Dog::operator=(const Dog& object)
 {
     if (this != &object)
     {
-        Animal::operator=(object);
+        this->Animal::operator=(object);
         if (this->_brain)
             delete this->_brain;
         this->_brain = new Brain(*object._brain);
