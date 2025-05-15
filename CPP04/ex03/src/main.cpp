@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:33:20 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/14 16:03:02 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:33:05 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	main()
 	ICharacter* me = new Character("ME_PLAYER");
 	
 	AMateria* tmp;
-	tmp = src->createMateria("");
+	tmp = src->createMateria("ice");
 	me->equip(tmp);
 	tmp = src->createMateria("ice");
 	me->equip(tmp);
@@ -110,6 +110,7 @@ int	main()
 	tmp = src->createMateria("ice");
 	me->equip(tmp);
 	me->use(2, *bob);
+	me->unequip(2);
 
 	deepCopyTest(src);
 	
