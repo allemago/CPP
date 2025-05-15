@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Animal.hpp                                         :+:      :+:    :+:   */
+/*   WrongAnimal.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/27 10:42:35 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/15 10:30:16 by magrabko         ###   ########.fr       */
+/*   Created: 2025/05/15 09:49:46 by magrabko          #+#    #+#             */
+/*   Updated: 2025/05/15 09:50:21 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,11 @@
 # define BOLD "\033[1m"
 # define RED "\033[1;31m"
 # define YELLOW "\033[1;93m"
-# define GREEN "\033[1;32m"
 # define CYAN "\033[1;36m"
-# define BLUE "\033[1;34m"
 # define PURPLE "\033[1;95m"
 # define RESET "\033[0m"
 
-class Animal
+class WrongAnimal
 {
 /*****************
 *   PROTECTED    *
@@ -38,13 +36,13 @@ protected:
 *****************/
 public:
     
-    Animal(void);
-    Animal(const std::string name);
-    Animal(const Animal& object);
-    virtual ~Animal(void);
-    
-    Animal& operator=(const Animal& object);
+    WrongAnimal(void);
+    WrongAnimal(const std::string name);
+    WrongAnimal(const WrongAnimal& object);
+    virtual ~WrongAnimal(void);
+
+    WrongAnimal& operator=(const WrongAnimal& object);
 
     const std::string&  getType(void) const;
-    virtual void        makeSound(void) const;
+    void                makeSound(void) const;
 };

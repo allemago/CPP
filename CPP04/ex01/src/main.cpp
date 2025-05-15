@@ -6,14 +6,15 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:33:53 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/07 14:05:35 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 10:03:30 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Animal.hpp"
 #include "../include/Cat.hpp"
 #include "../include/Dog.hpp"
-#include "../include/Wrong.hpp"
+#include "../include/WrongAnimal.hpp"
+#include "../include/WrongCat.hpp"
 #include "../include/Brain.hpp"
 
 void deepCopyTest()

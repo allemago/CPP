@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 10:54:47 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/05 13:46:14 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 10:22:16 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ Dog& Dog::operator=(const Dog& object)
 {
     if (this != &object)
     {
-        Animal::operator=(object);
+        this->Animal::operator=(object);
     }
     displayStatus(" copy assignment operator called");
     return (*this);

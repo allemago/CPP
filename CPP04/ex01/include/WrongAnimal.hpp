@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Wrong.hpp                                          :+:      :+:    :+:   */
+/*   WrongAnimal.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:46:58 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/05 15:29:24 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 09:53:46 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,4 @@ public:
 
     const std::string&  getType(void) const;
     void                makeSound(void) const;
-};
-
-class WrongCat : public WrongAnimal
-{
-/*****************
-*     PUBLIC     *
-*****************/
-public:
-
-    WrongCat(void);
-    WrongCat(const std::string name);
-    WrongCat(const WrongCat& object);
-    ~WrongCat(void);
-
-    WrongCat& operator=(const WrongCat& object);
-
-    void    makeSound(void) const;
-    void    displayStatus(std::string constructor) const;
 };

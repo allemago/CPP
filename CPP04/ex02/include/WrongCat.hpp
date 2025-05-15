@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Wrong.hpp                                          :+:      :+:    :+:   */
+/*   WrongCat.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:46:58 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/05 15:29:24 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 09:59:49 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+# include "WrongAnimal.hpp"
 # include <iostream>
 # include <iomanip>
 
@@ -21,31 +22,6 @@
 # define CYAN "\033[1;36m"
 # define PURPLE "\033[1;95m"
 # define RESET "\033[0m"
-
-class WrongAnimal
-{
-/*****************
-*   PROTECTED    *
-*****************/
-protected:
-    
-    std::string _type;
-    
-/*****************
-*     PUBLIC     *
-*****************/
-public:
-    
-    WrongAnimal(void);
-    WrongAnimal(const std::string name);
-    WrongAnimal(const WrongAnimal& object);
-    virtual ~WrongAnimal(void);
-
-    WrongAnimal& operator=(const WrongAnimal& object);
-
-    const std::string&  getType(void) const;
-    void                makeSound(void) const;
-};
 
 class WrongCat : public WrongAnimal
 {

@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:49:53 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/12 15:13:30 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 09:16:54 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,4 @@ public:
 
 	virtual AMateria*	clone() const;
 	virtual void		use(ICharacter& target);
-
 };
