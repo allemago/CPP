@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:19:57 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/26 11:06:56 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/26 14:55:36 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,12 @@ Bureaucrat&	Bureaucrat::decrementGrade()
 {
 	(_grade + 1) > 150 ? throw GradeTooLowException() : _grade++;
 	return (*this);
+}
+
+void	Bureaucrat::signForm(Form& form)
+{
+	form.beSigned(*this);
+	if (form.getIsSigned())
 }
 
 const char* Bureaucrat::GradeTooHighException::what() const throw()
