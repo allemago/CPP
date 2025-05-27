@@ -14,6 +14,8 @@ SRC_PATH= 		src/
 OBJ_PATH= 		obj/
 
 SRC=			$(SRC_PATH)main.cpp			\
+				$(SRC_PATH)Bureaucrat.cpp	\
+				$(SRC_PATH)Form.cpp			\
 
 				
 OBJ= 			$(addprefix $(OBJ_PATH), $(notdir $(SRC:.cpp=.o)))

@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:20:00 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/26 14:54:19 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:13:39 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define GREEN "\e[1;32m"
 # define RESET "\033[0m"
 
+class Form;
+
 class Bureaucrat
 {
 /*****************
@@ -27,7 +29,6 @@ private:
 
     std::string	_name;
 	int			_grade;
-	Form		_form;
 
 /*****************
 *     PUBLIC     *

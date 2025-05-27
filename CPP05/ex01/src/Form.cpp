@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:19:57 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/27 13:57:46 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:09:08 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ Form::~Form() {}
 
 Form&	Form::operator=(const Form& object)
 {
+	(void)object;
 	std::cout << ERR_ASSIGN_MSG << std::endl;
 	return (*this);
 }
 
 std::ostream&	operator<<(std::ostream& os, const Form& object)
 {
-    os << object.getName() << " " << object.getIsSigned() ? " form is signed.\n" : " is not signed.\n";
+    os << object.getName() << " " << ((object.getIsSigned() == true) ? " form is signed.\n" : " is not signed.\n");
 	os << "Required grade to sign is " << object.getMinGradeToSign() << ".\n";
 	os << "Required grade to execute is " << object.getMinGradeToExecute() << "." << std::endl;
     return (os);
@@ -51,7 +52,7 @@ const std::string& Form::getName() const
 	return (this->_name);
 }
 
-const bool	Form::getIsSigned() const
+bool	Form::getIsSigned() const
 {
 	return (this->_isSigned);
 }

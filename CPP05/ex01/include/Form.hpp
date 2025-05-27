@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 10:58:50 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/26 12:18:35 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:12:19 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define GREEN "\e[1;32m"
 # define RESET "\033[0m"
 # define ERR_ASSIGN_MSG "Assignment operator called on object with const members: assignment is not allowed."
+
+class Bureaucrat;
 
 class Form
 {
@@ -44,7 +46,7 @@ public:
 	Form&	operator=(const Form& object);
 
 	const std::string&	getName() const;
-	const bool			getIsSigned() const;
+	bool				getIsSigned() const;
 	const int&			getMinGradeToSign() const;
 	const int&			getMinGradeToExecute() const;
 	void				beSigned(const Bureaucrat& object);
