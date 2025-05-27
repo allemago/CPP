@@ -1,4 +1,4 @@
-NAME=			intern
+NAME=			form
 
 CXX=			c++
 
@@ -14,6 +14,8 @@ SRC_PATH= 		src/
 OBJ_PATH= 		obj/
 
 SRC=			$(SRC_PATH)main.cpp			\
+				$(SRC_PATH)Bureaucrat.cpp	\
+				$(SRC_PATH)Form.cpp			\
 
 				
 OBJ= 			$(addprefix $(OBJ_PATH), $(notdir $(SRC:.cpp=.o)))
@@ -35,7 +37,7 @@ $(NAME): $(OBJ)
 	@printf "   ░█▀▀░▄▀▄░█░█░░▀▄\n"
 	@printf "   ░▀▀▀░▀░▀░▀▀▀░▀▀▀\n"
 	@printf "\n\n${RESET}"
-	@printf "   \033[1musage: ./intern\033[0m"
+	@printf "   \033[1musage: ./game\033[0m"
 	@printf "\n\n"
 
 clean:

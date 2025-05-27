@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   RobotomyRequestForm.hpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 17:02:08 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/15 17:02:26 by magrabko         ###   ########.fr       */
+/*   Created: 2025/05/27 19:16:05 by magrabko          #+#    #+#             */
+/*   Updated: 2025/05/27 19:27:36 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main()
+#pragma once
+
+# include "AForm.hpp"
+# include <iostream>
+
+class RobotomyRequestForm : public AForm
 {
-	
-	
-	return (0);
-}
+/*****************
+*     PUBLIC     *
+*****************/
+public:
+
+};
