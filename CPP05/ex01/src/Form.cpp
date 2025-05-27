@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:19:57 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/27 14:09:08 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:00:25 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,18 @@ Form::Form(const std::string& name, const int& minGradeToSign, const int& minGra
 			:	_name(name),
 				_isSigned(false),
 				_minGradeToSign(minGradeToSign),
-				_minGradeToExecute(minGradeToExecute) {}
+				_minGradeToExecute(minGradeToExecute)
+{
+	if (minGradeToSign < 1)
+		std::cerr << "Minimum required to sign form: ", throw GradeTooHighException();
+	else if (minGradeToSign > 150)
+		std::cerr << "Minimum required to sign form: ", throw GradeTooLowException();
+
+	if (minGradeToExecute < 1)
+		std::cerr << "Minimum required to execute form: ", throw GradeTooHighException();
+	else if (minGradeToExecute > 150)
+		std::cerr << "Minimum required to execute form: ", throw GradeTooLowException();
+}
 
 Form::Form(const Form& object)
 			:	_name(object.getName()),
