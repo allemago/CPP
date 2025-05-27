@@ -6,14 +6,14 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:19:57 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/26 12:18:50 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/27 13:57:46 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Form.hpp"
 
 Form::Form()
-			:	_name("Karen"),
+			:	_name("contract"),
 				_isSigned(false),
 				_minGradeToSign(1),
 				_minGradeToExecute(1) {}
