@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:16:05 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/27 19:27:36 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/28 10:54:13 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,14 @@ class RobotomyRequestForm : public AForm
 *****************/
 public:
 
+//	==================== Canonical Form =========================
+
+	RobotomyRequestForm();
+	RobotomyRequestForm(const RobotomyRequestForm&);
+	~RobotomyRequestForm();
+	RobotomyRequestForm&	operator=(const RobotomyRequestForm&);
+
+//	==================== Public Methods =========================
+
+	virtual void	execute(const Bureaucrat&) const;
 };

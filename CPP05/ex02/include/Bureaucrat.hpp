@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:20:00 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/27 19:23:26 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/28 10:53:51 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define GREEN "\e[1;32m"
 # define RESET "\033[0m"
 
-class Form;
+class AForm;
 
 class Bureaucrat
 {
@@ -35,18 +35,30 @@ private:
 *****************/
 public:
 
-	Bureaucrat();
-	Bureaucrat(const std::string& name, int grade);
-	Bureaucrat(const Bureaucrat& object);
-	~Bureaucrat();
+//	==================== Canonical Form =========================
 
-	Bureaucrat&	operator=(const Bureaucrat& object);
+	Bureaucrat();
+	Bureaucrat(const Bureaucrat&);
+	~Bureaucrat();
+	Bureaucrat&	operator=(const Bureaucrat&);
+	
+//	==================== Custom Constructors ====================
+
+	Bureaucrat(const std::string&, int);
+
+//	==================== Getters / Setters ======================
 
 	const std::string&	getName() const;
 	const int&			getGrade() const;
+
+//	==================== Public Methods =========================
+
 	Bureaucrat&			incrementGrade(); // _grade--
 	Bureaucrat&			decrementGrade(); // _grade++
-	void				signForm(Form& form);
+	void				signForm(AForm&);
+	void				executeForm(const AForm&) const;
+
+//	==================== Exceptions =============================
 
 	class GradeTooHighException : public std::exception
 	{
@@ -60,4 +72,4 @@ public:
 	};
 };
 
-std::ostream&   operator<<(std::ostream& os, const Bureaucrat& object);
+std::ostream&   operator<<(std::ostream&, const Bureaucrat&);

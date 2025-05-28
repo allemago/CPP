@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 10:58:50 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/27 19:32:09 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/28 10:53:59 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ class Bureaucrat;
 
 class AForm
 {
-/*****************
-*    PRIVATE     *
+/****************
+*    PRIVATE    *
 *****************/
 private:
 
@@ -33,24 +33,39 @@ private:
 	const int			_minGradeToSign;
 	const int			_minGradeToExecute;
 
-/*****************
-*     PUBLIC     *
+/****************
+*    PUBLIC     *
 *****************/
 public:
 
-	AForm();
-	AForm(const std::string& name, const int& minGradeToSign, const int& minGradeToExecute);
-	AForm(const AForm& object);
-	~AForm();
+//	==================== Canonical Form =========================
 
-	AForm&	operator=(const AForm& object);
+	AForm();
+	AForm(const AForm&);
+	~AForm();
+	AForm&	operator=(const AForm&);
+	
+//	==================== Custom Constructors ====================
+
+	AForm(const std::string&, const int&, const int&);
+
+//	==================== Getters / Setters ======================
 
 	const std::string&	getName() const;
 	bool				getIsSigned() const;
 	const int&			getMinGradeToSign() const;
 	const int&			getMinGradeToExecute() const;
-	void				beSigned(const Bureaucrat& object);
 
+//	==================== Public Methods =========================
+
+	void				beSigned(const Bureaucrat&);
+	
+//	==================== Pure Virtual Methods ===================
+
+	virtual void		execute(const Bureaucrat&) const = 0;
+
+//	==================== Exceptions =============================
+	
 	class GradeTooHighException : public std::exception
 	{
 		public:
@@ -63,4 +78,4 @@ public:
 	};
 };
 
-std::ostream&   operator<<(std::ostream& os, const AForm& object);
+std::ostream&   operator<<(std::ostream&, const AForm&);
