@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:15:10 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/28 11:41:05 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:18:05 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,12 @@ void	RobotomyRequestForm::execute(const Bureaucrat& executor) const
 {
 	if (executor.getGrade() <= getMinGradeToExecute())
 	{
+		if (std::rand() % 2 == 0)
+			std::cout << "Bzzzz... " << executor.getName() << ROBOTOMY_SUCCESS << std::endl;
+		else
+			std::cerr << ROBOTOMY_FAILED << executor.getName() << std::endl;
 		
 	}
 	else
-		std::cerr << executor.getName() << " couldn't be robotomized because: ", throw GradeTooLowException();
+		std::cerr << ROBOTOMY_FAILED << executor.getName() << ": ", throw GradeTooLowException();
 }
