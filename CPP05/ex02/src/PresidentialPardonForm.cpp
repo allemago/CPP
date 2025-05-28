@@ -6,14 +6,14 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:15:08 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/28 15:24:07 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:25:12 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/PresidentialPardonForm.hpp"
 
 PresidentialPardonForm::PresidentialPardonForm()
-                       : AForm() {}
+                       : AForm("PresidentialPardon", 25, 5) {}
 
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm& object)
 {}
