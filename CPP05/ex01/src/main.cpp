@@ -6,11 +6,12 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:02:08 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/27 19:06:17 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/29 11:21:14 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Bureaucrat.hpp"
+#include "../include/Form.hpp"
 
 int	main()
 {

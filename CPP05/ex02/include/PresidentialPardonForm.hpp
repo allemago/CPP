@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:16:03 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/28 15:20:24 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/29 11:46:37 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,18 @@
 # include "AForm.hpp"
 # include <iostream>
 
-# define PARDON " has been pardoned by Zaphod Beeblebrox."
-# define NO_PARDON " couldn't be pardoned because: "
+# define PARDONED " has been pardoned by Zaphod Beeblebrox."
+# define NOT_PARDONED " couldn't be pardoned because: "
 
 class PresidentialPardonForm : public AForm
 {
+/*****************
+*     PRIVATE    *
+*****************/
+private:
+
+    std::string _target;
+
 /*****************
 *     PUBLIC     *
 *****************/

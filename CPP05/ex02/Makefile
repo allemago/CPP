@@ -13,8 +13,12 @@ RESET= 			\033[0m
 SRC_PATH= 		src/
 OBJ_PATH= 		obj/
 
-SRC=			$(SRC_PATH)main.cpp			\
-				$(SRC_PATH)Bureaucrat.cpp	\
+SRC=			$(SRC_PATH)main.cpp						\
+				$(SRC_PATH)AForm.cpp					\
+				$(SRC_PATH)Bureaucrat.cpp				\
+				$(SRC_PATH)PresidentialPardonForm.cpp	\
+				$(SRC_PATH)RobotomyRequestForm.cpp		\
+				$(SRC_PATH)ShrubberyCreationForm.cpp	\
 
 				
 OBJ= 			$(addprefix $(OBJ_PATH), $(notdir $(SRC:.cpp=.o)))

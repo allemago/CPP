@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:16:07 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/28 15:10:25 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/29 11:53:12 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include <fstream>
 
 # define ERR_OPEN_FILE "error opening the file"
-# define JOB_NOT_DONE " couldn't create a file because: "
+# define PLANT_TREES "Trees has been planted in "
+# define TREES_NOT_PLANTED " couldn't plant trees because: "
 # define ASCII_TREES "               ,@@@@@@@,						\n" \
                     "       ,,,.   ,@@@@@@/@@,  .oo8888o.			\n" \
                     "    ,&&&%&%&&%,@@@@@/@@@@@@,8888\\88/8o		\n" \
@@ -32,6 +33,13 @@
 
 class ShrubberyCreationForm : public AForm
 {
+/*****************
+*     PRIVATE    *
+*****************/
+private:
+
+    std::string     _target;
+
 /*****************
 *     PUBLIC     *
 *****************/

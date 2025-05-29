@@ -6,17 +6,17 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:15:10 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/28 15:18:05 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/29 12:35:32 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/RobotomyRequestForm.hpp"
 
 RobotomyRequestForm::RobotomyRequestForm()
-                    : AForm("RobotomyRequest", 72, 45) {}
+                    : AForm("RobotomyRequestForm", 72, 45), _target("Zelda") {}
 
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& object)
-                    : AForm(object) {}
+                    : AForm(object), _target(object._target) {}
 
 RobotomyRequestForm::~RobotomyRequestForm() {}
 
@@ -30,12 +30,16 @@ void	RobotomyRequestForm::execute(const Bureaucrat& executor) const
 {
 	if (executor.getGrade() <= getMinGradeToExecute())
 	{
-		if (std::rand() % 2 == 0)
-			std::cout << "Bzzzz... " << executor.getName() << ROBOTOMY_SUCCESS << std::endl;
+		if ((std::rand() / (double)RAND_MAX) < 0.5)
+			std::cout << "Bzzzz... " << _target << ROBOTOMY_SUCCESS << std::endl;
 		else
-			std::cerr << ROBOTOMY_FAILED << executor.getName() << std::endl;
+			std::cout << ROBOTOMY_FAILED << _target << std::endl;
 		
 	}
 	else
-		std::cerr << ROBOTOMY_FAILED << executor.getName() << ": ", throw GradeTooLowException();
+	{
+		std::cerr << executor.getName() << " couldn't robotomized ";
+		std::cerr << _target << " because: ", throw GradeTooLowException();
+		
+	}
 }

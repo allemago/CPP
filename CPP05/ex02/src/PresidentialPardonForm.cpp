@@ -6,17 +6,17 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:15:08 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/28 15:25:12 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/29 11:58:27 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/PresidentialPardonForm.hpp"
 
 PresidentialPardonForm::PresidentialPardonForm()
-                       : AForm("PresidentialPardon", 25, 5) {}
+                       : AForm("PresidentialPardonForm", 25, 5), _target("Link") {}
 
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm& object)
-{}
+                       : AForm(object), _target(object._target) {}
 
 PresidentialPardonForm::~PresidentialPardonForm() {}
 
@@ -30,8 +30,8 @@ void	PresidentialPardonForm::execute(const Bureaucrat& executor) const
 {
 	if (executor.getGrade() <= getMinGradeToExecute())
 	{
-		std::cout << executor.getName() << PARDON << std::endl;
+		std::cout << _target << PARDONED << std::endl;
 	}
 	else
-		std::cerr << executor.getName() << NO_PARDON, throw GradeTooLowException();
+		std::cerr << _target << NOT_PARDONED, throw GradeTooLowException();
 }

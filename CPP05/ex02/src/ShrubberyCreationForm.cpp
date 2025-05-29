@@ -6,17 +6,17 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:15:13 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/28 15:10:39 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/29 12:23:33 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ShrubberyCreationForm.hpp"
 
 ShrubberyCreationForm::ShrubberyCreationForm()
-                      : AForm("ShrubberyCreation", 145, 137) {}
+                      : AForm("ShrubberyCreationForm", 145, 137), _target("Cocoyashi") {}
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& object)
-                      : AForm(object) {}
+                      : AForm(object), _target(object._target) {}
 
 ShrubberyCreationForm::~ShrubberyCreationForm() {}
 
@@ -30,12 +30,14 @@ void	ShrubberyCreationForm::execute(const Bureaucrat& executor) const
 {
 	if (executor.getGrade() <= getMinGradeToExecute())
 	{
-		std::ofstream file(executor.getName() + "_shrubbery");
+		std::string	fileName = executor.getName() + "_shrubbery";
+		std::ofstream file(fileName.c_str());
 		if (!file)
-			std::cerr << executor.getName() + "_shrubbery: " << ERR_OPEN_FILE << std::endl;
+			std::cerr << fileName << ERR_OPEN_FILE << std::endl;
 		else
-			file << ASCII_TREES;
+			file << ASCII_TREES, std::cout <<  PLANT_TREES << _target << std::endl;
+		file.close();
 	}
 	else
-		std::cerr << executor.getName() << JOB_NOT_DONE, throw GradeTooLowException();
+		std::cerr << executor.getName() << TREES_NOT_PLANTED, throw GradeTooLowException();
 }
