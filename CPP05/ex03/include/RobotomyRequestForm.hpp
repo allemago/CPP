@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   PresidentialPardonForm.hpp                         :+:      :+:    :+:   */
+/*   RobotomyRequestForm.hpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 19:16:03 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 13:42:43 by magrabko         ###   ########.fr       */
+/*   Created: 2025/05/27 19:16:05 by magrabko          #+#    #+#             */
+/*   Updated: 2025/05/29 14:32:49 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 # include "AForm.hpp"
 # include <iostream>
+# include <cstdlib>
+# include <ctime>
 
-# define PARDONED " has been pardoned by Zaphod Beeblebrox."
-# define NOT_PARDONED " couldn't be pardoned by "
+# define ROBOTOMY_SUCCESS " has been robotomized successfully!"
+# define ROBOTOMY_FAILED "Makes some drilling noises... robotomy failed on "
 
-class PresidentialPardonForm : public AForm
+class RobotomyRequestForm : public AForm
 {
 /*****************
 *     PRIVATE    *
@@ -34,10 +36,14 @@ public:
 
 //	==================== Canonical Form =========================
 
-	PresidentialPardonForm();
-	PresidentialPardonForm(const PresidentialPardonForm&);
-	~PresidentialPardonForm();
-	PresidentialPardonForm&	operator=(const PresidentialPardonForm&);
+	RobotomyRequestForm();
+	RobotomyRequestForm(const RobotomyRequestForm&);
+	~RobotomyRequestForm();
+	RobotomyRequestForm&	operator=(const RobotomyRequestForm&);
+
+//	==================== Custom Constructors ====================
+	
+	RobotomyRequestForm(const std::string&);
 
 //	==================== Public Methods =========================
 

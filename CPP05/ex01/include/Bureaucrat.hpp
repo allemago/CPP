@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:20:00 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/28 10:12:09 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:12:39 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,29 @@ private:
 *     PUBLIC     *
 *****************/
 public:
+//	==================== Canonical Form =========================
 
 	Bureaucrat();
-	Bureaucrat(const std::string& name, int grade);
-	Bureaucrat(const Bureaucrat& object);
+	Bureaucrat(const Bureaucrat&);
 	~Bureaucrat();
+	Bureaucrat&	operator=(const Bureaucrat&);
 
-	Bureaucrat&	operator=(const Bureaucrat& object);
+//	==================== Custom Constructors ====================
+
+	Bureaucrat(const std::string&, int);
+
+//	==================== Getters / Setters =======================
 
 	const std::string&	getName() const;
 	const int&			getGrade() const;
+
+//	==================== Public Methods =========================
+	
 	Bureaucrat&			incrementGrade(); // _grade--
 	Bureaucrat&			decrementGrade(); // _grade++
-	void				signForm(Form& form);
+	void				signForm(Form&);
+
+//	==================== Exceptions =============================
 
 	class GradeTooHighException : public std::exception
 	{
@@ -60,4 +70,4 @@ public:
 	};
 };
 
-std::ostream&   operator<<(std::ostream& os, const Bureaucrat& object);
+std::ostream&   operator<<(std::ostream&, const Bureaucrat&);

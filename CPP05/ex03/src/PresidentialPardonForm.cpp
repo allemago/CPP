@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:15:08 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 13:43:23 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:33:20 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 PresidentialPardonForm::PresidentialPardonForm()
                        : AForm("PresidentialPardonForm", 25, 5), _target("Link") {}
+
+PresidentialPardonForm::PresidentialPardonForm(const std::string& target)
+                       : AForm("PresidentialPardonForm", 25, 5), _target(target) {}
 
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm& object)
                        : AForm(object), _target(object._target) {}

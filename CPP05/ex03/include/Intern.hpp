@@ -1,45 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   PresidentialPardonForm.hpp                         :+:      :+:    :+:   */
+/*   Intern.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 19:16:03 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 13:42:43 by magrabko         ###   ########.fr       */
+/*   Created: 2025/05/29 13:56:12 by magrabko          #+#    #+#             */
+/*   Updated: 2025/05/29 14:29:20 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-# include "AForm.hpp"
 # include <iostream>
+# include "PresidentialPardonForm.hpp"
+# include "RobotomyRequestForm.hpp"
+# include "ShrubberyCreationForm.hpp"
 
-# define PARDONED " has been pardoned by Zaphod Beeblebrox."
-# define NOT_PARDONED " couldn't be pardoned by "
+class AForm;
 
-class PresidentialPardonForm : public AForm
+class Intern
 {
-/*****************
-*     PRIVATE    *
-*****************/
-private:
-
-    std::string _target;
-
 /*****************
 *     PUBLIC     *
 *****************/
 public:
-
 //	==================== Canonical Form =========================
 
-	PresidentialPardonForm();
-	PresidentialPardonForm(const PresidentialPardonForm&);
-	~PresidentialPardonForm();
-	PresidentialPardonForm&	operator=(const PresidentialPardonForm&);
+	Intern();
+	Intern(const Intern&);
+	~Intern();
+	Intern&	operator=(const Intern&);
 
 //	==================== Public Methods =========================
 
-	virtual void	execute(const Bureaucrat&) const;
+	AForm*	makeForm(const std::string& name, const std::string& target);
+	
 };

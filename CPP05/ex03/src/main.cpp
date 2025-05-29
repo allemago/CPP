@@ -6,12 +6,13 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:02:08 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 13:50:39 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:00:29 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Bureaucrat.hpp"
 #include "../include/AForm.hpp"
+#include "../include/Intern.hpp"
 #include "../include/PresidentialPardonForm.hpp"
 #include "../include/RobotomyRequestForm.hpp"
 #include "../include/ShrubberyCreationForm.hpp"
@@ -22,14 +23,11 @@ int	main()
 		std::cout << GREEN "TEST 1" RESET << std::endl;
 		try
 		{
-			Bureaucrat a("Karen", 1);
-			std::cout << a.getName() << ", bureaucrat grade " << a << "." << std::endl;
-			ShrubberyCreationForm form;
-			a.executeForm(form);
-			for (int i = 0; i < 137; i++)
-				a.decrementGrade();
-			std::cout << a.getName() << ", bureaucrat grade " << a << "." << std::endl;
-			a.executeForm(form);
+			Intern a;
+			AForm* rrf;
+
+			rrf = a.makeForm("presidential pardon", "Zelda");
+
 		}
 		catch (std::exception& e)
 		{
@@ -41,15 +39,11 @@ int	main()
 		std::cout << GREEN "TEST 2" RESET << std::endl;
 		try
 		{
-			std::srand(std::time(NULL));
-			Bureaucrat a("Karen", 1);
-			std::cout << a.getName() << ", bureaucrat grade " << a << "." << std::endl;
-			RobotomyRequestForm form;
-			a.executeForm(form);
-			for (int i = 0; i < 45; i++)
-				a.decrementGrade();
-			std::cout << a.getName() << ", bureaucrat grade " << a << "." << std::endl;
-			a.executeForm(form);
+			Intern a;
+			AForm* rrf;
+
+			rrf = a.makeForm("robotomy request", "Link");
+
 			
 		}
 		catch (std::exception& e)
@@ -62,14 +56,25 @@ int	main()
 		std::cout << GREEN "TEST 3" RESET << std::endl;
 		try
 		{
-			Bureaucrat a("Karen", 1);
-			std::cout << a.getName() << ", bureaucrat grade " << a << "." << std::endl;
-			PresidentialPardonForm form;
-			a.executeForm(form);
-			for (int i = 0; i < 5; i++)
-				a.decrementGrade();
-			std::cout << a.getName() << ", bureaucrat grade " << a << "." << std::endl;
-			a.executeForm(form);
+			Intern a;
+			AForm* rrf;
+
+			rrf = a.makeForm("shrubbery creation", "Cocoyashi");
+		}
+		catch (std::exception& e)
+		{
+			std::cout << e.what() << std::endl;
+		}
+		std::cout << std::endl;
+	}
+		{	
+		std::cout << GREEN "TEST 4" RESET << std::endl;
+		try
+		{
+			Intern a;
+			AForm* rrf;
+
+			rrf = a.makeForm("unknown request", "Random");
 		}
 		catch (std::exception& e)
 		{

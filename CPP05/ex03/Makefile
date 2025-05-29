@@ -13,10 +13,13 @@ RESET= 			\033[0m
 SRC_PATH= 		src/
 OBJ_PATH= 		obj/
 
-SRC=			$(SRC_PATH)main.cpp			\
-				$(SRC_PATH)Bureaucrat.cpp	\
-				$(SRC_PATH)Form.cpp			\
-
+SRC=			$(SRC_PATH)main.cpp						\
+				$(SRC_PATH)AForm.cpp					\
+				$(SRC_PATH)Bureaucrat.cpp				\
+				$(SRC_PATH)Intern.cpp					\
+				$(SRC_PATH)PresidentialPardonForm.cpp	\
+				$(SRC_PATH)RobotomyRequestForm.cpp		\
+				$(SRC_PATH)ShrubberyCreationForm.cpp	\
 				
 OBJ= 			$(addprefix $(OBJ_PATH), $(notdir $(SRC:.cpp=.o)))
 
@@ -37,7 +40,7 @@ $(NAME): $(OBJ)
 	@printf "   ░█▀▀░▄▀▄░█░█░░▀▄\n"
 	@printf "   ░▀▀▀░▀░▀░▀▀▀░▀▀▀\n"
 	@printf "\n\n${RESET}"
-	@printf "   \033[1musage: ./game\033[0m"
+	@printf "   \033[1musage: ./form\033[0m"
 	@printf "\n\n"
 
 clean:

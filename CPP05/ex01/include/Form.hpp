@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 10:58:50 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/27 14:12:19 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:13:55 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,29 @@ private:
 *     PUBLIC     *
 *****************/
 public:
+//	==================== Canonical Form =========================
 
 	Form();
-	Form(const std::string& name, const int& minGradeToSign, const int& minGradeToExecute);
-	Form(const Form& object);
+	Form(const Form&);
 	~Form();
+	Form&	operator=(const Form&);
 
-	Form&	operator=(const Form& object);
+//	==================== Custom Constructors ====================
+
+	Form(const std::string&, const int&, const int&);
+
+//	==================== Getters / Setters ======================
 
 	const std::string&	getName() const;
 	bool				getIsSigned() const;
 	const int&			getMinGradeToSign() const;
 	const int&			getMinGradeToExecute() const;
-	void				beSigned(const Bureaucrat& object);
+	
+//	==================== Public Methods =========================
+
+	void				beSigned(const Bureaucrat&);
+
+//	==================== Exceptions =============================
 
 	class GradeTooHighException : public std::exception
 	{
@@ -63,4 +73,4 @@ public:
 	};
 };
 
-std::ostream&   operator<<(std::ostream& os, const Form& object);
+std::ostream&   operator<<(std::ostream&, const Form&);

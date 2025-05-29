@@ -1,59 +1,71 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
+/*   AForm.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 17:20:00 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 15:10:44 by magrabko         ###   ########.fr       */
+/*   Created: 2025/05/26 10:58:50 by magrabko          #+#    #+#             */
+/*   Updated: 2025/05/28 10:53:59 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+# include "Bureaucrat.hpp"
 # include <iostream>
 
 # define GREEN "\e[1;32m"
 # define RESET "\033[0m"
+# define ERR_ASSIGN_MSG "Assignment operator called on object with const members: assignment is not allowed."
 
-class Bureaucrat
+class Bureaucrat;
+
+class AForm
 {
-/*****************
-*    PRIVATE     *
+/****************
+*    PRIVATE    *
 *****************/
 private:
 
-    std::string	_name;
-	int			_grade; // 1 (highest) to 150 (lowest)
+    const std::string	_name;
+	bool				_isSigned;
+	const int			_minGradeToSign;
+	const int			_minGradeToExecute;
 
-/*****************
-*     PUBLIC     *
+/****************
+*    PUBLIC     *
 *****************/
 public:
+
 //	==================== Canonical Form =========================
 
-	Bureaucrat();
-	Bureaucrat(const Bureaucrat&);
-	~Bureaucrat();
-	Bureaucrat&	operator=(const Bureaucrat&);
+	AForm();
+	AForm(const AForm&);
+	~AForm();
+	AForm&	operator=(const AForm&);
 	
 //	==================== Custom Constructors ====================
 
-	Bureaucrat(const std::string&, int);
-	
+	AForm(const std::string&, const int&, const int&);
+
 //	==================== Getters / Setters ======================
 
 	const std::string&	getName() const;
-	const int&			getGrade() const;
+	bool				getIsSigned() const;
+	const int&			getMinGradeToSign() const;
+	const int&			getMinGradeToExecute() const;
 
 //	==================== Public Methods =========================
 
-	Bureaucrat&			incrementGrade(); // _grade--
-	Bureaucrat&			decrementGrade(); // _grade++
+	void				beSigned(const Bureaucrat&);
 	
-//	==================== Exceptions =============================
+//	==================== Pure Virtual Methods ===================
 
+	virtual void		execute(const Bureaucrat&) const = 0;
+
+//	==================== Exceptions =============================
+	
 	class GradeTooHighException : public std::exception
 	{
 		public:
@@ -66,4 +78,4 @@ public:
 	};
 };
 
-std::ostream&   operator<<(std::ostream&, const Bureaucrat&);
+std::ostream&   operator<<(std::ostream&, const AForm&);
