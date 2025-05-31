@@ -30,17 +30,17 @@ ScalarConverter&	ScalarConverter::operator=(const ScalarConverter& object)
 	return (*this);
 }
 
-static char	isInSet(const std::string& literal, const std::string& set)
+static bool	isInSet(const std::string& literal, const std::string& set)
 {
 	for (int i = 0; literal[i]; i++)
 	{
 		for (int j = 0; set[j]; j++)
 		{
 			if (literal[i] == set[j])
-				return (set[j]);
+				return (true);
 		}
 	}
-	return (0);
+	return (false);
 }
 
 static e_Types	defineType(const std::string& literal)
