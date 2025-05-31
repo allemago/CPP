@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 13:58:36 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/31 21:50:24 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/31 22:05:46 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,17 @@ void	printType(const std::string& literal,
 			std::cout << std::endl;
 			break ;
 		case FLOAT_TYPE:
-			std::cout << "float -> ";
-			scalarType == CHAR_TYPE ? std::cout << static_cast<float>(literal[0]) : std::cout << std::fixed << std::setprecision(1) << static_cast<float>(atof(literal.c_str())) << "f";
-			std::cout << std::endl;
+			std::cout << "float -> " << std::fixed << std::setprecision(1);
+			scalarType == CHAR_TYPE ?
+				std::cout << static_cast<float>(static_cast<int>(literal[0])) :
+				std::cout << atof(literal.c_str());
+			std::cout << "f" << std::endl;
 			break ;
 		case DOUBLE_TYPE:
-			std::cout << "double -> ";
-			scalarType == CHAR_TYPE ? std::cout << static_cast<double>(literal[0]) : std::cout << std::fixed << std::setprecision(1) << static_cast<double>(atof(literal.c_str()));
+			std::cout << "double -> " << std::fixed << std::setprecision(1);
+			scalarType == CHAR_TYPE ?
+				std::cout << static_cast<double>(static_cast<int>(literal[0])) :
+				std::cout << static_cast<double>(atof(literal.c_str()));
 			std::cout << std::endl;
 			break ;
 		default:
