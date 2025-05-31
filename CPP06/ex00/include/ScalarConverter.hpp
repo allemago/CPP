@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 13:41:59 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/31 20:00:29 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/31 23:23:21 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include <cstdlib>
 # include <cctype>
 
-# define NOT_DISPLAYABLE_MSG ": invalid format."
+# define INVALID_FORMAT ": invalid format"
+# define NOT_DISPLAYABLE "not displayable"
 # define ALL_SPACES " \t\n\v\f\r"
 
 enum e_Types
@@ -57,7 +58,7 @@ public:
 
 //	==================== Exceptions =============================
 
-	class NotDisplayableException : public std::exception
+	class InvalidFormatException : public std::exception
 	{
 		public:
 			const char* what() const throw();

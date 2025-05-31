@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 13:58:36 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/31 22:05:46 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/31 23:23:38 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,11 @@ static e_Types	defineType(const std::string& literal)
 	{
 		for (int i = 0; literal[i]; i++)
 		{
-			if (!isdigit(literal[i]))
+			if (i == 0 && (literal[i] == '-' || literal[i] == '+')
+				&& !isdigit(literal[i + 1]))
+				return (INVALID_TYPE);
+						
+			if (i != 0 && !isdigit(literal[i]))
 				return (INVALID_TYPE);
 		}
 		scalarType = INT_TYPE;
@@ -96,7 +100,7 @@ void	printType(const std::string& literal,
 			char c = static_cast<char>(value);
 			std::cout << "char -> ";
 			isprint(static_cast<int>(value)) ?
-				std::cout << c : std::cout << "impossible";
+				std::cout << c : std::cout << NOT_DISPLAYABLE;
 			std::cout << std::endl;
 			break ;
 		}
@@ -142,37 +146,40 @@ void	ScalarConverter::convert(const std::string& literal)
 			break ;
 		case INT_TYPE:
 			printType(literal, scalarType, CHAR_TYPE);
-			std::cout << "int -> " << literal << std::endl;
+			printType(literal, scalarType, INT_TYPE);
 			printType(literal, scalarType, FLOAT_TYPE);
 			printType(literal, scalarType, DOUBLE_TYPE);
 			break ;
 		case FLOAT_TYPE:
 			printType(literal, scalarType, CHAR_TYPE);
 			printType(literal, scalarType, INT_TYPE);
-			std::cout << "float -> " << literal << std::endl;
+			printType(literal, scalarType, FLOAT_TYPE);
 			printType(literal, scalarType, DOUBLE_TYPE);
 			break ;
 		case DOUBLE_TYPE:
 			printType(literal, scalarType, CHAR_TYPE);
 			printType(literal, scalarType, INT_TYPE);
 			printType(literal, scalarType, FLOAT_TYPE);
-			std::cout << "double -> " << literal << std::endl;
+			printType(literal, scalarType, DOUBLE_TYPE);
 			break ;
 		case PSEUDO_TYPE:
-			std::cout << "char -> " << "impossible" << std::endl;
-			std::cout << "int -> " << "impossible" << std::endl;	
-			std::cout << "float -> " << ((literal == "-inf" || literal == "+inf" || literal == "nan") ?
-                                         (literal + "f") : literal) << std::endl;
-			std::cout << "double -> " << ((literal == "-inff" || literal == "+inff" || literal == "nanf") ?
-			                             literal.substr(0, literal.size() - 1) : literal) << std::endl;
+			std::cout << "char -> " << NOT_DISPLAYABLE << std::endl;
+			std::cout << "int -> " << NOT_DISPLAYABLE << std::endl;	
+			std::cout << "float -> ";
+			(literal == "-inf" || literal == "+inf" || literal == "nan") ?
+				std::cout << (literal + "f") : std::cout << (literal);
+			std::cout << "double -> ";
+			(literal == "-inff" || literal == "+inff" || literal == "nanf") ?
+				std::cout << literal.substr(0, literal.size() - 1) : std::cout << literal;
+			std::cout << std::endl;
 			break ;
 		default:
-			std::cerr << literal, throw NotDisplayableException();
+			std::cerr << literal, throw InvalidFormatException();
 			break ;
 	}
 }
 
-const char* ScalarConverter::NotDisplayableException::what() const throw()
+const char* ScalarConverter::InvalidFormatException::what() const throw()
 {
-	return (NOT_DISPLAYABLE_MSG);
+	return (INVALID_FORMAT);
 }
