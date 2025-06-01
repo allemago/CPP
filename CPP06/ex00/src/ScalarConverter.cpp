@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 13:58:36 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/31 23:23:38 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/01 10:55:10 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,33 +44,40 @@ static bool	isInSet(const std::string& literal, const std::string& set)
 }
 
 static e_Types	defineType(const std::string& literal)
-{		
+{
+	// pseudo-literals type
 	for (int i = 0; i < 6; i++)
 	{
 		if (literal == pseudoLiterals[i])
 			return (PSEUDO_TYPE);
 	}
 
+	// char type
 	if (isalpha(literal[0]) && !literal[1])
 		return (CHAR_TYPE);
 
+	// invalid input
 	if (isInSet(literal, ALL_SPACES) ||
 		(literal[literal.size() - 1] == 'f' &&
 		isInSet(literal.substr(0, literal.size() - 1), "f")))
 		return (INVALID_TYPE);
 
+	// float and double types
 	int hasDot = 0;
-	for (size_t i = 0; i < literal.size() - 1; i++)
+	int lastChar = literal.size() - 1;
+	for (size_t i = 0; i < literal.size(); i++)
 	{
 		if (literal[i] == '.')
 			hasDot++;
-		if (hasDot > 1 || (hasDot && isalpha(literal[i])))
+		if (hasDot > 1 ||
+			(hasDot && i == lastChar && literal[i] != 'f' && isalpha(literal[i])))
 			return (INVALID_TYPE);
 	}
 	e_Types scalarType = INVALID_TYPE;
 	(hasDot && literal[literal.size() - 1] == 'f') ?
 		scalarType = FLOAT_TYPE : scalarType = DOUBLE_TYPE;
 	
+	// int type
 	if (!hasDot && scalarType == DOUBLE_TYPE)
 	{
 		for (int i = 0; literal[i]; i++)
