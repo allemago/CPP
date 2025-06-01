@@ -1,4 +1,4 @@
-NAME=			convert
+NAME=			serialize
 
 CXX=			c++
 
@@ -13,8 +13,8 @@ RESET= 			\033[0m
 SRC_PATH= 		src/
 OBJ_PATH= 		obj/
 
-SRC=			$(SRC_PATH)main.cpp				\
-				$(SRC_PATH)ScalarConverter.cpp	\
+SRC=			$(SRC_PATH)main.cpp			\
+				$(SRC_PATH)Serialize.cpp	\
 				
 OBJ= 			$(addprefix $(OBJ_PATH), $(notdir $(SRC:.cpp=.o)))
 
@@ -35,7 +35,7 @@ $(NAME): $(OBJ)
 	@printf "   ░█▀▀░▄▀▄░█░█░░█░\n"
 	@printf "   ░▀▀▀░▀░▀░▀▀▀░▀▀▀\n"
 	@printf "\n\n${RESET}"
-	@printf "   \033[1musage: ./convert\033[0m"
+	@printf "   \033[1musage: ./serialize\033[0m"
 	@printf "\n\n"
 
 clean:
