@@ -13,8 +13,8 @@ RESET= 			\033[0m
 SRC_PATH= 		src/
 OBJ_PATH= 		obj/
 
-SRC=			$(SRC_PATH)main.cpp					\
-				$(SRC_PATH)ScalarConverter.cpp		\
+SRC=			$(SRC_PATH)main.cpp		\
+				$(SRC_PATH)Base.cpp		\
 				
 OBJ= 			$(addprefix $(OBJ_PATH), $(notdir $(SRC:.cpp=.o)))
 
