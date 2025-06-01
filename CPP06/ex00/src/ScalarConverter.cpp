@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 13:58:36 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/01 14:55:59 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:03:50 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ static void	printType(const std::string& literal,
 	{
 		case CHAR_TYPE:
 			std::cout << "char -> ";
-			value >= 32 && value <= 126 ?
+			(int)value >= 32 && (int)value <= 126 ?
 				std::cout << static_cast<char>(value) : std::cout << NOT_DISPLAYABLE;
 			std::cout << std::endl;
 			break ;
@@ -123,6 +123,7 @@ static void	printType(const std::string& literal,
 			if (isOutOfRange(value, INT_TYPE))
 				std::cout << NOT_DISPLAYABLE;
 			else
+			
 			{
 				scalarType == CHAR_TYPE ?
 					std::cout << static_cast<int>(literal[0]) :
