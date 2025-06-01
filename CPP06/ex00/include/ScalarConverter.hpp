@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 13:41:59 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/31 23:23:21 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/01 12:35:14 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 # include <iomanip>
 # include <cstdlib>
 # include <cctype>
+# include <limits>
 
 # define INVALID_FORMAT ": invalid format"
+# define OUT_OF_RANGE "Error: value out of range"
 # define NOT_DISPLAYABLE "not displayable"
 # define ALL_SPACES " \t\n\v\f\r"
 
@@ -59,6 +61,11 @@ public:
 //	==================== Exceptions =============================
 
 	class InvalidFormatException : public std::exception
+	{
+		public:
+			const char* what() const throw();
+	};
+	class OutOfRangeException : public std::exception
 	{
 		public:
 			const char* what() const throw();

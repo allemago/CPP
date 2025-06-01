@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 13:58:36 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/01 10:55:10 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/01 12:49:33 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ ScalarConverter&	ScalarConverter::operator=(const ScalarConverter& object)
 
 static bool	isInSet(const std::string& literal, const std::string& set)
 {
-	for (int i = 0; literal[i]; i++)
+	for (size_t i = 0; literal[i]; i++)
 	{
-		for (int j = 0; set[j]; j++)
+		for (size_t j = 0; set[j]; j++)
 		{
 			if (literal[i] == set[j])
 				return (true);
@@ -46,7 +46,7 @@ static bool	isInSet(const std::string& literal, const std::string& set)
 static e_Types	defineType(const std::string& literal)
 {
 	// pseudo-literals type
-	for (int i = 0; i < 6; i++)
+	for (size_t i = 0; i < 6; i++)
 	{
 		if (literal == pseudoLiterals[i])
 			return (PSEUDO_TYPE);
@@ -62,30 +62,33 @@ static e_Types	defineType(const std::string& literal)
 		isInSet(literal.substr(0, literal.size() - 1), "f")))
 		return (INVALID_TYPE);
 
-	// float and double types
-	int hasDot = 0;
-	int lastChar = literal.size() - 1;
-	for (size_t i = 0; i < literal.size(); i++)
+	// float, double, int types
+	size_t hasDot = 0;
+	size_t lastChar = literal.size() - 1;
+	for (size_t i = 0; literal[i]; i++)
 	{
 		if (literal[i] == '.')
 			hasDot++;
-		if (hasDot > 1 ||
-			(hasDot && i == lastChar && literal[i] != 'f' && isalpha(literal[i])))
+			
+		if (i == 0
+			&& (literal[i] == '-' || literal[i] == '+')
+			&& !isdigit(literal[i + 1]))
+			return (INVALID_TYPE);
+			
+		if (hasDot > 1
+			|| (i != lastChar && isalpha(literal[i]))
+			|| (i == lastChar && literal[i] != 'f' && isalpha(literal[i])))
 			return (INVALID_TYPE);
 	}
 	e_Types scalarType = INVALID_TYPE;
-	(hasDot && literal[literal.size() - 1] == 'f') ?
-		scalarType = FLOAT_TYPE : scalarType = DOUBLE_TYPE;
-	
-	// int type
-	if (!hasDot && scalarType == DOUBLE_TYPE)
+	if (literal[lastChar] == 'f')
+		scalarType = FLOAT_TYPE;
+	else if (hasDot)
+		scalarType = DOUBLE_TYPE;
+	else if (!hasDot && !scalarType)
 	{
-		for (int i = 0; literal[i]; i++)
-		{
-			if (i == 0 && (literal[i] == '-' || literal[i] == '+')
-				&& !isdigit(literal[i + 1]))
-				return (INVALID_TYPE);
-						
+		for (size_t i = 0; literal[i]; i++)
+		{		
 			if (i != 0 && !isdigit(literal[i]))
 				return (INVALID_TYPE);
 		}
@@ -99,18 +102,16 @@ void	printType(const std::string& literal,
                   const e_Types scalarType,
                   const e_Types toPrint)
 {
+	double value = atof(literal.c_str());
+
 	switch (toPrint)
 	{
 		case CHAR_TYPE:
-		{
-			double value = atof(literal.c_str());
-			char c = static_cast<char>(value);
 			std::cout << "char -> ";
-			isprint(static_cast<int>(value)) ?
-				std::cout << c : std::cout << NOT_DISPLAYABLE;
+			value >= 32 && value <= 126 ?
+				std::cout << static_cast<char>(value) : std::cout << NOT_DISPLAYABLE;
 			std::cout << std::endl;
 			break ;
-		}
 		case INT_TYPE:
 			std::cout << "int -> ";
 			scalarType == CHAR_TYPE ?
@@ -142,11 +143,17 @@ void	ScalarConverter::convert(const std::string& literal)
 	e_Types scalarType;
 
 	scalarType = defineType(literal);
+	
+	double value = atof(literal.c_str());
 
+	if (value < std::numeric_limits<int>::min()
+		|| value > std::numeric_limits<int>::max())
+		throw OutOfRangeException();
+	
 	switch (scalarType)
 	{
 		case CHAR_TYPE:
-			std::cout << "char -> " << literal << std::endl;
+			printType(literal, scalarType, CHAR_TYPE);
 			printType(literal, scalarType, INT_TYPE);
 			printType(literal, scalarType, FLOAT_TYPE);
 			printType(literal, scalarType, DOUBLE_TYPE);
@@ -181,7 +188,8 @@ void	ScalarConverter::convert(const std::string& literal)
 			std::cout << std::endl;
 			break ;
 		default:
-			std::cerr << literal, throw InvalidFormatException();
+			std::cerr << literal;
+			throw InvalidFormatException();
 			break ;
 	}
 }
@@ -189,4 +197,9 @@ void	ScalarConverter::convert(const std::string& literal)
 const char* ScalarConverter::InvalidFormatException::what() const throw()
 {
 	return (INVALID_FORMAT);
+}
+
+const char* ScalarConverter::OutOfRangeException::what() const throw()
+{
+	return (OUT_OF_RANGE);
 }
