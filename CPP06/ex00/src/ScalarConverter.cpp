@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 13:58:36 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/01 12:49:33 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/01 14:55:59 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,16 @@ ScalarConverter&	ScalarConverter::operator=(const ScalarConverter& object)
 	return (*this);
 }
 
-static bool	isInSet(const std::string& literal, const std::string& set)
-{
-	for (size_t i = 0; literal[i]; i++)
-	{
-		for (size_t j = 0; set[j]; j++)
-		{
-			if (literal[i] == set[j])
-				return (true);
-		}
-	}
-	return (false);
-}
-
 static e_Types	defineType(const std::string& literal)
 {
 	// pseudo-literals type
 	for (size_t i = 0; i < 6; i++)
 	{
+		for (size_t j = 0; literal[j]; j++)
+		{
+			if (isspace(literal[j]))
+				return (INVALID_TYPE);
+		}
 		if (literal == pseudoLiterals[i])
 			return (PSEUDO_TYPE);
 	}
@@ -55,12 +47,6 @@ static e_Types	defineType(const std::string& literal)
 	// char type
 	if (isalpha(literal[0]) && !literal[1])
 		return (CHAR_TYPE);
-
-	// invalid input
-	if (isInSet(literal, ALL_SPACES) ||
-		(literal[literal.size() - 1] == 'f' &&
-		isInSet(literal.substr(0, literal.size() - 1), "f")))
-		return (INVALID_TYPE);
 
 	// float, double, int types
 	size_t hasDot = 0;
@@ -71,8 +57,8 @@ static e_Types	defineType(const std::string& literal)
 			hasDot++;
 			
 		if (i == 0
-			&& (literal[i] == '-' || literal[i] == '+')
-			&& !isdigit(literal[i + 1]))
+			&& ((literal[i] != '-' && literal[i] != '+' && !isdigit(literal[i]))
+			|| ((literal[i] == '-' || literal[i] == '+') && !isdigit(literal[i + 1]))))
 			return (INVALID_TYPE);
 			
 		if (hasDot > 1
@@ -81,7 +67,7 @@ static e_Types	defineType(const std::string& literal)
 			return (INVALID_TYPE);
 	}
 	e_Types scalarType = INVALID_TYPE;
-	if (literal[lastChar] == 'f')
+	if (hasDot && literal[lastChar] == 'f')
 		scalarType = FLOAT_TYPE;
 	else if (hasDot)
 		scalarType = DOUBLE_TYPE;
@@ -98,7 +84,27 @@ static e_Types	defineType(const std::string& literal)
 	return (scalarType);
 }
 
-void	printType(const std::string& literal,
+static bool	isOutOfRange(const double value, const e_Types scalarType)
+{
+	if ((scalarType == CHAR_TYPE || scalarType == INT_TYPE)
+		&& (value < std::numeric_limits<int>::min()
+			|| value > std::numeric_limits<int>::max()))
+		return (true);
+	
+	if (scalarType == FLOAT_TYPE
+		&& (value < -std::numeric_limits<float>::max()
+			|| value > std::numeric_limits<float>::max()))
+		return (true);
+	
+	if (scalarType == DOUBLE_TYPE
+		&& (value < -std::numeric_limits<double>::max()
+			|| value > std::numeric_limits<double>::max()))
+		return (true);
+
+	return (false);
+}
+
+static void	printType(const std::string& literal,
                   const e_Types scalarType,
                   const e_Types toPrint)
 {
@@ -114,9 +120,14 @@ void	printType(const std::string& literal,
 			break ;
 		case INT_TYPE:
 			std::cout << "int -> ";
-			scalarType == CHAR_TYPE ?
-				std::cout << static_cast<int>(literal[0]) :
-				std::cout << static_cast<int>(atof(literal.c_str()));
+			if (isOutOfRange(value, INT_TYPE))
+				std::cout << NOT_DISPLAYABLE;
+			else
+			{
+				scalarType == CHAR_TYPE ?
+					std::cout << static_cast<int>(literal[0]) :
+					std::cout << static_cast<int>(atof(literal.c_str()));
+			}
 			std::cout << std::endl;
 			break ;
 		case FLOAT_TYPE:
@@ -143,17 +154,14 @@ void	ScalarConverter::convert(const std::string& literal)
 	e_Types scalarType;
 
 	scalarType = defineType(literal);
-	
-	double value = atof(literal.c_str());
 
-	if (value < std::numeric_limits<int>::min()
-		|| value > std::numeric_limits<int>::max())
-		throw OutOfRangeException();
-	
+	if (isOutOfRange(atof(literal.c_str()), scalarType))
+		throw OutOfRangeException();		
+
 	switch (scalarType)
 	{
 		case CHAR_TYPE:
-			printType(literal, scalarType, CHAR_TYPE);
+			std::cout << "char -> " << literal << std::endl;
 			printType(literal, scalarType, INT_TYPE);
 			printType(literal, scalarType, FLOAT_TYPE);
 			printType(literal, scalarType, DOUBLE_TYPE);
@@ -182,13 +190,12 @@ void	ScalarConverter::convert(const std::string& literal)
 			std::cout << "float -> ";
 			(literal == "-inf" || literal == "+inf" || literal == "nan") ?
 				std::cout << (literal + "f") : std::cout << (literal);
-			std::cout << "double -> ";
+			std::cout << std::endl << "double -> ";
 			(literal == "-inff" || literal == "+inff" || literal == "nanf") ?
 				std::cout << literal.substr(0, literal.size() - 1) : std::cout << literal;
 			std::cout << std::endl;
 			break ;
 		default:
-			std::cerr << literal;
 			throw InvalidFormatException();
 			break ;
 	}

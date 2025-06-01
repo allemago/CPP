@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 13:41:59 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/01 12:35:14 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:02:05 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 # include <iomanip>
 # include <cstdlib>
 # include <cctype>
+# include <cfloat>
 # include <limits>
 
-# define INVALID_FORMAT ": invalid format"
+# define INVALID_FORMAT "Error: invalid format"
 # define OUT_OF_RANGE "Error: value out of range"
 # define NOT_DISPLAYABLE "not displayable"
-# define ALL_SPACES " \t\n\v\f\r"
 
 enum e_Types
 {
@@ -51,8 +51,6 @@ public:
 	ScalarConverter(const ScalarConverter&);
 	~ScalarConverter();
 	ScalarConverter&	operator=(const ScalarConverter&);
-
-//	==================== Custom Constructors ====================
 
 //	==================== Public Methods =========================
 
