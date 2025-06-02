@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 13:59:07 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/01 15:01:43 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:07:56 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int main(int argc, char **argv)
 {
-	if (argc != 2 || !argv[1][0])
+	if (!isInputValid(argc, argv[1]))
 	{
-		std::cerr << "usage: ./convert <literal>" << std::endl;
+		std::cerr << USAGE << std::endl;
 		return (-1);	
 	}
 	try

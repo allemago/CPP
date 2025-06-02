@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 15:05:25 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/01 15:50:48 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:12:22 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdint.h>
 
 # define BOLD "\033[1m"
-# define GREEN "\033[1;32m"
+# define YELLOW "\033[1;93m"
 # define RESET "\033[0m"
 
 class Serialize

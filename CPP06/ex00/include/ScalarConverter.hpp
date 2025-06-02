@@ -6,32 +6,17 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 13:41:59 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/01 15:02:05 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:50:54 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+# include "Utils.hpp"
 # include <iostream>
-# include <iomanip>
+# include <exception>
+# include <string>
 # include <cstdlib>
-# include <cctype>
-# include <cfloat>
-# include <limits>
-
-# define INVALID_FORMAT "Error: invalid format"
-# define OUT_OF_RANGE "Error: value out of range"
-# define NOT_DISPLAYABLE "not displayable"
-
-enum e_Types
-{
-	INVALID_TYPE = 0,
-	CHAR_TYPE = 1,
-	INT_TYPE = 2,
-	FLOAT_TYPE = 3,
-	DOUBLE_TYPE = 4,
-	PSEUDO_TYPE = 5
-};
 
 class ScalarConverter
 {
@@ -41,16 +26,14 @@ class ScalarConverter
 private:
 
 	ScalarConverter();
+	ScalarConverter(const ScalarConverter&);
+	~ScalarConverter();
+	ScalarConverter&	operator=(const ScalarConverter&);
 
 /*****************
 *     PUBLIC     *
 *****************/
 public:
-//	==================== Canonical Form =========================
-
-	ScalarConverter(const ScalarConverter&);
-	~ScalarConverter();
-	ScalarConverter&	operator=(const ScalarConverter&);
 
 //	==================== Public Methods =========================
 

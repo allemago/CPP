@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 15:57:13 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/02 10:12:20 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:45:46 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,29 @@ void	identify(Base* p)
 
 void	identify(Base& p)
 {
-	identify(&p);
+	try
+	{
+		(void)dynamic_cast<A&>(p);
+		std::cout << "A" << std::endl;
+		return ;
+	}
+	catch(const std::exception& e) {}
+	
+	try
+	{
+		(void)dynamic_cast<B&>(p);
+		std::cout << "B" << std::endl;
+		return ;
+	}
+	catch(const std::exception& e) {}
+	
+	try
+	{
+		(void)dynamic_cast<C&>(p);
+		std::cout << "C" << std::endl;
+		return ;
+	}
+	catch(const std::exception& e) {}
+	
+	std::cout << "not recognized" << std::endl;
 }

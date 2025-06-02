@@ -15,6 +15,7 @@ OBJ_PATH= 		obj/
 
 SRC=			$(SRC_PATH)main.cpp				\
 				$(SRC_PATH)ScalarConverter.cpp	\
+				$(SRC_PATH)Utils.cpp			\
 
 				
 OBJ= 			$(addprefix $(OBJ_PATH), $(notdir $(SRC:.cpp=.o)))
