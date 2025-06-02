@@ -6,15 +6,12 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:06:20 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/01 17:01:02 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/02 09:35:45 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 # include "Base.hpp"
-# include <iostream>
-
-class Base;
 
 class C : public Base {};
