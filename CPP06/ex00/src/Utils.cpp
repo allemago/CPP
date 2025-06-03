@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:42:41 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/02 15:45:57 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:08:03 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 const std::string pseudoLiteralsFloat[3] = { "-inff", "+inff", "nanf" };
 const std::string pseudoLiteralsDouble[3] = { "-inf", "+inf", "nan" };
 
-bool	isInputValid(const int argc, const std::string& literal)
+bool	isInputValid(const int argc, const char* literal)
 {
 	if (argc != 2 || !literal[0])
 		return (false);

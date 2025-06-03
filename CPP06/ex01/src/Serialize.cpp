@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 15:06:08 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/01 15:50:41 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:10:17 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ uintptr_t	Serialize::serialize(Data* ptr)
 
 Data*	Serialize::deserialize(uintptr_t raw)
 {
-	return (reinterpret_cast<Data *>(raw));
+	return (reinterpret_cast<Data*>(raw));
 }

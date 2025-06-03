@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:43:31 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/02 15:00:49 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:05:59 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ enum e_Types
 };
 
 e_Types	defineType(const std::string&);
-bool	isInputValid(const int, const std::string&);
+bool	isInputValid(const int, const char*);
 bool	isOutOfRange(const double, const e_Types, const std::string&);
 void	printType(const std::string&, const e_Types, const e_Types);
