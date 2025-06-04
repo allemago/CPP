@@ -6,13 +6,13 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:20:19 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/03 15:33:09 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:35:24 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/whatever.hpp"
 
-int main( void )
+int main()
 {
     int a = 2;
     int b = 3;
@@ -27,5 +27,5 @@ int main( void )
     std::cout << "min(c, d) = " << ::min(c, d) << std::endl;
     std::cout << "max(c, d) = " << ::max(c, d) << std::endl;
     
-    return 0;
+    return (0);
 }
