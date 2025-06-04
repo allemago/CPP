@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 17:21:42 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/04 11:50:08 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:33:52 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,5 @@ public:
 			virtual const char*	what() const throw();
 	};
 };
-
-template <typename T>
-std::ostream&	operator<<(std::ostream&, const Array<T>&);
 
 # include "Array.tpp"

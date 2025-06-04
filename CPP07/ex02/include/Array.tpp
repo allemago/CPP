@@ -6,20 +6,18 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 09:51:54 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/04 12:32:45 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/04 14:59:23 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 template <typename T>
-Array<T>::Array() : _n(0), _array(NULL)
-{
-	this->_array = new T[size()]();
-}
+Array<T>::Array() : _n(0), _array(NULL) {}
 
 template <typename T>
 Array<T>::Array(size_t n) : _n(n), _array(NULL)
 {
-	this->_array = new T[size()]();
+	if (size() > 0)
+		this->_array = new T[size()]();
 }
 
 template <typename T>
@@ -44,9 +42,8 @@ Array<T>&	Array<T>::operator=(const Array<T>& object)
 			delete[] this->_array;
 			this->_array = NULL;
 		}
-		if (size())
-			this->_n = object.size();
-		this->_array = new T[object.size()];
+		this->_n = object.size();
+		this->_array = new T[object.size()]();
 		for (size_t i = 0; i < size(); i++)
 			this->_array[i] = object._array[i];
 	}
@@ -56,22 +53,10 @@ Array<T>&	Array<T>::operator=(const Array<T>& object)
 template <typename T>
 T&	Array<T>::operator[](size_t index) const
 {
-	if (index >= _n)
+	if (index >= size())
 		throw indexOutOfBounds();
-		
-	return (this->_array[index]);
-}
-
-template <typename T>
-std::ostream&	operator<<(std::ostream& os, const Array<T>& array)
-{
-	for (size_t i = 0; i < array.size(); i++)
-	{
-		if (array[i])
-			os << array[i];
-	}
 	
-	return (os);
+	return (this->_array[index]);
 }
 
 template <typename T>
