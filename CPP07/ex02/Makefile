@@ -1,4 +1,4 @@
-NAME=			array
+NAME=			arraytest
 
 CXX=			c++
 
@@ -34,7 +34,7 @@ $(NAME): $(OBJ)
 	@printf "   ░█▀▀░▄▀▄░█░█░▄▀░\n"
 	@printf "   ░▀▀▀░▀░▀░▀▀▀░▀▀▀\n"
 	@printf "\n\n${RESET}"
-	@printf "   \033[1musage: ./array\033[0m"
+	@printf "   \033[1musage: ./arraytest\033[0m"
 	@printf "\n\n"
 
 clean:

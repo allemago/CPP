@@ -6,13 +6,19 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 17:21:42 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/03 17:49:31 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:50:08 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 # include <iostream>
+# include <exception>
+
+# define BOLD "\033[1m"
+# define YELLOW "\033[1;93m"
+# define RESET "\033[0m"
+# define OUT_OF_BOUNDS "Error: index is out of bounds."
 
 template <typename T>
 class Array
@@ -22,54 +28,43 @@ class Array
 *****************/
 private:
 
-	T*		_array;
 	size_t	_n;
+	T*		_array;
 
 /*****************
 *     PUBLIC     *
 *****************/
 public:
+
 //	==================== Canonical Form =========================
 
-	Array() : _n(0), _array(NULL) {}
-	
-	Array(size_t n) : _n(n), _array(NULL)
-	{
-		this->_array = new T[this->_n];
-	}
-
-	Array(const Array& object) : _n(object._n), _array(NULL)
-	{
-		*this = object;
-	}
-
-	Array& operator=(const Array& object)
-	{
-		if (this != &object)
-		{
-			if (this->_array)
-			{
-				for (int i = 0; i < _n; i++)
-					delete this->_array[i];
-				delete[] this->_array;
-				this->_array = NULL;
-			}
-			this->_array = new T[object._n];
-		}
-		return (*this);
-	}
-	
-	~Array()
-	{
-		for (size_t i = 0; i < this->_n; i++)
-			delete[] _array[i];
-		delete[] _array;
-	}
-	
-	Array&	operator=(const Array&);
+	Array();
+	Array(const Array<T>&);
+	~Array();
+	Array<T>&	operator=(const Array<T>&);
 
 //	==================== Custom Constructors ====================
-//	==================== Getters / Setters ======================
+
+	Array(size_t);
+
+// ============== Additional Operator Overloads =================
+
+	T&	operator[](size_t) const;
+	
 //	==================== Public Methods =========================
+
+	size_t	size() const;
+	
 //	==================== Exceptions =============================
+
+	class indexOutOfBounds: public std::exception
+	{
+		public:
+			virtual const char*	what() const throw();
+	};
 };
+
+template <typename T>
+std::ostream&	operator<<(std::ostream&, const Array<T>&);
+
+# include "Array.tpp"
