@@ -1,0 +1,75 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/05 13:40:31 by magrabko          #+#    #+#             */
+/*   Updated: 2025/06/05 14:33:24 by magrabko         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../include/easyfind.hpp"
+#include <vector>
+#include <list>
+#include <deque>
+#include <array>
+
+int main()
+{
+    {
+        try
+        {
+            std::vector<int> values;
+            values.push_back(1), values.push_back(2), values.push_back(3);
+            std::cout << *::easyfind(values, 1) << std::endl;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+    }
+    
+    {
+        try
+        {
+            std::list<int> values;
+            values.push_back(4), values.push_back(5), values.push_back(6);
+            std::cout << *::easyfind(values, 5) << std::endl;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+    }
+    
+    {
+        try
+        {
+            std::deque<int> values;
+            values.push_back(7), values.push_back(8), values.push_back(9);
+            std::cout << *::easyfind(values, 9) << std::endl;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+    }
+    
+    {        
+        try
+        {
+            std::array<int, > values;
+            values.push_back(10), values.push_back(11), values.push_back(12);
+            std::cout << *::easyfind(values, 1) << std::endl;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        
+    }
+    
+    return (0);
+}
