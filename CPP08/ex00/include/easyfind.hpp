@@ -4,6 +4,9 @@
 # include <algorithm>
 # include <vector>
 
+# define BOLD "\033[1m"
+# define RESET "\033[0m"
+
 class NoOccurrenceFound : public std::exception
 {
 	public:
