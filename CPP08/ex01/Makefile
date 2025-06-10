@@ -1,4 +1,4 @@
-NAME=			distance
+NAME=			program
 
 CXX=			c++
 
@@ -35,7 +35,7 @@ $(NAME): $(OBJ)
 	@printf "   ░█▀▀░▄▀▄░█░█░░█░\n"
 	@printf "   ░▀▀▀░▀░▀░▀▀▀░▀▀▀\n"
 	@printf "\n\n${RESET}"
-	@printf "   \033[1musage: ./distance\033[0m"
+	@printf "   \033[1musage: ./program\033[0m"
 	@printf "\n\n"
 
 clean:

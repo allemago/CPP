@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   MutantStack.hpp                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/10 16:04:09 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/10 16:56:15 by magrabko         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #pragma once
 
 # include <stack>
@@ -34,16 +22,24 @@ public:
 
 //	======================= Typedefs ============================
 
-	typedef typename C::iterator			iterator;
-	typedef typename C::reverse_iterator	reverse_iterator;
+	typedef typename C::iterator				iterator;
+	typedef typename C::reverse_iterator		reverse_iterator;
+	typedef typename C::const_iterator			const_iterator;
+	typedef typename C::const_reverse_iterator	const_reverse_iterator;
 
 //	==================== Public Methods =========================
 
-	iterator					begin();
-	iterator					end();
+	iterator				begin();
+	iterator				end();
 
-	reverse_iterator			rbegin();
-	reverse_iterator			rend();
+	const_iterator			cbegin() const;
+	const_iterator			cend() const;
+
+	reverse_iterator		rbegin();
+	reverse_iterator		rend();
+	
+	const_reverse_iterator	crbegin() const;
+	const_reverse_iterator	crend() const;
 };
 
 #include "MutantStack.tpp"
