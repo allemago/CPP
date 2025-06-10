@@ -22,24 +22,24 @@ public:
 
 //	======================= Typedefs ============================
 
-	typedef typename C::iterator				iterator;
-	typedef typename C::reverse_iterator		reverse_iterator;
-	typedef typename C::const_iterator			const_iterator;
-	typedef typename C::const_reverse_iterator	const_reverse_iterator;
+	typedef typename C::iterator                iterator;
+	typedef typename C::reverse_iterator        reverse_iterator;
+	typedef typename C::const_iterator          const_iterator;
+	typedef typename C::const_reverse_iterator  const_reverse_iterator;
 
 //	==================== Public Methods =========================
 
-	iterator				begin();
-	iterator				end();
+	iterator                begin();
+	iterator                end();
 
-	const_iterator			cbegin() const;
-	const_iterator			cend() const;
+	const_iterator          cbegin() const;
+	const_iterator          cend() const;
 
-	reverse_iterator		rbegin();
-	reverse_iterator		rend();
+	reverse_iterator        rbegin();
+	reverse_iterator        rend();
 	
-	const_reverse_iterator	crbegin() const;
-	const_reverse_iterator	crend() const;
+	const_reverse_iterator  crbegin() const;
+	const_reverse_iterator  crend() const;
 };
 
 #include "MutantStack.tpp"
