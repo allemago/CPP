@@ -12,13 +12,6 @@
 # include <cfloat>
 # include <limits>
 
-enum	e_Type
-{
-	INVALID_TYPE = 0,
-	FLOAT_TYPE = 1,
-	INT_TYPE = 2
-};
-
 class BitcoinExchangeBis
 {
 /*****************
@@ -50,9 +43,43 @@ public:
 
 	void	addToContainer();
 	void	scanExchangeRate();
-	void	computeExchange(const std::string&, const std::string&) const;
-	bool	isOutOfRange(const float) const;
-	e_Type	setType(const float) const;
+
+	bool	isOutOfRange(double) const;
+
+	template < typename T >
+	void	BitcoinExchangeBis::computeExchange(const std::string& key, const std::string& value) const
+	{
+		double number = atof(value.c_str());
+		T nbr = setType(number);
+
+		switch (type)
+		{
+			case FLOAT_TYPE:
+				nbr * getExchangeRate(key);
+				break ;
+			case INT_TYPE:
+				;
+				break ;
+			default:
+				;
+		}
+	}
+
+	const T&	BitcoinExchangeBis::setType(const float number) const
+	{
+		if ((number < std::numeric_limits<float>::min()
+			|| number > std::numeric_limits<float>::max()))
+		{
+			std::cout << "Error: float value out of range." << std::endl;
+			return 0;	
+		}
+	}
+
+	template < typename T >
+	const T& getExchangeRate(const std::string& key)
+	{
+
+	}	
 
 //	==================== Exceptions =============================
 

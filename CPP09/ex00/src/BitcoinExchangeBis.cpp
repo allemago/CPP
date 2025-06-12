@@ -46,7 +46,11 @@ void	BitcoinExchangeBis::scanExchangeRate()
 		std::string	value;
 
 		if (std::getline(iss, key, '|') && std::getline(iss, value))
-			computeExchange(key, value);
+		{
+			double number = atof(value.c_str());
+			if (!isOutOfRange(number, setType(number)))
+				computeExchange(key, value);
+		}
 		else
 			std::cout << "Error: bad input => " << value << std::endl;
 	}
@@ -54,12 +58,14 @@ void	BitcoinExchangeBis::scanExchangeRate()
 
 void	BitcoinExchangeBis::computeExchange(const std::string& key, const std::string& value) const
 {
-	e_Type type = setType(atof(value.c_str()));
+	double number = atof(value.c_str());
+	e_Type type = setType(number);
 
 	switch (type)
 	{
 		case FLOAT_TYPE:
-			;
+			float nbr = static_cast<float>(number);
+			nbr * getExchangeRate(key);
 			break ;
 		case INT_TYPE:
 			;
@@ -69,20 +75,11 @@ void	BitcoinExchangeBis::computeExchange(const std::string& key, const std::stri
 	}
 }
 
-e_Type	BitcoinExchangeBis::setType(const float number) const
-{
-	if ((number < std::numeric_limits<float>::min()
-		|| number > std::numeric_limits<float>::max()))
-	{
-		std::cout << "Error: float value out of range." << std::endl;
-		return INVALID_TYPE;	
-	}
-}
 
-bool	BitcoinExchangeBis::isOutOfRange(const float number) const
+bool	BitcoinExchangeBis::isOutOfRange(double nbr) const
 {
-	if ((number < std::numeric_limits<float>::min()
-		|| number > std::numeric_limits<float>::max()))
+	if ((nbr < std::numeric_limits<float>::min()
+		|| nbr > std::numeric_limits<float>::max()))
 		return true;
 
 	return false;
