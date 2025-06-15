@@ -106,32 +106,25 @@ bool	BitcoinExchange::isKeyValid(const std::string& key) const
 		|| year < 1900 || year > _currentYear || month < 1 || month > 12 || day < 1)
 		return false;
 
+	int maxDay;
 	if (month == FEBRUARY)
 	{
 		if (isLeapYear(year))
-		{
-			if (day > 29)
-				return false;
-		}
+			maxDay = 29;
 		else
-		{
-			if (day > 28)
-				return false;
+			maxDay = 28;
 		}
 	}
 	else
 	{
 		if (find(_longMonths.begin(), _longMonths.end(), month) != _longMonths.end())
-		{
-			if (day > 31)
-				return false;
-		}
+			maxDay = 31;
 		else
-		{
-			if (day > 30)
-				return false;
-		}
+			maxDay = 30;
 	}
+
+	if (day > maxDay)
+		return false;
 
 	return true;
 }
