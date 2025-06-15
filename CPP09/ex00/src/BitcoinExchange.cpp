@@ -88,14 +88,9 @@ bool	BitcoinExchange::isLeapYear(int year) const
 
 bool	BitcoinExchange::isKeyValid(const std::string& key) const
 {
-	if (key.size() != DATE_FORMAT_SIZE)
+	if (key.size() != DATE_FORMAT_SIZE
+		|| key[4] != '-' || key[7] != '-')
 		return false;
-	
-	for (size_t i = 0; key[i]; i++)
-	{
-		if (!isdigit(key[i]) && key[i] != '-')
-			return false;
-	}
 
 	int	year = atoi((key.substr(0, 4).c_str()));
 	int	month = atoi((key.substr(5, 2).c_str()));
@@ -109,18 +104,12 @@ bool	BitcoinExchange::isKeyValid(const std::string& key) const
 	int maxDay;
 	if (month == FEBRUARY)
 	{
-		if (isLeapYear(year))
-			maxDay = 29;
-		else
-			maxDay = 28;
-		}
+		isLeapYear(year) ? maxDay = 29 : maxDay = 28;
 	}
 	else
 	{
-		if (find(_longMonths.begin(), _longMonths.end(), month) != _longMonths.end())
-			maxDay = 31;
-		else
-			maxDay = 30;
+		find(_longMonths.begin(), _longMonths.end(), month) != _longMonths.end() ?
+			maxDay = 31 : maxDay = 30;
 	}
 
 	if (day > maxDay)
