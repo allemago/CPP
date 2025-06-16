@@ -7,9 +7,6 @@ RPN::RPN()
 
 RPN::RPN(const std::string& expression) : _expression(expression)
 {
-	if (!isExpressionValid())
-		throw std::runtime_error(ERR_EXPFORMAT);
-
 	init();
 }
 
@@ -38,50 +35,41 @@ void	RPN::init()
 	std::string token;
 	while (iss >> token)
 	{
-		if (isdigit(token[0] && token.size() == 1))
+		if (isdigit(token[0]) && token.size() == 1)
 			_numbers.push(token[0] - '0');
-		else if (std::string("+-*/").find(token[0]) != std::string::npos)
+		else if (token.size() == 1 && std::string("+-*/").find(token[0]) != std::string::npos)
 		{
+			if (_numbers.size() < 2)
+				throw std::runtime_error("Error: not enough operands");
 			
+			int b = _numbers.top();
+			_numbers.pop();
+			int a = _numbers.top();
+			_numbers.pop();
+
+			if (token == "+")
+				_numbers.push(a + b);
+			else if (token == "-")
+				_numbers.push(a - b);
+			else if (token == "*")
+				_numbers.push(a * b);
+			else if (token == "/")
+			{
+				if (b == 0)
+					throw std::runtime_error("Error: division by zero");
+				_numbers.push(a / b);
+			}
 		}
 		else
-			throw std::runtime_error(ERR_EXPFORMAT);
+			throw std::runtime_error("Error");
 		
 	}
+
+	if (_numbers.size() != 1)
+		throw std::runtime_error("Error");
 }
 
-void	RPN::computeExpression()
+int	RPN::getResult() const
 {
-
+	return _numbers.top();
 }
-/* 
-std::stack<int> s;
-std::stringstream iss(_expression);
-std::string token;
-
-while (iss >> token)
-{
-    if (isdigit(token[0]) && token.size() == 1)
-        s.push(token[0] - '0');
-    else if (token == "+" || token == "-" || token == "*" || token == "/")
-    {
-        if (s.size() < 2)
-            throw std::runtime_error("Not enough operands");
-
-        int b = s.top(); s.pop();
-        int a = s.top(); s.pop();
-
-        if (token == "+") s.push(a + b);
-        else if (token == "-") s.push(a - b);
-        else if (token == "*") s.push(a * b);
-        else if (token == "/")
-        {
-            if (b == 0) throw std::runtime_error("Division by zero");
-            s.push(a / b);
-        }
-    }
-    else
-        throw std::runtime_error("Invalid token");
-}
-
- */

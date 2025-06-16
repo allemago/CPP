@@ -14,7 +14,7 @@ SRC_PATH= 		src/
 OBJ_PATH= 		obj/
 
 SRC=			$(SRC_PATH)main.cpp	\
-				$(SRC_PATH)Span.cpp	\
+				$(SRC_PATH)RPN.cpp	\
 				
 OBJ= 			$(addprefix $(OBJ_PATH), $(notdir $(SRC:.cpp=.o)))
 
