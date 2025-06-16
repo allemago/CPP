@@ -33,7 +33,7 @@ void	RPN::computeRPN()
 			else if (token.size() == 1 && std::string("+-*/").find(token[0]) != std::string::npos)
 			{
 				if (_numbers.size() < 2)
-					throw std::runtime_error("Error: not enough operands");
+					throw std::runtime_error(ERR_OPERAND);
 				
 				int b = _numbers.top();
 				_numbers.pop();
@@ -49,7 +49,7 @@ void	RPN::computeRPN()
 				else if (token == "/")
 				{
 					if (b == 0)
-						throw std::runtime_error("Error: division by zero");
+						throw std::runtime_error(ERR_DIV_ZERO);
 					_numbers.push(a / b);
 				}
 			}

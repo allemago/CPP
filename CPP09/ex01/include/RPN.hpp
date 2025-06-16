@@ -6,7 +6,8 @@
 # include <algorithm>
 # include <sstream>
 
-# define ERR_expr_EMPTY "Error: please use constructor with expr parameter"
+# define ERR_OPERAND "Error: not enough operands"
+# define ERR_DIV_ZERO "Error: division by zero"
 
 class RPN
 {
