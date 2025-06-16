@@ -6,7 +6,7 @@
 # include <algorithm>
 # include <sstream>
 
-# define ERR_DEFCONST "Error: please use constructor with expression parameter"
+# define ERR_expr_EMPTY "Error: please use constructor with expr parameter"
 
 class RPN
 {
@@ -15,10 +15,10 @@ class RPN
 *****************/
 private:
 
-	std::string                 _expression;
+	std::string                 _expr;
 	std::stack<int>     		_numbers;
 
-	void	init();
+	void	computeRPN();
 
 /*****************
 *     PUBLIC     *
