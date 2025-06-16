@@ -1,6 +1,7 @@
 #pragma once
 
 # include <iostream>
+# include <iomanip>
 # include <fstream>
 # include <sstream>
 # include <string>
@@ -13,10 +14,12 @@
 # include <exception>
 # include <stdexcept>
 
-# define ERROR_LOCAL_TIME "Error: failed to get local time"
-# define ERROR_OPEN_FILE "Error: could not open file(s)"
-# define ERROR_FILE_FORMAT "Error: use correct format: date | value"
-# define FILE_FORMAT "date | value"
+# define ERR_LOCAL_TIME "Error: failed to get local time"
+# define ERR_OPEN_FILE "Error: could not open file(s)"
+# define ERR_DATAFILE_FORMAT "Error: please use correct format for data file: date,exchange_rate"
+# define ERR_INFILE_FORMAT "Error: please use correct format for input file: date | value"
+# define DATA_FILE_FORMAT "date,exchange_rate"
+# define INPUT_FILE_FORMAT "date | value"
 # define DATE_FORMAT_SIZE 10
 # define BAD_INPUT "Error: bad input => "
 # define NO_RATE_AVAILABLE "Error: no price data available."
@@ -59,7 +62,7 @@ private:
 
 	void    init();
 	void    computeExchange(const std::string&, const float);
-	bool    isFormatValid(const std::string&, const std::string&) const;
+	bool    isFormatValid(const std::string&, const std::string&, const std::string&) const;
 	bool    isKeyValid(const std::string&) const;
 	bool    isValueValid(const std::string&) const;
 	bool    isInRange(const std::string&) const;
