@@ -22,11 +22,14 @@ PmergeMe&	PmergeMe::operator=(const PmergeMe& object)
 
 void	PmergeMe::init()
 {
-	if (_rawSequence.empty() || !isSequenceValid())
+	if (_rawSequence.empty()
+		|| _rawSequence.find_first_not_of(WHITESPACE) == std::string::npos)
 		throw std::runtime_error(USAGE);
+
+	parseSequence();
 }
 
-bool	PmergeMe::isSequenceValid()
+void	PmergeMe::parseSequence()
 {
 	std::istringstream issSeq(_rawSequence);
 	std::string token;
@@ -39,15 +42,13 @@ bool	PmergeMe::isSequenceValid()
 			|| !issToken.eof()
 			|| nb < 0
 			|| nb > std::numeric_limits<int>::max())
-			return false;
+			throw std::runtime_error(USAGE);
 		else
 			_d.push_back(nb);
 
-		if (distance(_d.begin(), _d.end()) == MAX_SIZE)
+		if (_d.size() == MAX_SIZE)
 			throw std::runtime_error(MAX_SIZE_REACHED);
 	}
-
-    return true;
 }
 
 void	PmergeMe::mergeInsert()
@@ -91,7 +92,6 @@ void	PmergeMe::printBefore() const
 
 std::ostream&   operator<<(std::ostream& os, const PmergeMe& object)
 {
-	(void)object;
 	os << "\nAfter:\t";
 	for (std::vector< std::pair<int, int> >::const_iterator it = object.getV().begin(); it != object.getV().end(); ++it)
 		os << it->first << " " << it->second << " ";
@@ -101,7 +101,7 @@ std::ostream&   operator<<(std::ostream& os, const PmergeMe& object)
 
 	os << "Time to process a range of\t" << std::distance(object.getV().begin(), object.getV().end());
 	os << " elements with std::vector : ";
-	os << std::fixed << std::setprecision(5) << object.getTime() << " us\n";
+	os << std::fixed << std::setprecision(5) << object.getTime() << " us";
     return (os);
 }
 

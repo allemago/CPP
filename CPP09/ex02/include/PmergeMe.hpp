@@ -39,7 +39,7 @@ private:
 //	==================== Private Methods ========================
 
 	void	init();
-	bool    isSequenceValid();
+	void    parseSequence();
 	void    printBefore() const;
 	void	mergeInsert();
 
