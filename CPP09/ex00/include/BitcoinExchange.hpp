@@ -7,6 +7,7 @@
 # include <string>
 # include <map>
 # include <vector>
+# include <list>
 # include <algorithm>
 # include <cstdlib>
 # include <cctype>
@@ -14,8 +15,9 @@
 # include <exception>
 # include <stdexcept>
 
+# define USAGE "Usage: ./btc input.txt"
 # define ERR_LOCAL_TIME "Error: failed to get local time"
-# define ERR_OPEN_FILE "Error: could not open file(s)"
+# define ERR_OPEN_FILE "Error: could not open "
 # define ERR_DATAFILE_FORMAT "Error: please use correct format for data file: date,exchange_rate"
 # define ERR_INFILE_FORMAT "Error: please use correct format for input file: date | value"
 # define DATA_FILE_FORMAT "date,exchange_rate"
@@ -49,7 +51,7 @@ private:
 	std::ifstream                   _inputFile;
 
 	std::map<std::string, float>    _data;
-	std::vector<int>				_longMonths;
+	std::list<int>					_longMonths;
 
 	int                             _currentYear;
 	int                             _currentMonth;

@@ -13,7 +13,8 @@ BitcoinExchange::BitcoinExchange(const std::string& file1, const std::string& fi
 void	BitcoinExchange::init()
 {
 	if (!_dataFile.is_open() || !_inputFile.is_open())
-		throw std::runtime_error(ERR_OPEN_FILE);
+		throw std::runtime_error(std::string(ERR_OPEN_FILE)
+			+ (!_dataFile.is_open() ? "data file" : "input file"));
 
 	_longMonths.push_back(JANUARY);
 	_longMonths.push_back(MARCH);

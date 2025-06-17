@@ -4,17 +4,14 @@ int main(int argc, char **argv)
 {
     if (argc != 2)
     {
-        std::cerr << "Usage: ./btc file.txt" << std::endl;
+        std::cerr << USAGE << std::endl;
         return (-1);
     }
 
     BitcoinExchange* btc = NULL;
-    std::string file1 = "data.csv";
-    std::string file2 = argv[1];
-
     try
     {
-        btc = new BitcoinExchange(file1, file2);
+        btc = new BitcoinExchange("data.csv", argv[1]);
         btc->convertBitcoinValue();
     }
     catch(const std::exception& e)

@@ -28,7 +28,7 @@ void	RPN::computeRPN()
 		std::string token;
 		while (iss >> token)
 		{
-			if (isdigit(token[0]) && token.size() == 1)
+			if (token.size() == 1 && isdigit(token[0]))
 				_numbers.push(token[0] - '0');
 			else if (token.size() == 1 && std::string("+-*/").find(token[0]) != std::string::npos)
 			{
@@ -55,7 +55,6 @@ void	RPN::computeRPN()
 			}
 			else
 				throw std::runtime_error("Error");
-			
 		}
 	}
 

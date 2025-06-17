@@ -14,6 +14,7 @@ SRC_PATH= 		src/
 OBJ_PATH= 		obj/
 
 SRC=			$(SRC_PATH)main.cpp		\
+				$(SRC_PATH)PmergeMe.cpp	\
 				
 OBJ= 			$(addprefix $(OBJ_PATH), $(notdir $(SRC:.cpp=.o)))
 
@@ -34,7 +35,7 @@ $(NAME): $(OBJ)
 	@printf "   ░█▀▀░▄▀▄░█░█░▄▀░\n"
 	@printf "   ░▀▀▀░▀░▀░▀▀▀░▀▀▀\n"
 	@printf "\n\n${RESET}"
-	@printf "   \033[1musage: ./program\033[0m"
+	@printf "   \033[1musage: ./PmergeMe [positive integer sequence]\033[0m"
 	@printf "\n\n"
 
 clean:

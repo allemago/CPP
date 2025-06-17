@@ -4,7 +4,7 @@ int main(int argc, char **argv)
 {
     if (argc != 2)
     {
-        std::cerr << "Usage: ./RPN [expr]" << std::endl;
+        std::cerr << "Usage: ./RPN [expression]" << std::endl;
         return (-1);
     }
 

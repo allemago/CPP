@@ -15,7 +15,7 @@ OBJ_PATH= 		obj/
 
 SRC=			$(SRC_PATH)main.cpp				\
 				$(SRC_PATH)BitcoinExchange.cpp	\
-				
+
 OBJ= 			$(addprefix $(OBJ_PATH), $(notdir $(SRC:.cpp=.o)))
 
 all: $(NAME)
@@ -35,7 +35,7 @@ $(NAME): $(OBJ)
 	@printf "   ░█▀▀░▄▀▄░█░█░█░█\n"
 	@printf "   ░▀▀▀░▀░▀░▀▀▀░▀▀▀\n"
 	@printf "\n\n${RESET}"
-	@printf "   \033[1musage: ./btc\033[0m"
+	@printf "   \033[1musage: ./btc input.txt\033[0m"
 	@printf "\n\n"
 
 clean:
