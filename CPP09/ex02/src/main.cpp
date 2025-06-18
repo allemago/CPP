@@ -1,6 +1,6 @@
 #include "../include/PmergeMe.hpp"
 
-time_t  g_startTime = 0;
+clock_t  g_startTime = 0;
 
 static std::string  concatSequence(size_t size, char **argv)
 {
@@ -16,21 +16,41 @@ int main(int argc, char **argv)
     if (argc == 1)
         return std::cerr << USAGE << std::endl, -1;
 
-    time(&g_startTime);
-    std::string sequence = concatSequence(argc, argv);
-    
-    PmergeMe* sort = NULL;
-    try
+    // DEQUE
     {
-        sort = new PmergeMe(sequence);
-        sort->process();
-        std::cout << *sort << std::endl;
+        PmergeMe< std::deque<int> >* sortDeque = NULL;
+        try
+        {
+            std::cout << BOLD "CONTAINER: DEQUE" RESET << std::endl;
+            sortDeque = new PmergeMe< std::deque<int> >(concatSequence(argc, argv));
+            g_startTime = clock();
+            sortDeque->process();
+            std::cout << *sortDeque << std::endl;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << std::endl;
+        }
+        delete sortDeque;
     }
-    catch(const std::exception& e)
+
+    // VECTOR
     {
-        std::cerr << e.what() << std::endl;
+        PmergeMe< std::vector<int> >* sortVector = NULL;
+        try
+        {
+            std::cout << BOLD "\nCONTAINER: VECTOR" RESET << std::endl;
+            sortVector = new PmergeMe< std::vector<int> >(concatSequence(argc, argv));
+            g_startTime = clock();
+            sortVector->process();
+            std::cout << *sortVector << std::endl;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << std::endl;
+        }
+        delete sortVector;
     }
-    delete sort;
 
     return (0);
 }
