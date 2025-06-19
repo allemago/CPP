@@ -15,6 +15,7 @@
 # include <cmath>
 
 # define BOLD "\033[1m"
+# define GREEN "\033[1;32m"
 # define RESET "\033[0m"
 
 # define USAGE "Usage: ./PmergeMe [positive integer sequence]"
@@ -27,10 +28,16 @@
 
 extern clock_t g_startTime;
 
-enum	e_containerType
+enum	e_Type
 {
 	DEQUE_TYPE = 1,
 	VECTOR_TYPE = 2
+};
+
+enum	e_Mode
+{
+	EXTRACT_MIN_MODE = 1,
+	SORT_MAIN_MODE = 2
 };
 
 template <typename T>
@@ -39,13 +46,13 @@ struct ContainerTypeTraits;
 template <>
 struct ContainerTypeTraits< std::deque<int> >
 {
-	static const e_containerType type = DEQUE_TYPE;
+	static const e_Type type = DEQUE_TYPE;
 };
 
 template <>
 struct ContainerTypeTraits< std::vector<int> >
 {
-	static const e_containerType type = VECTOR_TYPE;
+	static const e_Type type = VECTOR_TYPE;
 };
 
 template <typename T>
@@ -56,18 +63,18 @@ class PmergeMe
 *****************/
 private:
 
-	std::string                      _rawSequence;
+	std::string               _rawSequence;
 
-	static const e_containerType     _type = ContainerTypeTraits<T>::type;
-	T                                _c;
-	std::vector<int>                 _small;
+	static const e_Type       _type = ContainerTypeTraits<T>::type;
+	T                         _mainChain;
+	std::vector<int>          _pendingInserts;
 
 //	==================== Private Methods ========================
 
-	void                    parseSequence();
-	bool                    isSequenceEmpty() const;
-	void                    printBefore() const;
-	void	                mergeInsert();
+	void    parseSequence();
+	bool    isSequenceEmpty() const;
+	void    printBefore() const;
+	void    mergeInsertSort(e_Mode, size_t);
 
 /*****************
 *     PUBLIC     *
@@ -86,7 +93,6 @@ public:
 
 //	==================== Getters / Setters ======================
 
-	T&                         getOdd(size_t, size_t);
 	double                     getTime() const;
 	const T&                   getContainer() const;
 	const std::string          getContainerName() const;

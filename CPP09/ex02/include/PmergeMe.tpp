@@ -22,9 +22,9 @@ PmergeMe<T>&	PmergeMe<T>::operator=(const PmergeMe<T>& obj)
 	{
 		_rawSequence = obj._rawSequence;
 
-		if (_c.size())
-			_c.clear();
-		_c = obj._c;
+		if (_mainChain.size())
+			_mainChain.clear();
+		_mainChain = obj._mainChain;
 	}
 	return *this;
 }
@@ -53,34 +53,45 @@ void	PmergeMe<T>::parseSequence()
 			|| nb < 0
 			|| nb > std::numeric_limits<int>::max())
 			throw std::runtime_error(USAGE);
-		else if (find(_c.begin(), _c.end(), nb) == _c.end())
-			_c.push_back(nb);
+		else if (find(_mainChain.begin(), _mainChain.end(), nb) == _mainChain.end())
+			_mainChain.push_back(nb);
 		else
 			throw std::runtime_error(ERR_DUP_VALUES);
 
-		if (_c.size() == MAX_SIZE)
+		if (_mainChain.size() == MAX_SIZE)
 			throw std::runtime_error(MAX_SIZE_REACHED);
 	}
 }
 
 template <typename T>
-void	PmergeMe<T>::mergeInsert(e_containerType )
+void	PmergeMe<T>::mergeInsertSort(e_Mode mode, size_t n)
 {
-	if (_c.size() <= 1)
+	if (mode == SORT_MAIN_MODE && n == _mainChain.size() / 2)
 		return ;
-
-	size_t size = _c.size();
+	
+	size_t size = _mainChain.size();
 	size_t last = size - (size % 2);
 
 	for (size_t i = 0; i < last; i++)
 	{
-		if (_c[i] < _c[i + 1])
+		if (_mainChain[i] > _mainChain[i + 1])
 		{
-			_small.push_back(_c[i]);
-			_c.erase(_c.begin() + i);
+			switch (mode)
+			{
+				case EXTRACT_MIN_MODE:
+					_pendingInserts.push_back(_mainChain[i + 1]);
+					_mainChain.erase(_mainChain.begin() + (i + 1));
+					break ;
+
+				case SORT_MAIN_MODE:
+					std::swap(_mainChain[i], _mainChain[i + 1]);
+					break ;
+			}
 		}
 	}
-	mergeInsert();
+
+	if (mode == SORT_MAIN_MODE)
+		mergeInsertSort(SORT_MAIN_MODE, n + 2);
 }
 
 template <typename T>
@@ -88,19 +99,26 @@ void	PmergeMe<T>::process()
 {
 	printBefore();
 
-	if (_c.size() > 1)
-		mergeInsert();
-	std::cout << BOLD "\n_SMALL:" RESET << std::endl;
-	for (size_t i = 0; i < _small.size(); i++)
-		std::cout << _small[i] << " ";
+	if (_mainChain.size() > 1)
+	{
+		mergeInsertSort(EXTRACT_MIN_MODE, 0);
+		mergeInsertSort(SORT_MAIN_MODE, 0);
+	}
+
+	// DEBUG
+	std::cout << GREEN "\n\n_pendingInserts:" << std::endl;
+	for (size_t i = 0; i < _pendingInserts.size(); i++)
+		std::cout << _pendingInserts[i] << " ";
+	std::cout << RESET << std::endl;
+	// DEBUG
 }
 
 template <typename T>
 void	PmergeMe<T>::printBefore() const
 {
 	std::cout << "Before:\t";
-	for (size_t i = 0; i < _c.size(); i++)
-		std::cout << _c[i] << " ";
+	for (size_t i = 0; i < _mainChain.size(); i++)
+		std::cout << _mainChain[i] << " ";
 }
 
 template <typename T>
@@ -127,7 +145,7 @@ double	PmergeMe<T>::getTime() const
 template <typename T>
 const T&	PmergeMe<T>::getContainer() const
 {
-	return this->_c;
+	return this->_mainChain;
 }
 
 template <typename T>
