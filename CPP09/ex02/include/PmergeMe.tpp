@@ -64,12 +64,13 @@ void	PmergeMe<T>::parseSequence()
 }
 
 template <typename T>
-void	PmergeMe<T>::mergeInsert()
+void	PmergeMe<T>::mergeInsert(e_containerType )
 {
-	bool isOdd = false;
-	size_t odd, last = _c.size() - 2;
-	if (_c.size() % 2 != 0)
-		{ odd = _c.back(); last -= 1; isOdd = true; }
+	if (_c.size() <= 1)
+		return ;
+
+	size_t size = _c.size();
+	size_t last = size - (size % 2);
 
 	for (size_t i = 0; i < last; i++)
 	{
@@ -79,9 +80,7 @@ void	PmergeMe<T>::mergeInsert()
 			_c.erase(_c.begin() + i);
 		}
 	}
-
-	if (isOdd)
-		_c.push_back(odd);
+	mergeInsert();
 }
 
 template <typename T>
@@ -91,6 +90,9 @@ void	PmergeMe<T>::process()
 
 	if (_c.size() > 1)
 		mergeInsert();
+	std::cout << BOLD "\n_SMALL:" RESET << std::endl;
+	for (size_t i = 0; i < _small.size(); i++)
+		std::cout << _small[i] << " ";
 }
 
 template <typename T>
@@ -105,7 +107,7 @@ template <typename T>
 std::ostream&	operator<<(std::ostream& os, const PmergeMe<T>& obj)
 {
 	T c = obj.getContainer();
-
+	
 	os << "\nAfter:\t";
 	for (size_t i = 0; i < c.size(); i++)
 		os << c[i] << " ";
@@ -133,3 +135,4 @@ const std::string	PmergeMe<T>::getContainerName() const
 {
 	return this->_type == VECTOR_TYPE ? "std::vector : " : "std::deque : ";
 }
+
