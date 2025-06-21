@@ -7,7 +7,7 @@ CXXFLAGS= 		-Wall -Wextra -Werror -g3 -std=c++98 -MMD
 INCLD=  		-I ./include/
 
 CYAN= 			\033[1;36m
-GREEN_B=		\033[1;32m
+YELLOW_B=		\033[1;32m
 RESET= 			\033[0m
 
 SRC_PATH= 		src/
@@ -40,7 +40,7 @@ $(NAME): $(OBJ)
 
 clean:
 	@rm -rf $(OBJ_PATH)
-	@printf "\n\n${GREEN_B}"
+	@printf "\n\n${YELLOW_B}"
 	@printf "   ░█▀▀░█░░░█▀▀░█▀█░█▀█░█░█░█▀█░░█\n"
 	@printf "   ░█░░░█░░░█▀▀░█▀█░█░█░█░█░█▀▀░░▀\n"
 	@printf "   ░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀░▀░▀▀▀░▀░░░░▀\n"

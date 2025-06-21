@@ -23,6 +23,7 @@ int main(int argc, char **argv)
         {
             std::cout << BOLD "CONTAINER: DEQUE" RESET << std::endl;
             sortDeque = new PmergeMe< std::deque<int> >(concatSequence(argc, argv));
+			sortDeque->printBefore();
             g_startTime = clock();
             sortDeque->process();
             std::cout << *sortDeque << std::endl;
@@ -41,7 +42,8 @@ int main(int argc, char **argv)
         {
             std::cout << BOLD "\nCONTAINER: VECTOR" RESET << std::endl;
             sortVector = new PmergeMe< std::vector<int> >(concatSequence(argc, argv));
-            g_startTime = clock();
+            sortVector->printBefore();
+			g_startTime = clock();
             sortVector->process();
             std::cout << *sortVector << std::endl;
         }

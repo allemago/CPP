@@ -15,7 +15,7 @@
 # include <cmath>
 
 # define BOLD "\033[1m"
-# define GREEN "\033[1;32m"
+# define YELLOW "\033[1;93m"
 # define RESET "\033[0m"
 
 # define USAGE "Usage: ./PmergeMe [positive integer sequence]"
@@ -36,8 +36,8 @@ enum	e_Type
 
 enum	e_Mode
 {
-	EXTRACT_MIN_MODE = 1,
-	SORT_MAIN_MODE = 2
+	EXTRACT_MIN = 1,
+	SORT_MAX = 2
 };
 
 template <typename T>
@@ -67,14 +67,13 @@ private:
 
 	static const e_Type       _type = ContainerTypeTraits<T>::type;
 	T                         _mainChain;
-	std::vector<int>          _pendingInserts;
 
 //	==================== Private Methods ========================
 
 	void    parseSequence();
 	bool    isSequenceEmpty() const;
-	void    printBefore() const;
-	void    mergeInsertSort(e_Mode, size_t);
+	void    mergeInsertSort(size_t, size_t);
+	void    insertSorted(size_t, size_t, int);
 
 /*****************
 *     PUBLIC     *
@@ -99,6 +98,7 @@ public:
 
 //	==================== Public Methods =========================
 
+	void    printBefore() const;
 	void	process();
 
 //	======================= Typedefs ============================

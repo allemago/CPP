@@ -64,59 +64,69 @@ void	PmergeMe<T>::parseSequence()
 }
 
 template <typename T>
-void	PmergeMe<T>::mergeInsertSort(e_Mode mode, size_t n)
+void	PmergeMe<T>::mergeInsertSort(size_t start, size_t end)
 {
-	if (mode == SORT_MAIN_MODE && n == _mainChain.size() / 2)
+	if (end <= start)
 		return ;
 	
-	size_t size = _mainChain.size();
-	size_t last = size - (size % 2);
+	size_t size = end - start + 1;
+	size_t pairs = size / 2;
+	bool isOdd = (size % 2 != 0);
 
-	for (size_t i = 0; i < last; i++)
+	for (size_t i = 0; i < pairs; i++)
 	{
-		if (_mainChain[i] > _mainChain[i + 1])
-		{
-			switch (mode)
-			{
-				case EXTRACT_MIN_MODE:
-					_pendingInserts.push_back(_mainChain[i + 1]);
-					_mainChain.erase(_mainChain.begin() + (i + 1));
-					break ;
-
-				case SORT_MAIN_MODE:
-					std::swap(_mainChain[i], _mainChain[i + 1]);
-					break ;
-			}
-		}
+		size_t first = start + 2 * i;
+		size_t second = start + 2 * i + 1;
+		if (_mainChain[first] < _mainChain[second])
+			std::swap(_mainChain[first], _mainChain[second]);
 	}
 
-	if (mode == SORT_MAIN_MODE)
-		mergeInsertSort(SORT_MAIN_MODE, n + 2);
+	for (size_t i = pairs; i > 0; i--)
+	{
+		size_t minIndex = start + 2 * (i - 1) + 1;
+		int minValue = _mainChain[minIndex];
+		_mainChain.erase(_mainChain.begin() + minIndex);
+		_mainChain.insert(_mainChain.begin() + start + pairs, minValue);
+	}
+
+	int straggler;
+	if (isOdd)
+	{
+		straggler = _mainChain[end];
+		_mainChain.erase(_mainChain.begin() + end);
+	}
+	
+	mergeInsertSort(start, start + pairs - 1);
+
+	for (size_t i = 0; i < pairs; i++)
+	{
+		insertSorted(start, start + pairs - 1 + i, _mainChain[start + pairs + i]);
+		_mainChain.erase(_mainChain.begin() + start + pairs + i + 1);
+	}
+
+	if (isOdd)
+		insertSorted(start, end, straggler);
 }
+
+template <typename T>
+void	PmergeMe<T>::insertSorted(size_t start, size_t end, int value)
+{
+	while (start <= end && _mainChain[start] < value)
+		start++;
+	_mainChain.insert(_mainChain.begin() + start, value);
+}
+
 
 template <typename T>
 void	PmergeMe<T>::process()
 {
-	printBefore();
-
-	if (_mainChain.size() > 1)
-	{
-		mergeInsertSort(EXTRACT_MIN_MODE, 0);
-		mergeInsertSort(SORT_MAIN_MODE, 0);
-	}
-
-	// DEBUG
-	std::cout << GREEN "\n\n_pendingInserts:" << std::endl;
-	for (size_t i = 0; i < _pendingInserts.size(); i++)
-		std::cout << _pendingInserts[i] << " ";
-	std::cout << RESET << std::endl;
-	// DEBUG
+	mergeInsertSort(0, _mainChain.size() - 1);
 }
 
 template <typename T>
 void	PmergeMe<T>::printBefore() const
 {
-	std::cout << "Before:\t";
+	std::cout << YELLOW "Before:\t" RESET;
 	for (size_t i = 0; i < _mainChain.size(); i++)
 		std::cout << _mainChain[i] << " ";
 }
@@ -124,14 +134,16 @@ void	PmergeMe<T>::printBefore() const
 template <typename T>
 std::ostream&	operator<<(std::ostream& os, const PmergeMe<T>& obj)
 {
+	double duration = obj.getTime();
+
 	T c = obj.getContainer();
 	
-	os << "\nAfter:\t";
+	os << YELLOW "\nAfter:\t" RESET;
 	for (size_t i = 0; i < c.size(); i++)
 		os << c[i] << " ";
 	os << "\nTime to process a range of\t" << c.size();
 	os << " elements with " << obj.getContainerName();
-	os << std::fixed << std::setprecision(5) << obj.getTime() << " us";
+	os << std::fixed << std::setprecision(5) << duration << " us";
 
     return (os);
 }
