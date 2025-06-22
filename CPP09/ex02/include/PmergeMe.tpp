@@ -1,10 +1,10 @@
 #include "../include/PmergeMe.hpp"
 
 template <typename T>
-PmergeMe<T>::PmergeMe() : _sequence("") { parseSequence(); }
+PmergeMe<T>::PmergeMe() : _rawSequence("") { parseSequence(); }
 
 template <typename T>
-PmergeMe<T>::PmergeMe(const std::string& raw) : _sequence(raw) { parseSequence(); }
+PmergeMe<T>::PmergeMe(const std::string& raw) : _rawSequence(raw) { parseSequence(); }
 
 template <typename T>
 PmergeMe<T>::PmergeMe(const PmergeMe& obj)
@@ -20,11 +20,11 @@ PmergeMe<T>&	PmergeMe<T>::operator=(const PmergeMe<T>& obj)
 {
 	if (this != &obj)
 	{
-		_sequence = obj._sequence;
+		_rawSequence = obj._rawSequence;
 
-		if (_sequence.size())
-			_sequence.clear();
-		_sequence = obj._sequence;
+		if (_rawSequence.size())
+			_rawSequence.clear();
+		_rawSequence = obj._rawSequence;
 
 		if (_mainChain.size())
 			_mainChain.clear();
@@ -36,7 +36,7 @@ PmergeMe<T>&	PmergeMe<T>::operator=(const PmergeMe<T>& obj)
 template <typename T>
 bool	PmergeMe<T>::isSequenceEmpty() const
 {
-	return _sequence.find_first_not_of(WHITESPACE) == std::string::npos;
+	return _rawSequence.find_first_not_of(WHITESPACE) == std::string::npos;
 }
 
 template <typename T>
@@ -45,7 +45,7 @@ void	PmergeMe<T>::parseSequence()
 	if (isSequenceEmpty())
 		throw std::runtime_error(USAGE);
 
-	std::istringstream issSeq(_sequence);
+	std::istringstream issSeq(_rawSequence);
 	std::string token;
     long long nb;
 
@@ -57,20 +57,49 @@ void	PmergeMe<T>::parseSequence()
 			|| nb < 0
 			|| nb > std::numeric_limits<int>::max())
 			throw std::runtime_error(USAGE);
-		else if (find(_raw.begin(), _raw.end(), nb) == _raw.end())
-			_raw.push_back(nb);
+		else if (find(_mainChain.begin(), _mainChain.end(), nb) == _mainChain.end())
+			_mainChain.push_back(nb);
 		else
 			throw std::runtime_error(ERR_DUP_VALUES);
 
-		if (_raw.size() == MAX_SIZE)
+		if (_mainChain.size() == MAX_SIZE)
 			throw std::runtime_error(MAX_SIZE_REACHED);
 	}
-
-	_mainChain = _raw;
 }
 
 template <typename T>
-void	PmergeMe<T>::sort(e_Mode mode, size_t size, size_t start, size_t pairs)
+size_t	PmergeMe<T>::binarySearch(int x) const
+{
+	size_t low = 0, mid = 0;
+	size_t high = _mainChain.size() - 1;
+
+	while (low < high)
+	{
+		mid = low + (high - low) / 2;
+
+		if (_mainChain[mid] < x)
+			low = mid + 1;
+		else
+			high = mid;
+	}
+
+	return low;
+}
+
+template <typename T>
+size_t	PmergeMe<T>::getJacobsthalIndex(size_t n) const
+{
+    if (n == 0)
+        return 0;
+
+    if (n == 1)
+        return 1;
+
+    return getJacobsthalIndex(n - 1) + 2 * getJacobsthalIndex(n - 2);
+}
+
+template <typename T>
+void	PmergeMe<T>::mergeInsertSort(e_Mode mode, size_t size, size_t start, size_t pairs)
 {
 	if (pairs == size / 2)
 		return ;
@@ -81,27 +110,23 @@ void	PmergeMe<T>::sort(e_Mode mode, size_t size, size_t start, size_t pairs)
 	{
 		switch (mode)
 		{
-			case MAX_SEARCH:
+			case HANDLE_MAX:
 				if (_mainChain[i] > _mainChain[i + pairs])
 					std::swap_ranges(_mainChain.begin() + i,
 									_mainChain.begin() + (i + pairs),
 									_mainChain.begin() + (i + pairs));
 				break ;
 
-			case MIN_SEARCH:
-				if (i > 1)
-				{
-
-					std::swap_ranges(_mainChain.begin() + (i + 1),
-									_mainChain.begin() + (i + 2),
-									_mainChain.begin() + ((i + 1) / 2) + 1);
-				}
+			case HANDLE_MIN:
+				pending.push_back(_mainChain[i]);
+				_mainChain.erase(_mainChain.begin() + i);
+				i--;
 				break ;
 		}
 	}
 
-	if (mode == MAX_SEARCH)
-		sort(MAX_SEARCH, size, start + pairs, pairs * 2);
+	if (mode == HANDLE_MAX)
+		mergeInsertSort(HANDLE_MAX, size, start + pairs, pairs * 2);
 }
 
 /*
@@ -110,13 +135,21 @@ raw = (12, 1) (15, 2) (558, 6) (85, 9) (984551) size = 9
 
 isOdd = true, straggler = 984551;
 
-mainChain avant
+mainChain avant trie des paires
 (12, 1) (15, 2) (558, 6) (85, 9) size  = 8
  0   1   2   3   4    5   6   7 
 
-mainChain apres
-(1, 12) (2, 15) (6, 558) (9, 85)
- 0  1    2  3    4  5     6  7 
+mainChain apres trie des paires
+(1, 12) (15) (6, 558) (9, 85)
+ 0  1    2    3  4     5  6
+
+mainChain apres ajout des grands derriere le min
+(1) (12) (15) (558) (85)
+ 0   1    2    3     4
+
+pending apres HANDLE_MIN
+(2) (6) (9)
+ 0   1   2 
 
 */
 
@@ -134,10 +167,19 @@ void	PmergeMe<T>::process()
 
 	if (size > 1)
 	{
-		sort(MAX_SEARCH, size, 0, 1);
-
-		sort(MIN_SEARCH, size, 2, 1);
+		mergeInsertSort(HANDLE_MAX, size, 0, 1);
+		mergeInsertSort(HANDLE_MIN, size, 2, 1);
 	}
+}
+
+
+template <typename T>
+void	PmergeMe<T>::printBefore() const
+{
+	std::cout << YELLOW "Before:\t" RESET;
+	for (size_t i = 0; i < _mainChain.size(); i++)
+		std::cout << _mainChain[i] << " ";
+	std::cout << "\n";
 }
 
 template <typename T>
@@ -145,19 +187,12 @@ std::ostream&	operator<<(std::ostream& os, const PmergeMe<T>& obj)
 {
 	double duration = obj.getDuration();
 
-	T c1 = obj.getContainer(RAW);
-
-	os << YELLOW "Before:\t" RESET;
-	size_t size = c1.size();
-	for (size_t i = 0; i < size; i++)
-		os << c1[i] << (i + 1 != size ? " " : "\n");
-
-	T c2 = obj.getContainer(MAINCHAIN);
+	T c = obj.getContainer();
 	
 	os << YELLOW "After:\t" RESET;
-	size = c2.size();
+	size_t size = c.size();
 	for (size_t i = 0; i < size; i++)
-		os << c2[i] << (i + 1 != size ? " " : "\n");
+		os << c[i] << (i + 1 != size ? " " : "\n");
 	os << "\nTime to process a range of\t" << size;
 	os << " elements with " << obj.getContainerType() << " : ";
 	os << std::fixed << std::setprecision(5) << duration << " us";
@@ -172,9 +207,9 @@ double	PmergeMe<T>::getDuration() const
 }
 
 template <typename T>
-const T&	PmergeMe<T>::getContainer(e_Name name) const
+const T&	PmergeMe<T>::getContainer() const
 {
-	return name == RAW ? this->_raw : this->_mainChain;
+	return this->_mainChain;
 }
 
 template <typename T>

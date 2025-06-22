@@ -38,14 +38,8 @@ enum	e_Type
 
 enum	e_Mode
 {
-	MAX_SEARCH = 1,
-	MIN_SEARCH = 2
-};
-
-enum	e_Name
-{
-	MAINCHAIN = 1,
-	RAW = 2
+	HANDLE_MAX = 1,
+	HANDLE_MIN = 2
 };
 
 // TYPE TRAITS
@@ -81,7 +75,7 @@ class PmergeMe
 *****************/
 private:
 
-	std::string               _sequence;
+	std::string               _rawSequence;
 
 	static const e_Type       _type = ContainerTypeTraits<T>::value;
 	T                         _raw;
@@ -92,7 +86,9 @@ private:
 
 	void    parseSequence();
 	bool    isSequenceEmpty() const;
-	void    sort(e_Mode, size_t, size_t, size_t);
+	void    mergeInsertSort(e_Mode, size_t, size_t, size_t);
+	size_t  getJacobsthalIndex(size_t) const;
+	size_t  binarySearch(int) const;
 
 /*****************
 *     PUBLIC     *
@@ -112,11 +108,12 @@ public:
 //	======================== Getters ============================
 
 	double               getDuration() const;
-	const T&             getContainer(e_Name) const;
+	const T&             getContainer() const;
 	const std::string    getContainerType() const;
 
 //	==================== Public Methods =========================
 
+	void    printBefore() const;
 	void	process();
 };
 
