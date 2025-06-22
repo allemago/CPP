@@ -22,6 +22,10 @@ PmergeMe<T>&	PmergeMe<T>::operator=(const PmergeMe<T>& obj)
 	{
 		_rawSequence = obj._rawSequence;
 
+		if (_sequence.size())
+			_sequence.clear();
+		_sequence = obj._sequence;
+
 		if (_mainChain.size())
 			_mainChain.clear();
 		_mainChain = obj._mainChain;
@@ -53,116 +57,88 @@ void	PmergeMe<T>::parseSequence()
 			|| nb < 0
 			|| nb > std::numeric_limits<int>::max())
 			throw std::runtime_error(USAGE);
-		else if (find(_mainChain.begin(), _mainChain.end(), nb) == _mainChain.end())
-			_mainChain.push_back(nb);
+		else if (find(_sequence.begin(), _sequence.end(), nb) == _sequence.end())
+			_sequence.push_back(nb);
 		else
 			throw std::runtime_error(ERR_DUP_VALUES);
 
-		if (_mainChain.size() == MAX_SIZE)
+		if (_sequence.size() == MAX_SIZE)
 			throw std::runtime_error(MAX_SIZE_REACHED);
 	}
 }
 
 template <typename T>
-void	PmergeMe<T>::mergeInsertSort(size_t start, size_t end)
+void	PmergeMe<T>::sort(size_t pairs)
 {
-	if (end <= start)
+	size_t size = _sequence.size();
+
+	if (pairs == size / 2)
 		return ;
-	
-	size_t size = end - start + 1;
-	size_t pairs = size / 2;
-	bool isOdd = (size % 2 != 0);
 
-	for (size_t i = 0; i < pairs; i++)
+	size % 2 != 0 ? _oddFlag.isOdd = true : _oddFlag.isOdd = false;
+	if (_oddFlag.isOdd)
 	{
-		size_t first = start + 2 * i;
-		size_t second = start + 2 * i + 1;
-		if (_mainChain[first] < _mainChain[second])
-			std::swap(_mainChain[first], _mainChain[second]);
+		_oddFlag.straggler = _sequence.back();
+		_sequence.pop_back();
 	}
 
-	for (size_t i = pairs; i > 0; i--)
+	size_t end = size - pairs;
+	for (size_t i = 0; i < end; i+=2)
 	{
-		size_t minIndex = start + 2 * (i - 1) + 1;
-		int minValue = _mainChain[minIndex];
-		_mainChain.erase(_mainChain.begin() + minIndex);
-		_mainChain.insert(_mainChain.begin() + start + pairs, minValue);
+		if (_sequence[i] > _sequence[i + 1])
+			;
 	}
-
-	int straggler;
-	if (isOdd)
-	{
-		straggler = _mainChain[end];
-		_mainChain.erase(_mainChain.begin() + end);
-	}
-	
-	mergeInsertSort(start, start + pairs - 1);
-
-	for (size_t i = 0; i < pairs; i++)
-	{
-		insertSorted(start, start + pairs - 1 + i, _mainChain[start + pairs + i]);
-		_mainChain.erase(_mainChain.begin() + start + pairs + i + 1);
-	}
-
-	if (isOdd)
-		insertSorted(start, end, straggler);
 }
-
-template <typename T>
-void	PmergeMe<T>::insertSorted(size_t start, size_t end, int value)
-{
-	while (start <= end && _mainChain[start] < value)
-		start++;
-	_mainChain.insert(_mainChain.begin() + start, value);
-}
-
 
 template <typename T>
 void	PmergeMe<T>::process()
 {
-	mergeInsertSort(0, _mainChain.size() - 1);
-}
-
-template <typename T>
-void	PmergeMe<T>::printBefore() const
-{
-	std::cout << YELLOW "Before:\t" RESET;
-	for (size_t i = 0; i < _mainChain.size(); i++)
-		std::cout << _mainChain[i] << " ";
+	if (_sequence.size() > 1)
+	{
+		sort(1);
+	}
 }
 
 template <typename T>
 std::ostream&	operator<<(std::ostream& os, const PmergeMe<T>& obj)
 {
-	double duration = obj.getTime();
+	double duration = obj.getDuration();
 
-	T c = obj.getContainer();
+	T c1 = obj.getContainer(SEQUENCE);
+
+	os << YELLOW "Before:\t" RESET;
+	size_t size = c1.size();
+	for (size_t i = 0; i < size; i++)
+		os << c1[i] << (i + 1 != size ? " " : "\n");
+
+	T c2 = obj.getContainer(MAINCHAIN);
 	
-	os << YELLOW "\nAfter:\t" RESET;
-	for (size_t i = 0; i < c.size(); i++)
-		os << c[i] << " ";
-	os << "\nTime to process a range of\t" << c.size();
-	os << " elements with " << obj.getContainerName();
+	os << YELLOW "After:\t" RESET;
+	size = c2.size();
+	for (size_t i = 0; i < size; i++)
+		os << c2[i] << (i + 1 != size ? " " : "\n");
+	os << "\nTime to process a range of\t" << size;
+	os << " elements with " << obj.getContainerType() << " : ";
 	os << std::fixed << std::setprecision(5) << duration << " us";
 
     return (os);
 }
 
 template <typename T>
-double	PmergeMe<T>::getTime() const
+double	PmergeMe<T>::getDuration() const
 {
 	return (static_cast<double>(clock() - g_startTime) / CLOCKS_PER_SEC) * MICRO_SEC;
 }
 
 template <typename T>
-const T&	PmergeMe<T>::getContainer() const
+const T&	PmergeMe<T>::getContainer(e_Name name) const
 {
-	return this->_mainChain;
+	return name == SEQUENCE ? this->_sequence : this->_mainChain;
 }
 
 template <typename T>
-const std::string	PmergeMe<T>::getContainerName() const
+const std::string	PmergeMe<T>::getContainerType() const
 {
-	return this->_type == VECTOR_TYPE ? "std::vector : " : "std::deque : ";
+	return this->_type == VECTOR_TYPE ? "std::vector" : "std::deque";
 }
 
