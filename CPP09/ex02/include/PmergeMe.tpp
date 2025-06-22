@@ -1,10 +1,10 @@
 #include "../include/PmergeMe.hpp"
 
 template <typename T>
-PmergeMe<T>::PmergeMe() : _rawSequence("") { parseSequence(); }
+PmergeMe<T>::PmergeMe() : _sequence("") { parseSequence(); }
 
 template <typename T>
-PmergeMe<T>::PmergeMe(const std::string& raw) : _rawSequence(raw) { parseSequence(); }
+PmergeMe<T>::PmergeMe(const std::string& raw) : _sequence(raw) { parseSequence(); }
 
 template <typename T>
 PmergeMe<T>::PmergeMe(const PmergeMe& obj)
@@ -20,7 +20,7 @@ PmergeMe<T>&	PmergeMe<T>::operator=(const PmergeMe<T>& obj)
 {
 	if (this != &obj)
 	{
-		_rawSequence = obj._rawSequence;
+		_sequence = obj._sequence;
 
 		if (_sequence.size())
 			_sequence.clear();
@@ -36,7 +36,7 @@ PmergeMe<T>&	PmergeMe<T>::operator=(const PmergeMe<T>& obj)
 template <typename T>
 bool	PmergeMe<T>::isSequenceEmpty() const
 {
-	return _rawSequence.find_first_not_of(WHITESPACE) == std::string::npos;
+	return _sequence.find_first_not_of(WHITESPACE) == std::string::npos;
 }
 
 template <typename T>
@@ -45,7 +45,7 @@ void	PmergeMe<T>::parseSequence()
 	if (isSequenceEmpty())
 		throw std::runtime_error(USAGE);
 
-	std::istringstream issSeq(_rawSequence);
+	std::istringstream issSeq(_sequence);
 	std::string token;
     long long nb;
 
@@ -57,45 +57,86 @@ void	PmergeMe<T>::parseSequence()
 			|| nb < 0
 			|| nb > std::numeric_limits<int>::max())
 			throw std::runtime_error(USAGE);
-		else if (find(_sequence.begin(), _sequence.end(), nb) == _sequence.end())
-			_sequence.push_back(nb);
+		else if (find(_raw.begin(), _raw.end(), nb) == _raw.end())
+			_raw.push_back(nb);
 		else
 			throw std::runtime_error(ERR_DUP_VALUES);
 
-		if (_sequence.size() == MAX_SIZE)
+		if (_raw.size() == MAX_SIZE)
 			throw std::runtime_error(MAX_SIZE_REACHED);
 	}
+
+	_mainChain = _raw;
 }
 
 template <typename T>
-void	PmergeMe<T>::sort(size_t pairs)
+void	PmergeMe<T>::sort(e_Mode mode, size_t size, size_t start, size_t pairs)
 {
-	size_t size = _sequence.size();
-
 	if (pairs == size / 2)
 		return ;
 
-	size % 2 != 0 ? _oddFlag.isOdd = true : _oddFlag.isOdd = false;
-	if (_oddFlag.isOdd)
+	T pending;
+	size_t end = size - start - pairs;
+	for (size_t i = start; i < end; i+=(pairs * 2))
 	{
-		_oddFlag.straggler = _sequence.back();
-		_sequence.pop_back();
+		switch (mode)
+		{
+			case MAX_SEARCH:
+				if (_mainChain[i] > _mainChain[i + pairs])
+					std::swap_ranges(_mainChain.begin() + i,
+									_mainChain.begin() + (i + pairs),
+									_mainChain.begin() + (i + pairs));
+				break ;
+
+			case MIN_SEARCH:
+				if (i > 1)
+				{
+
+					std::swap_ranges(_mainChain.begin() + (i + 1),
+									_mainChain.begin() + (i + 2),
+									_mainChain.begin() + ((i + 1) / 2) + 1);
+				}
+				break ;
+		}
 	}
 
-	size_t end = size - pairs;
-	for (size_t i = 0; i < end; i+=2)
-	{
-		if (_sequence[i] > _sequence[i + 1])
-			;
-	}
+	if (mode == MAX_SEARCH)
+		sort(MAX_SEARCH, size, start + pairs, pairs * 2);
 }
+
+/*
+                                       straggler
+raw = (12, 1) (15, 2) (558, 6) (85, 9) (984551) size = 9
+
+isOdd = true, straggler = 984551;
+
+mainChain avant
+(12, 1) (15, 2) (558, 6) (85, 9) size  = 8
+ 0   1   2   3   4    5   6   7 
+
+mainChain apres
+(1, 12) (2, 15) (6, 558) (9, 85)
+ 0  1    2  3    4  5     6  7 
+
+*/
 
 template <typename T>
 void	PmergeMe<T>::process()
 {
-	if (_sequence.size() > 1)
+	 _oddFlag.isOdd = (_mainChain.size() % 2 != 0);
+	if (_oddFlag.isOdd)
 	{
-		sort(1);
+		_oddFlag.straggler = _mainChain.back();
+		_mainChain.pop_back();
+	}
+
+	size_t size = _mainChain.size();
+
+	if (size > 1)
+	{
+		sort(MAX_SEARCH, size, 0, 1);
+
+		sort(MIN_SEARCH, size, 2, 1);
 	}
 }
 
@@ -104,7 +145,7 @@ std::ostream&	operator<<(std::ostream& os, const PmergeMe<T>& obj)
 {
 	double duration = obj.getDuration();
 
-	T c1 = obj.getContainer(SEQUENCE);
+	T c1 = obj.getContainer(RAW);
 
 	os << YELLOW "Before:\t" RESET;
 	size_t size = c1.size();
@@ -133,7 +174,7 @@ double	PmergeMe<T>::getDuration() const
 template <typename T>
 const T&	PmergeMe<T>::getContainer(e_Name name) const
 {
-	return name == SEQUENCE ? this->_sequence : this->_mainChain;
+	return name == RAW ? this->_raw : this->_mainChain;
 }
 
 template <typename T>

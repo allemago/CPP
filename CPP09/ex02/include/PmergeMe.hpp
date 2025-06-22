@@ -36,10 +36,16 @@ enum	e_Type
 	VECTOR_TYPE = 2
 };
 
+enum	e_Mode
+{
+	MAX_SEARCH = 1,
+	MIN_SEARCH = 2
+};
+
 enum	e_Name
 {
 	MAINCHAIN = 1,
-	SEQUENCE = 2
+	RAW = 2
 };
 
 // TYPE TRAITS
@@ -75,10 +81,10 @@ class PmergeMe
 *****************/
 private:
 
-	std::string               _rawSequence;
+	std::string               _sequence;
 
 	static const e_Type       _type = ContainerTypeTraits<T>::value;
-	T                         _sequence;
+	T                         _raw;
 	T                         _mainChain;
 	s_OddFlag                 _oddFlag;
 
@@ -86,7 +92,7 @@ private:
 
 	void    parseSequence();
 	bool    isSequenceEmpty() const;
-	void    sort(size_t);
+	void    sort(e_Mode, size_t, size_t, size_t);
 
 /*****************
 *     PUBLIC     *
