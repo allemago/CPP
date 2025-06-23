@@ -39,30 +39,32 @@ enum	e_Type
 enum	e_Mode
 {
 	HANDLE_MAX = 1,
-	HANDLE_MIN = 2
+	HANDLE_ODD = 2,
+	HANDLE_MIN = 3
 };
 
 // TYPE TRAITS
 template <typename T>
-struct ContainerTypeTraits;
+struct	ContainerTypeTraits;
 
 template <>
-struct ContainerTypeTraits< std::deque<int> >
+struct	ContainerTypeTraits< std::deque<int> >
 {
 	static const e_Type value = DEQUE_TYPE;
 };
 
 template <>
-struct ContainerTypeTraits< std::vector<int> >
+struct	ContainerTypeTraits< std::vector<int> >
 {
 	static const e_Type value = VECTOR_TYPE;
 };
 
-// STRUCTURE
-struct s_OddFlag
+// TEMPLATE STRUCTURE
+template <typename T>
+struct	OddFlag
 {
 	bool  isOdd;
-	int   straggler;
+	T     straggler;
 };
 
 
@@ -78,17 +80,19 @@ private:
 	std::string               _rawSequence;
 
 	static const e_Type       _type = ContainerTypeTraits<T>::value;
-	T                         _raw;
 	T                         _mainChain;
-	s_OddFlag                 _oddFlag;
+	T                         _pending;
+	OddFlag<T>                _oddFlag;
 
 //	==================== Private Methods ========================
 
 	void    parseSequence();
 	bool    isSequenceEmpty() const;
 	void    mergeInsertSort(e_Mode, size_t, size_t, size_t);
-	size_t  getJacobsthalIndex(size_t) const;
-	size_t  binarySearch(int) const;
+	void    insertPending();
+	void    extractStraggler(size_t, size_t);
+	size_t  jacobsthal(size_t) const;
+	size_t  binarySearch(size_t) const;
 
 /*****************
 *     PUBLIC     *

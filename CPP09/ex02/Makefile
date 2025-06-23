@@ -50,7 +50,8 @@ fclean: clean
 
 re: fclean all
 
-test:
-	@./PmergeMe $$(shuf -i 0-999999 -n 100)
+test: $(NAME)
+	@clear
+	@./PmergeMe $$(shuf -i 0-999999 -n 40)
 
 .PHONY: all clean fclean re

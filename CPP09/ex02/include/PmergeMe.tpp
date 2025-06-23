@@ -68,26 +68,29 @@ void	PmergeMe<T>::parseSequence()
 }
 
 template <typename T>
-size_t	PmergeMe<T>::binarySearch(int x) const
+size_t	PmergeMe<T>::binarySearch(size_t target) const
 {
 	size_t low = 0, mid = 0;
 	size_t high = _mainChain.size() - 1;
 
-	while (low < high)
+	while (low <= high)
 	{
 		mid = low + (high - low) / 2;
 
-		if (_mainChain[mid] < x)
+		if (mid == target)
+			return mid;
+
+		if (mid < target)
 			low = mid + 1;
 		else
-			high = mid;
+			high = mid - 1;
 	}
 
 	return low;
 }
 
 template <typename T>
-size_t	PmergeMe<T>::getJacobsthalIndex(size_t n) const
+size_t	PmergeMe<T>::jacobsthal(size_t n) const
 {
     if (n == 0)
         return 0;
@@ -95,38 +98,7 @@ size_t	PmergeMe<T>::getJacobsthalIndex(size_t n) const
     if (n == 1)
         return 1;
 
-    return getJacobsthalIndex(n - 1) + 2 * getJacobsthalIndex(n - 2);
-}
-
-template <typename T>
-void	PmergeMe<T>::mergeInsertSort(e_Mode mode, size_t size, size_t start, size_t pairs)
-{
-	if (pairs == size / 2)
-		return ;
-
-	T pending;
-	size_t end = size - start - pairs;
-	for (size_t i = start; i < end; i+=(pairs * 2))
-	{
-		switch (mode)
-		{
-			case HANDLE_MAX:
-				if (_mainChain[i] > _mainChain[i + pairs])
-					std::swap_ranges(_mainChain.begin() + i,
-									_mainChain.begin() + (i + pairs),
-									_mainChain.begin() + (i + pairs));
-				break ;
-
-			case HANDLE_MIN:
-				pending.push_back(_mainChain[i]);
-				_mainChain.erase(_mainChain.begin() + i);
-				i--;
-				break ;
-		}
-	}
-
-	if (mode == HANDLE_MAX)
-		mergeInsertSort(HANDLE_MAX, size, start + pairs, pairs * 2);
+    return jacobsthal(n - 1) + 2 * jacobsthal(n - 2);
 }
 
 /*
@@ -140,38 +112,95 @@ mainChain avant trie des paires
  0   1   2   3   4    5   6   7 
 
 mainChain apres trie des paires
-(1, 12) (15) (6, 558) (9, 85)
- 0  1    2    3  4     5  6
+(1, 12) (2, 15) (6, 558) (9, 85)
+ 0  1    2  3    4  5     6  7
 
 mainChain apres ajout des grands derriere le min
 (1) (12) (15) (558) (85)
  0   1    2    3     4
 
-pending apres HANDLE_MIN
+_pending apres HANDLE_MIN
 (2) (6) (9)
  0   1   2 
 
 */
 
 template <typename T>
-void	PmergeMe<T>::process()
+void	PmergeMe<T>::insertPending()
 {
-	 _oddFlag.isOdd = (_mainChain.size() % 2 != 0);
-	if (_oddFlag.isOdd)
-	{
-		_oddFlag.straggler = _mainChain.back();
-		_mainChain.pop_back();
-	}
-
-	size_t size = _mainChain.size();
-
-	if (size > 1)
-	{
-		mergeInsertSort(HANDLE_MAX, size, 0, 1);
-		mergeInsertSort(HANDLE_MIN, size, 2, 1);
-	}
+	;
 }
 
+template <typename T>
+void	PmergeMe<T>::mergeInsertSort(e_Mode mode, size_t size, size_t start, size_t pairs)
+{
+	if (size <= 1 || pairs >= size / 2)
+		return ;
+
+	size_t end = ((size / pairs) * pairs);
+	_oddFlag.isOdd = (end != size);
+	if (_oddFlag.isOdd)
+		extractStraggler(size, end);
+
+	T& c = (mode != HANDLE_ODD ? _mainChain : _oddFlag.straggler);
+	size_t max = (mode != HANDLE_MIN ? end : size / 2);
+	size_t incr = (mode != HANDLE_MIN ? pairs * 2 : 1);
+
+	for (size_t i = start; i < max; i+=incr)
+	{
+		switch (mode)
+		{
+			case HANDLE_MAX:
+			case HANDLE_ODD:
+				if (c[i] < c[i - pairs])
+					std::swap_ranges(c.begin() + (i - pairs) + 1,
+									c.begin() + i + 1,
+									c.begin() + (i - (pairs * 2)) + 1);
+				break ;
+
+			case HANDLE_MIN:
+				_pending.push_back(c[i]);
+				_mainChain.erase(_mainChain.begin() + i);
+				break ;
+		}
+	}
+
+	if (mode == HANDLE_MAX || mode == HANDLE_ODD) // DEBUG
+		std::cout << "pairs = " << pairs << "\n";
+	else
+		std::cout << "\n";
+	printBefore();
+	std::cout << "\n"; // DEBUG
+
+	if (mode == HANDLE_MAX)
+		mergeInsertSort(HANDLE_MAX, size, start + pairs * 2, pairs * 2);
+
+	else if (mode == HANDLE_MIN)
+		insertPending();
+}
+
+template <typename T>
+void	PmergeMe<T>::process()
+{
+	std::cout << "\n"; // DEBUG
+	
+	mergeInsertSort(HANDLE_MAX, _mainChain.size(), 1, 1);
+
+	if (_oddFlag.isOdd)
+		mergeInsertSort(HANDLE_ODD, _oddFlag.straggler.size(), 1, 1);
+	
+	mergeInsertSort(HANDLE_MIN, _mainChain.size(), 0, 1);
+}
+
+template <typename T>
+void	PmergeMe<T>::extractStraggler(size_t size, size_t end)
+{
+	_oddFlag.straggler.insert(_oddFlag.straggler.begin(),
+							_mainChain.begin() + end,
+							_mainChain.begin() + size);
+
+	_mainChain.erase(_mainChain.begin() + end, _mainChain.begin() + size);
+}
 
 template <typename T>
 void	PmergeMe<T>::printBefore() const
@@ -189,7 +218,7 @@ std::ostream&	operator<<(std::ostream& os, const PmergeMe<T>& obj)
 
 	T c = obj.getContainer();
 	
-	os << YELLOW "After:\t" RESET;
+	os << YELLOW "\nAfter:\t" RESET;
 	size_t size = c.size();
 	for (size_t i = 0; i < size; i++)
 		os << c[i] << (i + 1 != size ? " " : "\n");
@@ -217,4 +246,3 @@ const std::string	PmergeMe<T>::getContainerType() const
 {
 	return this->_type == VECTOR_TYPE ? "std::vector" : "std::deque";
 }
-
