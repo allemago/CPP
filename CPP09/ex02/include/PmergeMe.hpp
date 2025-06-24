@@ -15,7 +15,12 @@
 # include <cmath>
 
 # define BOLD "\033[1m"
+# define RED "\033[1;31m"
 # define YELLOW "\033[1;93m"
+# define GREEN "\033[1;32m"
+# define CYAN "\033[1;36m"
+# define BLUE "\033[1;34m"
+# define PURPLE "\033[1;95m"
 # define RESET "\033[0m"
 
 # define USAGE "Usage: ./PmergeMe [positive integer sequence]"
@@ -40,7 +45,8 @@ enum	e_Mode
 {
 	HANDLE_MAX = 1,
 	HANDLE_ODD = 2,
-	HANDLE_MIN = 3
+	HANDLE_MIN = 3,
+	HANDLE_ODD_INSERT = 4
 };
 
 // TYPE TRAITS
@@ -63,8 +69,8 @@ struct	ContainerTypeTraits< std::vector<int> >
 template <typename T>
 struct	OddFlag
 {
-	bool  isOdd;
-	T     straggler;
+	bool   isOdd;
+	T      straggler;
 };
 
 
@@ -77,22 +83,32 @@ class PmergeMe
 *****************/
 private:
 
-	std::string               _rawSequence;
+	std::string                              _rawSequence;
 
-	static const e_Type       _type = ContainerTypeTraits<T>::value;
-	T                         _mainChain;
-	T                         _pending;
-	OddFlag<T>                _oddFlag;
+	static const e_Type                      _type = ContainerTypeTraits<T>::value;
+	T                                        _mainChain;
+	std::vector< std::pair<size_t, int> >    _pending;
+	OddFlag<T>                               _oddFlag;
+
+//	====================== Typedefs =============================
+
+	typedef typename T::iterator          iterator;
+	typedef typename T::const_iterator    const_iterator;
 
 //	==================== Private Methods ========================
 
-	void    parseSequence();
-	bool    isSequenceEmpty() const;
-	void    mergeInsertSort(e_Mode, size_t, size_t, size_t);
-	void    insertPending();
-	void    extractStraggler(size_t, size_t);
-	size_t  jacobsthal(size_t) const;
-	size_t  binarySearch(size_t) const;
+	void             parseSequence();
+	bool             isSequenceEmpty() const;
+	void             mergeInsertSort(e_Mode, size_t, size_t, size_t);
+	void             insertPending();
+	void             extractStraggler(e_Mode, size_t, size_t);
+	size_t           jacobsthal(size_t) const;
+	const_iterator   binarySearch(size_t) const;
+
+	// DEBUG FUNCTIONS
+	void    printPending() const;
+	void    printMainChain() const;
+	void    printOrder(const std::vector<size_t>&) const;
 
 /*****************
 *     PUBLIC     *
