@@ -42,8 +42,8 @@ bool	PmergeMe<T>::isSequenceEmpty() const
 template <typename T>
 void	PmergeMe<T>::parseSequence()
 {
-	if (isSequenceEmpty())
-		throw std::runtime_error(USAGE);
+	if (isSequenceEmpty() || !_type)
+		throw std::runtime_error(!_type ? ERR_TYPE : USAGE);
 
 	std::istringstream issSeq(_rawSequence);
 	std::string token;
@@ -68,9 +68,9 @@ void	PmergeMe<T>::parseSequence()
 }
 
 template <typename T>
-typename PmergeMe<T>::const_iterator	PmergeMe<T>::binarySearch(size_t target) const
+typename PmergeMe<T>::t_iterator	PmergeMe<T>::binarySearch(size_t target) const
 {
-	const_iterator it;
+	t_iterator it;
 
 	size_t low = 0, mid = 0;
 	size_t high = _mainChain.size() - 1;
@@ -102,20 +102,20 @@ size_t	PmergeMe<T>::jacobsthal(size_t n) const
 }
 
 /*
-                                       straggler
+                                       unpaired
 raw = (12, 1) (15, 2) (558, 6) (85, 9) (984551) size = 9
 
-isOdd = true, straggler = 984551;
+flag = true, unpaired[0] = 984551;
 
 mainChain avant trie des paires
 (12, 1) (15, 2) (558, 6) (85, 9) size  = 8
  0   1   2   3   4    5   6   7 
 
-mainChain apres trie des paires
+mainChain apres trie des paires: petit a gauche, grand a droite
 (1, 12) (2, 15) (6, 558) (9, 85)
  0  1    2  3    4  5     6  7
 
-mainChain apres ajout des grands derriere le min
+mainChain apres extraction des min (_pending), reste les grands
 (12) (15) (85) (558)
  0    1    2     3
 
@@ -123,14 +123,14 @@ _pending apres HANDLE_MIN
 index key =  1   3   4   5
 value     = (1) (2) (9) (6)
 
-1-	J'insere dans mainChain le tout premier element de pending (index key = 1) -> (value = 1).
+1- [OK]	Inserer dans mainChain le tout premier element de pending (index key = 1) -> (value = 1).
 
-2-	Ensuite, j'insere les elements de pending aux (indices de Jacobsthal)* dans l'odre decroissant,
-	pending size = 4, indices utiles de Jacobsthal = (1, 3, 5), car size <= 5 de la suite.
+2- [..]	Ensuite, inserer les elements de pending aux (indices de Jacobsthal)* dans l'odre decroissant,
+		pending size = 4, indices utiles de Jacobsthal = (1, 3, 5), car size <= 5 de la suite,
+		-> inserer _pending[index key 5], puis _pending[index key 3] et enfin _pending[index key 1],
+		puis inserer tous les autres restants dans l'ordre croissant donc -> _pending[index key 4].
 
-3-	Puis inserer tous les autres restants dans l'ordre croissant.
-
-4-	Inserer le straggler a la fin.
+4- [..]	Inserer unpaired.
 
 
 *suite de Jacobsthal = ...1, 3, 5, 11, 21, 43, 85, 171...
@@ -138,11 +138,18 @@ value     = (1) (2) (9) (6)
 */
 
 template <typename T>
+void	PmergeMe<T>::insertIndex(typename PmergeMe<T>::t_iterator target,
+								typename PmergeMe<T>::v_iterator index)
+{
+	_mainChain.insert(target, index->second);
+	_pending.erase(index);
+}
+
+template <typename T>
 void	PmergeMe<T>::insertPending()
 {
 	// inserer le plus petit element en premier dans mainChain
-	_mainChain.insert(_mainChain.begin(), _pending[0].second);
-	_pending.erase(_pending.begin());
+	insertIndex(_mainChain.begin(), _pending.begin());
 
 	printPending(); // DEBUG
 
@@ -158,10 +165,10 @@ void	PmergeMe<T>::insertPending()
 
 	printOrder(jacobsthalOrder); // DEBUG
 
-/* 	// insertion des pending et straggler
+/* 	// insertion des pending et unpaired
  	const_iterator it;
 	insertIt(HANDLE_MIN, it);
-	if (_oddFlag.isOdd)
+	if (_hasOdd.flag)
 		insertIt(HANDLE_ODD_INSERT, it);
 
 
@@ -172,21 +179,23 @@ void	PmergeMe<T>::insertPending()
 					[1](const_iterator& f) {return f.first == index});
 	}
 
-	// insertion supplementaire si isOdd
+	// insertion supplementaire si flag
 	for (size_t i = 0; )
-	while (_oddFlag.isOdd && _oddFlag.straggler.size())
+	while (_hasOdd.flag && _hasOdd.unpaired.size())
 	{
-		_mainChain.insert(binarySearch(_oddFlag.straggler), _oddFlag.straggler);
-	} */
+		_mainChain.insert(binarySearch(_hasOdd.unpaired), _hasOdd.unpaired);
+	}
+*/
+
 }
 
 template <typename T>
-void	PmergeMe<T>::extractStraggler(e_Mode mode, size_t start, size_t end)
+void	PmergeMe<T>::handleUnpaired(e_Mode mode, size_t start, size_t end)
 {
 	switch (mode)
 	{
 		case HANDLE_ODD:
-			_oddFlag.straggler.insert(_oddFlag.straggler.begin(),
+			_hasOdd.unpaired.insert(_hasOdd.unpaired.begin(),
 									_mainChain.begin() + start,
 									_mainChain.begin() + end);
 			_mainChain.erase(_mainChain.begin() + start, _mainChain.begin() + end);
@@ -197,7 +206,7 @@ void	PmergeMe<T>::extractStraggler(e_Mode mode, size_t start, size_t end)
 			for (size_t i = start; i < end; i++)
 			{
 				_pending[i].first = (i > 0 ? i + 2 : i + 1);
-				_pending[i].second = _oddFlag.straggler[i];
+				_pending[i].second = _hasOdd.unpaired[i];
 			}
 		}
 
@@ -213,11 +222,11 @@ void	PmergeMe<T>::mergeInsertSort(e_Mode mode, size_t size, size_t start, size_t
 		return ;
 
 	size_t end = ((size / pairs) * pairs);
-	_oddFlag.isOdd = (end != size);
-	if (_oddFlag.isOdd)
-		extractStraggler(HANDLE_ODD, end, size);
+	_hasOdd.flag = (end != size);
+	if (_hasOdd.flag)
+		handleUnpaired(HANDLE_ODD, end, size);
 
-	T& c = (mode != HANDLE_ODD ? _mainChain : _oddFlag.straggler);
+	T& c = (mode != HANDLE_ODD ? _mainChain : _hasOdd.unpaired);
 	size_t max = (mode != HANDLE_MIN ? end : size / 2);
 	size_t incr = (mode != HANDLE_MIN ? pairs * 2 : 1);
 
@@ -253,8 +262,8 @@ void	PmergeMe<T>::process()
 {
 	mergeInsertSort(HANDLE_MAX, _mainChain.size(), 1, 1);
 
-	if (_oddFlag.isOdd)
-		mergeInsertSort(HANDLE_ODD, _oddFlag.straggler.size(), 1, 1);
+	if (_hasOdd.flag)
+		mergeInsertSort(HANDLE_ODD, _hasOdd.unpaired.size(), 1, 1);
 	
 	mergeInsertSort(HANDLE_MIN, _mainChain.size(), 0, 1);
 }

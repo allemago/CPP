@@ -18,41 +18,37 @@ int main(int argc, char **argv)
 
     // DEQUE
     {
-        PmergeMe< std::deque<int> >* sortDeque = NULL;
         try
         {
             std::cout << BOLD "CONTAINER: DEQUE" RESET << std::endl;
-            sortDeque = new PmergeMe< std::deque<int> >(concatSequence(argc, argv));
-            sortDeque->printBefore();
+            PmergeMe< std::deque<int> > sortDeque(concatSequence(argc, argv));
+            sortDeque.printBefore();
             g_startTime = clock();
-            sortDeque->process();
-            std::cout << *sortDeque << std::endl;
+            sortDeque.process();
+            std::cout << sortDeque << std::endl;
         }
         catch(const std::exception& e)
         {
             std::cerr << e.what() << std::endl;
         }
-        delete sortDeque;
     }
 
     // VECTOR
     {
-        PmergeMe< std::vector<int> >* sortVector = NULL;
         try
         {
             std::cout << BOLD "\nCONTAINER: VECTOR" RESET << std::endl;
-            sortVector = new PmergeMe< std::vector<int> >(concatSequence(argc, argv));
-            sortVector->printBefore();
+            PmergeMe< std::vector<int> > sortVector(concatSequence(argc, argv));
+            sortVector.printBefore();
 			g_startTime = clock();
-            sortVector->process();
-            std::cout << *sortVector << std::endl;
+            sortVector.process();
+            std::cout << sortVector << std::endl;
         }
         catch(const std::exception& e)
         {
             std::cerr << e.what() << std::endl;
         }
-        delete sortVector;
     }
 
-    return (0);
+    return 0;
 }

@@ -5,6 +5,7 @@
 # include <string>
 # include <vector>
 # include <deque>
+# include <list>
 # include <utility>
 # include <algorithm>
 # include <iterator>
@@ -24,6 +25,7 @@
 # define RESET "\033[0m"
 
 # define USAGE "Usage: ./PmergeMe [positive integer sequence]"
+# define ERR_TYPE "Unsupported container type. Please use vector or deque"
 # define MAX_SIZE_REACHED "Maximum of 5000 integers has been reached"
 # define ERR_DUP_VALUES "Error: duplicate values are not allowed"
 
@@ -37,6 +39,7 @@ extern clock_t g_startTime;
 // ENUM
 enum	e_Type
 {
+	INVALID_TYPE = 0,
 	DEQUE_TYPE = 1,
 	VECTOR_TYPE = 2
 };
@@ -51,7 +54,10 @@ enum	e_Mode
 
 // TYPE TRAITS
 template <typename T>
-struct	ContainerTypeTraits;
+struct	ContainerTypeTraits
+{
+	static const e_Type value = INVALID_TYPE;
+};
 
 template <>
 struct	ContainerTypeTraits< std::deque<int> >
@@ -67,10 +73,10 @@ struct	ContainerTypeTraits< std::vector<int> >
 
 // TEMPLATE STRUCTURE
 template <typename T>
-struct	OddFlag
+struct	HasOdd
 {
-	bool   isOdd;
-	T      straggler;
+	bool   flag;
+	T      unpaired;
 };
 
 
@@ -85,30 +91,33 @@ private:
 
 	std::string                              _rawSequence;
 
-	static const e_Type                      _type = ContainerTypeTraits<T>::value;
-	T                                        _mainChain;
-	std::vector< std::pair<size_t, int> >    _pending;
-	OddFlag<T>                               _oddFlag;
+	static const e_Type                      _type = ContainerTypeTraits<T>::value; // T (container) type: vector, deque
+	T                                        _mainChain; // final sequence
+
+	std::vector< std::pair<size_t, int> >    _pending; // min elements
+
+	HasOdd<T>                                _hasOdd; // unpaired elements
 
 //	====================== Typedefs =============================
 
-	typedef typename T::iterator          iterator;
-	typedef typename T::const_iterator    const_iterator;
+	typedef typename T::iterator                                     t_iterator;
+	typedef typename std::vector<std::pair<size_t, int> >::iterator  v_iterator;
 
 //	==================== Private Methods ========================
 
 	void             parseSequence();
 	bool             isSequenceEmpty() const;
 	void             mergeInsertSort(e_Mode, size_t, size_t, size_t);
+	void             handleUnpaired(e_Mode, size_t, size_t);
 	void             insertPending();
-	void             extractStraggler(e_Mode, size_t, size_t);
+	void             insertIndex(t_iterator, v_iterator);
 	size_t           jacobsthal(size_t) const;
-	const_iterator   binarySearch(size_t) const;
+	t_iterator       binarySearch(size_t) const;
 
 	// DEBUG FUNCTIONS
-	void    printPending() const;
-	void    printMainChain() const;
-	void    printOrder(const std::vector<size_t>&) const;
+	void             printPending() const;
+	void             printMainChain() const;
+	void             printOrder(const std::vector<size_t>&) const;
 
 /*****************
 *     PUBLIC     *
@@ -133,8 +142,8 @@ public:
 
 //	==================== Public Methods =========================
 
-	void    printBefore() const;
-	void	process();
+	void                 printBefore() const;
+	void                 process();
 };
 
 # include "PmergeMe.tpp"
