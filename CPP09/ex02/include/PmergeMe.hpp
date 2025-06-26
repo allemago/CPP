@@ -79,7 +79,6 @@ struct	HasOdd
 	T      unpaired;
 };
 
-
 // TEMPLATE CLASS
 template <typename T>
 class PmergeMe
@@ -91,17 +90,18 @@ private:
 
 	std::string                              _rawSequence;
 
-	static const e_Type                      _type = ContainerTypeTraits<T>::value; // T (container) type: vector, deque
-	T                                        _mainChain; // final sequence
+	static const e_Type                      _type = ContainerTypeTraits<T>::value;
+	T                                        _mainChain;
 
-	std::vector< std::pair<size_t, int> >    _pending; // min elements
+	std::vector< std::pair<size_t, int> >    _pending;
 
-	HasOdd<T>                                _hasOdd; // unpaired elements
+	HasOdd<T>                                _hasOdd;
 
 //	====================== Typedefs =============================
 
-	typedef typename T::iterator                                     t_iterator;
-	typedef typename std::vector<std::pair<size_t, int> >::iterator  v_iterator;
+	typedef typename T::iterator                             iterator;
+	typedef typename std::vector<std::pair<size_t, int> >    PairList;
+	typedef typename PairList::iterator                      pair_iterator;
 
 //	==================== Private Methods ========================
 
@@ -110,9 +110,10 @@ private:
 	void             mergeInsertSort(e_Mode, size_t, size_t, size_t);
 	void             handleUnpaired(e_Mode, size_t, size_t);
 	void             insertPending();
-	void             insertIndex(t_iterator, v_iterator);
+	void             insertValue(iterator, pair_iterator);
+	void             getJacobsthalOrder(T&);
 	size_t           jacobsthal(size_t) const;
-	t_iterator       binarySearch(size_t) const;
+	iterator         binarySearch(size_t) const;
 
 	// DEBUG FUNCTIONS
 	void             printPending() const;

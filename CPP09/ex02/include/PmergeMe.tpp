@@ -68,9 +68,9 @@ void	PmergeMe<T>::parseSequence()
 }
 
 template <typename T>
-typename PmergeMe<T>::t_iterator	PmergeMe<T>::binarySearch(size_t target) const
+typename PmergeMe<T>::iterator	PmergeMe<T>::binarySearch(size_t target) const
 {
-	t_iterator it;
+	iterator it;
 
 	size_t low = 0, mid = 0;
 	size_t high = _mainChain.size() - 1;
@@ -138,8 +138,22 @@ value     = (1) (2) (9) (6)
 */
 
 template <typename T>
-void	PmergeMe<T>::insertIndex(typename PmergeMe<T>::t_iterator target,
-								typename PmergeMe<T>::v_iterator index)
+void	PmergeMe<T>::getJacobsthalOrder(T& order)
+{
+	if (!order.size())
+		order.clear();
+	
+	size_t index = 0;
+	for (size_t i = 3; index < _pending.size(); i++)
+	{
+		index = jacobsthal(i);
+		jacobsthalOrder.push_back(index);
+	}
+}
+
+template <typename T>
+void	PmergeMe<T>::insertValue(typename PmergeMe<T>::iterator target,
+								typename PmergeMe<T>::pair_iterator index)
 {
 	_mainChain.insert(target, index->second);
 	_pending.erase(index);
@@ -148,45 +162,36 @@ void	PmergeMe<T>::insertIndex(typename PmergeMe<T>::t_iterator target,
 template <typename T>
 void	PmergeMe<T>::insertPending()
 {
-	// inserer le plus petit element en premier dans mainChain
-	insertIndex(_mainChain.begin(), _pending.begin());
+	insertValue(_mainChain.begin(), _pending.begin());
 
 	printPending(); // DEBUG
 
-	// recuperation de la suite Jacobsthal
-	std::vector<size_t> jacobsthalOrder;
-	size_t index = 0;
-
-	for (size_t i = 3; index < _pending.size(); i++)
-	{
-		index = jacobsthal(i);
-		jacobsthalOrder.push_back(index);
-	}
-
-	printOrder(jacobsthalOrder); // DEBUG
-
-/* 	// insertion des pending et unpaired
- 	const_iterator it;
-	insertIt(HANDLE_MIN, it);
-	if (_hasOdd.flag)
-		insertIt(HANDLE_ODD_INSERT, it);
-
-
+	T order;
+	getJacobsthalOrder(order);
+	
+	printOrder(order); // DEBUG
+	
+	size_t i = order.size();
+	iterator it;
 	while (_pending.size())
 	{
-		it = find_if(_pending.begin(),
-					_pending.end(),
-					[1](const_iterator& f) {return f.first == index});
-	}
+		if (i-- > 0)
+		{
+			it = find_if(_pending.begin(),
+						_pending.end(),
+						[order[i]](iterator& f) { return f.first == order[i] });
+			
+			insertValue(binarySearch(it->second), it);
 
-	// insertion supplementaire si flag
-	for (size_t i = 0; )
-	while (_hasOdd.flag && _hasOdd.unpaired.size())
-	{
-		_mainChain.insert(binarySearch(_hasOdd.unpaired), _hasOdd.unpaired);
-	}
-*/
+			_pending.erase(it);
+		}
 
+		if (_hasOdd.flag && !_pending.size())
+		{
+			handleUnpaired(HANDLE_ODD_INSERT, 0, _hasOdd.unpaired.size());
+			getJacobsthalOrder(order);
+		}
+	}
 }
 
 template <typename T>
@@ -208,6 +213,7 @@ void	PmergeMe<T>::handleUnpaired(e_Mode mode, size_t start, size_t end)
 				_pending[i].first = (i > 0 ? i + 2 : i + 1);
 				_pending[i].second = _hasOdd.unpaired[i];
 			}
+			_hasOdd.flag = false;
 		}
 
 		default:
