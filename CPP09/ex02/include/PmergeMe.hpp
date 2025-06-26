@@ -5,7 +5,7 @@
 # include <string>
 # include <vector>
 # include <deque>
-# include <list>
+# include <set>
 # include <utility>
 # include <algorithm>
 # include <iterator>
@@ -32,6 +32,9 @@
 # define MAX_SIZE 5000
 # define MICRO_SEC 1000000.0
 # define WHITESPACE "\t\n\v\f\r "
+
+template <typename T>
+class PmergeMe;
 
 // GLOBAL VARIABLE
 extern clock_t g_startTime;
@@ -71,7 +74,7 @@ struct	ContainerTypeTraits< std::vector<int> >
 	static const e_Type value = VECTOR_TYPE;
 };
 
-// TEMPLATE STRUCTURE
+// STRUCTURES
 template <typename T>
 struct	HasOdd
 {
@@ -92,6 +95,7 @@ private:
 
 	static const e_Type                      _type = ContainerTypeTraits<T>::value;
 	T                                        _mainChain;
+	std::set<size_t>                         _maxIndex;
 
 	std::vector< std::pair<size_t, int> >    _pending;
 
@@ -109,11 +113,12 @@ private:
 	bool             isSequenceEmpty() const;
 	void             mergeInsertSort(e_Mode, size_t, size_t, size_t);
 	void             handleUnpaired(e_Mode, size_t, size_t);
+	void             setMaxIndexes();
 	void             insertPending();
 	void             insertValue(iterator, pair_iterator);
-	void             getJacobsthalOrder(T&);
+	void             getJacobsthalOrder(std::vector<size_t>&);
 	size_t           jacobsthal(size_t) const;
-	iterator         binarySearch(size_t) const;
+	iterator         binarySearch(size_t);
 
 	// DEBUG FUNCTIONS
 	void             printPending() const;
