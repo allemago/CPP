@@ -103,9 +103,10 @@ private:
 
 //	====================== Typedefs =============================
 
-	typedef typename T::iterator                             iterator;
-	typedef typename std::vector<std::pair<size_t, int> >    PairList;
-	typedef typename PairList::iterator                      pair_iterator;
+	typedef typename T::iterator                  iterator;
+	typedef typename std::pair<size_t, int>       Pair;
+	typedef typename std::vector<Pair>            PairList;
+	typedef typename PairList::iterator           pair_iterator;
 
 //	==================== Private Methods ========================
 
@@ -118,7 +119,7 @@ private:
 	void             insertValue(iterator, pair_iterator);
 	void             getJacobsthalOrder(std::vector<size_t>&);
 	size_t           jacobsthal(size_t) const;
-	iterator         binarySearch(size_t);
+	iterator         binarySearch(pair_iterator);
 
 	// DEBUG FUNCTIONS
 	void             printPending() const;
