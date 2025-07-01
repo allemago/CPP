@@ -109,15 +109,16 @@ value     = (1) (2) (9) (6)
 */
 
 template <typename T>
-typename PmergeMe<T>::iterator	PmergeMe<T>::binarySearch(typename PmergeMe<T>::pair_iterator it)
+typename PmergeMe<T>::iterator	PmergeMe<T>::binarySearch(typename PmergeMe<T>::iterator it)
 {
- 	iterator low = _mainChain.begin(), high = (it->first > 1 ? _mainChain.begin() + (it->first - 2) : _mainChain.end());
+ 	iterator low = _mainChain.begin();
+	iterator high = _mainChain.begin() + (it->first - 1) * 2;
 
 	while (low < high)
 	{
 		iterator mid = low + (high - low) / 2;
 
-		if (*mid < it->second)
+		if (mid->second < it->second)
 			low = mid + 1;
 		else
 			high = mid;
@@ -144,35 +145,36 @@ void	PmergeMe<T>::getJacobsthalOrder(std::vector<size_t>& order, size_t size)
 	if (order.size())
 		order.clear();
 
+	size_t index = 0;
 	if (size < 2)
 		order.insert(order.begin(), 1);
 	else
 	{
-		size_t index = jacobsthal(3);
-		for (size_t i = 4; index <= size + 2; i++)
+		index = jacobsthal(2);
+		for (size_t i = 3; index <= size + 2; i++)
 		{
-			order.insert((index > 1 ? order.begin() : order.end()), index);
+			order.insert(order.end(), index);
 			index = jacobsthal(i);
 		}
 	}
+
+	if (order.back() != size + 2)
+		order.insert(order.end(), size + 2);
 }
 
 template <typename T>
 void	PmergeMe<T>::insertValue(typename PmergeMe<T>::iterator pos,
-								typename PmergeMe<T>::pair_iterator toInsert)
+								typename PmergeMe<T>::iterator toInsert)
 {
-	_mainChain.insert(pos, toInsert->second);
+	_mainChain.insert(pos, std::make_pair(toInsert->first, toInsert->second));
 	_pending.erase(toInsert);
 }
 
 template <typename T>
 void	PmergeMe<T>::insertPending()
 {
-/* 	T& c = _pending; */
+	T& c = _pending;
 
-	printMainChain();
-	printPending();
-/* 
 	insertValue(_mainChain.begin(), c.begin());
 	
 	std::vector<size_t> order;
@@ -181,21 +183,23 @@ void	PmergeMe<T>::insertPending()
 	while (c.size())
 	{
 		size_t orderSize = order.size();
-		for (size_t index = 0; index < orderSize; index++)
+
+		if (orderSize == 1)
+			insertValue(binarySearch(c.begin()), c.begin());
+		else
 		{
-			for (pair_iterator it = c.end() - 1; it >= c.begin(); --it)
+			for (size_t index = 1; index < orderSize; index++)
 			{
-				if (it->first == order[index])
+				size_t inserted = 0;
+				size_t maxToInsert = order[index] - order[index - 1];
+	
+				for (iterator it = c.end() - 1; inserted < maxToInsert && it >= c.begin(); --it)
 				{
 					insertValue(binarySearch(it), it);
-					break ;
+					++inserted;
 				}
 			}
 		}
- 
-		size_t pendingSize = c.size();
-		for (size_t i = 0; i < pendingSize; i++)
-			insertValue(binarySearch(c.begin()), c.begin());
 		
 		if (_hasOdd.flag)
 		{
@@ -203,7 +207,23 @@ void	PmergeMe<T>::insertPending()
 			getJacobsthalOrder(order, c.size());
 			_hasOdd.flag = false;
 		}
-	} */
+	}
+}
+
+template <typename T>
+void	PmergeMe<T>::setIndexes(T& c)
+{
+	size_t end = c.size();
+	for (size_t i = 0; i < end; i++)
+	{
+		if (i % 2 == 0)
+			c[i].first = (i ? c[i - 1].first + 1 : 1);
+		else
+			c[i].first = c[i - 1].first;
+	}
+
+	if (_hasOdd.flag)
+		_hasOdd.unpaired[0].first = c.back().first + 1;
 }
 
 template <typename T>
@@ -212,13 +232,14 @@ void	PmergeMe<T>::handleUnpaired(size_t start, size_t end)
 	_hasOdd.unpaired.insert(_hasOdd.unpaired.begin(),
 							_mainChain.begin() + start,
 							_mainChain.begin() + end);
+
 	_mainChain.erase(_mainChain.begin() + start, _mainChain.begin() + end);
 }
 
 template <typename T>
 void	PmergeMe<T>::mergeInsertSort(e_Mode mode, size_t size, size_t start, size_t pairs)
 {
-	if (size <= 1 || pairs >= size / 2)
+	if (size <= 1 || pairs > size / 2) // avant -> >=
 		return ;
 
 	size_t end = ((size / pairs) * pairs);
@@ -229,7 +250,6 @@ void	PmergeMe<T>::mergeInsertSort(e_Mode mode, size_t size, size_t start, size_t
 			handleUnpaired(end, size);
 	}
 
-	T& c = (mode != HANDLE_ODD ? _mainChain : _hasOdd.unpaired);
 	size_t max = (mode != HANDLE_MIN ? end : size / 2);
 	size_t incr = (mode != HANDLE_MIN ? pairs * 2 : 1);
 
@@ -238,26 +258,22 @@ void	PmergeMe<T>::mergeInsertSort(e_Mode mode, size_t size, size_t start, size_t
 		switch (mode)
 		{
 			case HANDLE_MAX:
-			case HANDLE_ODD:
-				if (c[i].second < c[i - pairs].second)
-					std::swap_ranges(c.begin() + (i - pairs) + 1,
-									c.begin() + i + 1,
-									c.begin() + (i - (pairs * 2)) + 1);
+				if (_mainChain[i].second < _mainChain[i - pairs].second)
+					std::swap_ranges(_mainChain.begin() + (i - pairs) + 1,
+									_mainChain.begin() + i + 1,
+									_mainChain.begin() + (i - (pairs * 2)) + 1);
 				break ;
 
 			case HANDLE_MIN:
-				_pending.push_back(std::make_pair((i > 0 ? i + 2 : i + 1), c[i].second));
+				_pending.push_back(std::make_pair(_mainChain[i].first, _mainChain[i].second));
 				_mainChain.erase(_mainChain.begin() + i);
-			
-			default:
-				break ;
 		}
 	}
 
 	if (mode == HANDLE_MAX)
 	{
 		if (pairs == 2)
-			setIndexes();
+			setIndexes(_mainChain);
 
 		mergeInsertSort(HANDLE_MAX, size, start + pairs * 2, pairs * 2);
 	}
@@ -269,12 +285,6 @@ template <typename T>
 void	PmergeMe<T>::process()
 {
 	mergeInsertSort(HANDLE_MAX, _mainChain.size(), 1, 1);
-
-	if (_hasOdd.flag)
-		mergeInsertSort(HANDLE_ODD, _hasOdd.unpaired.size(), 1, 1);
-	
-	
-
 	mergeInsertSort(HANDLE_MIN, _mainChain.size(), 0, 1);
 }
 
@@ -302,6 +312,8 @@ std::ostream&	operator<<(std::ostream& os, const PmergeMe<T>& obj)
 	os << " elements with " << obj.getContainerType() << " : ";
 	os << std::fixed << std::setprecision(5) << duration << " us";
 
+	os << obj.isSorted();
+
     return (os);
 }
 
@@ -321,17 +333,6 @@ template <typename T>
 const std::string	PmergeMe<T>::getContainerType() const
 {
 	return this->_type == VECTOR_TYPE ? "std::vector" : "std::deque";
-}
-
-template <typename T>
-void	PmergeMe<T>::setIndexes()
-{
-	size_t end = _mainChain.size();
-	for (size_t i = 0; i < end - 1; i+=2)
-	{
-		_mainChain[i].first = (i ? i - i / 2 : i);
-		_mainChain[i + 1].first = (i ? i - i / 2 : i);
-	}
 }
 
 // DEBUG FUNCTIONS
@@ -361,6 +362,21 @@ void	PmergeMe<T>::printOrder(const std::vector<size_t>& c) const
 	for (size_t i = 0; i < c.size(); i++)
 		std::cout << c[i] << " ";
 	std::cout << "\n";
+}
+
+template <typename T>
+const std::string	PmergeMe<T>::isSorted() const
+{
+	bool sorted = true;
+	for (size_t i = 0; i < _mainChain.size() - 1; i++)
+	{
+		if (_mainChain[i].second > _mainChain[i + 1].second)
+		{
+			sorted = false;
+			break ;
+		}
+	}
+	return sorted ? "\n\nSequence is sorted ✅" : "\n\nSequence is not sorted ❌";
 }
 
 // DEBUG FUNCTIONS

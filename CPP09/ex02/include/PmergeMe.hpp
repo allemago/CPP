@@ -50,9 +50,7 @@ enum	e_Type
 enum	e_Mode
 {
 	HANDLE_MAX = 1,
-	HANDLE_ODD = 2,
-	HANDLE_MIN = 3,
-	HANDLE_ODD_INSERT = 4
+	HANDLE_MIN = 2
 };
 
 // TYPE TRAITS
@@ -101,10 +99,7 @@ private:
 
 //	====================== Typedefs =============================
 
-	typedef typename T::iterator                  iterator;
-	typedef typename std::pair<size_t, int>       Pair;
-	typedef typename std::vector<Pair>            PairList;
-	typedef typename PairList::iterator           pair_iterator;
+	typedef typename T::iterator             iterator;
 
 //	==================== Private Methods ========================
 
@@ -112,12 +107,12 @@ private:
 	bool             isSequenceEmpty() const;
 	void             mergeInsertSort(e_Mode, size_t, size_t, size_t);
 	void             handleUnpaired(size_t, size_t);
-	void             setIndexes();
+	void             setIndexes(T& c);
 	void             insertPending();
-	void             insertValue(iterator, pair_iterator);
+	void             insertValue(iterator, iterator);
 	void             getJacobsthalOrder(std::vector<size_t>&, size_t);
 	size_t           jacobsthal(size_t) const;
-	iterator         binarySearch(pair_iterator);
+	iterator         binarySearch(iterator);
 
 	// DEBUG FUNCTIONS
 	void             printPending() const;
@@ -149,6 +144,9 @@ public:
 
 	void                 printBefore() const;
 	void                 process();
+	
+	// DEBUG FUNCTIONS
+	const std::string    isSorted() const;
 };
 
 # include "PmergeMe.tpp"
