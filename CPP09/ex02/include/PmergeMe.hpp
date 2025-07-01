@@ -63,13 +63,13 @@ struct	ContainerTypeTraits
 };
 
 template <>
-struct	ContainerTypeTraits< std::deque<int> >
+struct	ContainerTypeTraits< std::deque< std::pair<size_t, int> > >
 {
 	static const e_Type value = DEQUE_TYPE;
 };
 
 template <>
-struct	ContainerTypeTraits< std::vector<int> >
+struct	ContainerTypeTraits< std::vector< std::pair<size_t, int> > >
 {
 	static const e_Type value = VECTOR_TYPE;
 };
@@ -78,8 +78,8 @@ struct	ContainerTypeTraits< std::vector<int> >
 template <typename T>
 struct	HasOdd
 {
-	bool   flag;
-	T      unpaired;
+	bool    flag;
+	T       unpaired;
 };
 
 // TEMPLATE CLASS
@@ -95,9 +95,7 @@ private:
 
 	static const e_Type                      _type = ContainerTypeTraits<T>::value;
 	T                                        _mainChain;
-	std::set<size_t>                         _maxIndex;
-
-	std::vector< std::pair<size_t, int> >    _pending;
+	T                                        _pending;
 
 	HasOdd<T>                                _hasOdd;
 
@@ -113,11 +111,11 @@ private:
 	void             parseSequence();
 	bool             isSequenceEmpty() const;
 	void             mergeInsertSort(e_Mode, size_t, size_t, size_t);
-	void             handleUnpaired(e_Mode, size_t, size_t);
-	void             setMaxIndexes();
+	void             handleUnpaired(size_t, size_t);
+	void             setIndexes();
 	void             insertPending();
 	void             insertValue(iterator, pair_iterator);
-	void             getJacobsthalOrder(std::vector<size_t>&);
+	void             getJacobsthalOrder(std::vector<size_t>&, size_t);
 	size_t           jacobsthal(size_t) const;
 	iterator         binarySearch(pair_iterator);
 
