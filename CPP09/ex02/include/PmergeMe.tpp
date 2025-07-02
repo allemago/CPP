@@ -4,13 +4,10 @@ template <typename T>
 PmergeMe<T>::PmergeMe() : _rawSequence("") { parseSequence(); }
 
 template <typename T>
-PmergeMe<T>::PmergeMe(const std::string& raw) : _rawSequence(raw) { parseSequence(); }
+PmergeMe<T>::PmergeMe(const std::string& raw) : _rawSequence(raw) { parseSequence(); _hasOdd.flag = false; }
 
 template <typename T>
-PmergeMe<T>::PmergeMe(const PmergeMe& obj)
-{
-	*this = obj;
-}
+PmergeMe<T>::PmergeMe(const PmergeMe& obj) { *this = obj; }
 
 template <typename T>
 PmergeMe<T>::~PmergeMe() {}
@@ -20,16 +17,26 @@ PmergeMe<T>&	PmergeMe<T>::operator=(const PmergeMe<T>& obj)
 {
 	if (this != &obj)
 	{
-		_rawSequence = obj._rawSequence;
+		this->_rawSequence = obj._rawSequence;
 
-		if (_rawSequence.size())
-			_rawSequence.clear();
-		_rawSequence = obj._rawSequence;
+		if (this->_rawSequence.size())
+			this->_rawSequence.clear();
+		this->_rawSequence = obj._rawSequence;
 
-		if (_mainChain.size())
-			_mainChain.clear();
-		_mainChain = obj._mainChain;
+		if (this->_mainChain.size())
+			this->_mainChain.clear();
+		this->_mainChain = obj._mainChain;
+
+		if (this->_pending.size())
+			this->_pending.clear();
+		this->_pending = obj._pending;
+
+		if (this->_hasOdd.unpaired.size())
+			this->_hasOdd.unpaired.clear();
+		this->_hasOdd.flag = obj._hasOdd.flag;
+		this->_hasOdd.unpaired = obj._hasOdd.unpaired;
 	}
+
 	return *this;
 }
 
@@ -43,7 +50,7 @@ template <typename T>
 void	PmergeMe<T>::parseSequence()
 {
 	if (isSequenceEmpty() || !_type)
-		throw std::runtime_error(!_type ? ERR_TYPE : USAGE);
+		throw std::runtime_error(!_type ? ERR_TYPE : std::string(EMPTY) + USAGE);
 
 	std::istringstream issSeq(_rawSequence);
 	std::string token;
@@ -57,18 +64,17 @@ void	PmergeMe<T>::parseSequence()
 			|| nb < 0
 			|| nb > std::numeric_limits<int>::max())
 			throw std::runtime_error(USAGE);
-		else if (find(_mainChain.begin(),
-					_mainChain.end(),
-					std::make_pair(static_cast<size_t>(0), static_cast<int>(nb))) == _mainChain.end())
-			_mainChain.push_back(std::make_pair(static_cast<size_t>(0), static_cast<int>(nb)));
+
+		std::pair<size_t, int> newPair(0, nb);
+
+		if (find(_mainChain.begin(), _mainChain.end(), newPair) == _mainChain.end())
+			_mainChain.push_back(newPair);
 		else
 			throw std::runtime_error(ERR_DUP_VALUES);
 
 		if (_mainChain.size() == MAX_SIZE)
 			throw std::runtime_error(MAX_SIZE_REACHED);
 	}
-
-	_hasOdd.flag = false;
 }
 
 /*
@@ -86,13 +92,13 @@ mainChain apres trie des paires: petit a gauche, grand a droite
 (1, 12) (2, 15) (6, 558) (9, 85)
  0  1    2  3    4  5     6  7
 
-mainChain apres extraction des min (_pending), reste les grands
-(12) (15) (85) (558)
- 0    1    2     3
+mainChain apres extraction des min (_pending), reste les grands + ajout du petit
+(1)  (12) (15) (85) (558)
+ 0    1    2    3    4
 
 _pending apres HANDLE_MIN
-index key =  1   3   4   5
-value     = (1) (2) (9) (6)
+index key =  3   4   5
+value     = (2) (9) (6)
 
 1- [OK]	Inserer dans mainChain le tout premier element de pending (index key = 1) -> (value = 1).
 
@@ -106,13 +112,26 @@ value     = (1) (2) (9) (6)
 
 *suite de Jacobsthal = ...1, 3, 5, 11, 21, 43, 85, 171...
 
+iterator high = _mainChain.begin() + (it->first - 1) <--- avant dans binarySearch()
+
 */
+
+template <typename T>
+size_t	PmergeMe<T>::getNewInsertionIndex(size_t currentIndex) const
+{
+	static size_t insertionIndex = currentIndex;
+
+
+	// reste a gerer le cas ou il y a un unpaired solo donc soit le meme index que le dernier soit * 2
+
+	return insertionIndex < currentIndex ? insertionIndex+=1 : insertionIndex = currentIndex;
+}
 
 template <typename T>
 typename PmergeMe<T>::iterator	PmergeMe<T>::binarySearch(typename PmergeMe<T>::iterator it)
 {
  	iterator low = _mainChain.begin();
-	iterator high = _mainChain.begin() + (it->first - 1) * 2;
+	iterator high = _mainChain.begin() + getNewInsertionIndex(it->first - 1);
 
 	while (low < high)
 	{
@@ -208,10 +227,12 @@ void	PmergeMe<T>::insertPending()
 			_hasOdd.flag = false;
 		}
 	}
+
+	printMainChain(); // DEBUG
 }
 
 template <typename T>
-void	PmergeMe<T>::setIndexes(T& c)
+void	PmergeMe<T>::setInsertionIndexes(T& c)
 {
 	size_t end = c.size();
 	for (size_t i = 0; i < end; i++)
@@ -223,7 +244,7 @@ void	PmergeMe<T>::setIndexes(T& c)
 	}
 
 	if (_hasOdd.flag)
-		_hasOdd.unpaired[0].first = c.back().first + 1;
+		_hasOdd.unpaired[0].first = c.back().first;
 }
 
 template <typename T>
@@ -273,7 +294,7 @@ void	PmergeMe<T>::mergeInsertSort(e_Mode mode, size_t size, size_t start, size_t
 	if (mode == HANDLE_MAX)
 	{
 		if (pairs == 2)
-			setIndexes(_mainChain);
+			setInsertionIndexes(_mainChain);
 
 		mergeInsertSort(HANDLE_MAX, size, start + pairs * 2, pairs * 2);
 	}
@@ -338,6 +359,15 @@ const std::string	PmergeMe<T>::getContainerType() const
 // DEBUG FUNCTIONS
 
 template <typename T>
+void	PmergeMe<T>::printMainChain() const
+{
+	std::cout << PURPLE "\nmainChain:\n" RESET;
+	for (size_t i = 0; i < _mainChain.size(); i++)
+		std::cout << "index = " << _mainChain[i].first << BOLD ", value = " << _mainChain[i].second << "\n" RESET;
+	std::cout << "\n";
+}
+
+template <typename T>
 void	PmergeMe<T>::printPending() const
 {
 	std::cout << GREEN "\npending:\n" RESET;
@@ -347,11 +377,11 @@ void	PmergeMe<T>::printPending() const
 }
 
 template <typename T>
-void	PmergeMe<T>::printMainChain() const
+void	PmergeMe<T>::printOdd() const
 {
-	std::cout << PURPLE "\nmainChain:\n" RESET;
-	for (size_t i = 0; i < _mainChain.size(); i++)
-		std::cout << "index = " << _mainChain[i].first << BOLD ", value = " << _mainChain[i].second << "\n" RESET;
+	std::cout << BLUE "\nunpaired:\n" RESET;
+	for (size_t i = 0; i < _hasOdd.unpaired.size(); i++)
+		std::cout << "index = " << _hasOdd.unpaired[i].first << BOLD ", value = " << _hasOdd.unpaired[i].second << "\n" RESET;
 	std::cout << "\n";
 }
 

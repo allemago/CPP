@@ -5,7 +5,7 @@
 # include <string>
 # include <vector>
 # include <deque>
-# include <set>
+# include <map>
 # include <utility>
 # include <algorithm>
 # include <iterator>
@@ -24,6 +24,7 @@
 # define PURPLE "\033[1;95m"
 # define RESET "\033[0m"
 
+# define EMPTY "Error: empty sequence in parameter\n"
 # define USAGE "Usage: ./PmergeMe [positive integer sequence]"
 # define ERR_TYPE "Unsupported container type. Please use vector or deque"
 # define MAX_SIZE_REACHED "Maximum of 5000 integers has been reached"
@@ -72,7 +73,7 @@ struct	ContainerTypeTraits< std::vector< std::pair<size_t, int> > >
 	static const e_Type value = VECTOR_TYPE;
 };
 
-// STRUCTURES
+// TEMPLATE STRUCTURES
 template <typename T>
 struct	HasOdd
 {
@@ -80,7 +81,6 @@ struct	HasOdd
 	T       unpaired;
 };
 
-// TEMPLATE CLASS
 template <typename T>
 class PmergeMe
 {
@@ -89,13 +89,14 @@ class PmergeMe
 *****************/
 private:
 
-	std::string                              _rawSequence;
+	static const e_Type    _type = ContainerTypeTraits<T>::value;
 
-	static const e_Type                      _type = ContainerTypeTraits<T>::value;
-	T                                        _mainChain;
-	T                                        _pending;
+	std::string            _rawSequence;
 
-	HasOdd<T>                                _hasOdd;
+	T                      _mainChain;
+	T                      _pending;
+
+	HasOdd<T>              _hasOdd;
 
 //	====================== Typedefs =============================
 
@@ -105,18 +106,23 @@ private:
 
 	void             parseSequence();
 	bool             isSequenceEmpty() const;
+
 	void             mergeInsertSort(e_Mode, size_t, size_t, size_t);
-	void             handleUnpaired(size_t, size_t);
-	void             setIndexes(T& c);
 	void             insertPending();
 	void             insertValue(iterator, iterator);
+	
 	void             getJacobsthalOrder(std::vector<size_t>&, size_t);
 	size_t           jacobsthal(size_t) const;
 	iterator         binarySearch(iterator);
 
-	// DEBUG FUNCTIONS
-	void             printPending() const;
+	void             handleUnpaired(size_t, size_t);
+	void             setInsertionIndexes(T& c);
+	size_t           getNewInsertionIndex(size_t) const;
+
+	                 // DEBUG FUNCTIONS
 	void             printMainChain() const;
+	void             printPending() const;
+	void             printOdd() const;
 	void             printOrder(const std::vector<size_t>&) const;
 
 /*****************
@@ -134,17 +140,15 @@ public:
 
 	PmergeMe(const std::string&);
 
-//	======================== Getters ============================
+//	==================== Public Methods =========================
+
+	void                 printBefore() const;
+	void                 process();
 
 	double               getDuration() const;
 	const T&             getContainer() const;
 	const std::string    getContainerType() const;
 
-//	==================== Public Methods =========================
-
-	void                 printBefore() const;
-	void                 process();
-	
 	// DEBUG FUNCTIONS
 	const std::string    isSorted() const;
 };
