@@ -4,7 +4,8 @@ template <typename T>
 PmergeMe<T>::PmergeMe() : _rawSequence("") { parseSequence(); }
 
 template <typename T>
-PmergeMe<T>::PmergeMe(const std::string& raw) : _rawSequence(raw) { parseSequence(); _hasOdd.flag = false; }
+PmergeMe<T>::PmergeMe(const std::string& raw) : _rawSequence(raw),
+												_count(0) { parseSequence(); _hasOdd.flag = false; }
 
 template <typename T>
 PmergeMe<T>::PmergeMe(const PmergeMe& obj) { *this = obj; }
@@ -18,21 +19,9 @@ PmergeMe<T>&	PmergeMe<T>::operator=(const PmergeMe<T>& obj)
 	if (this != &obj)
 	{
 		this->_rawSequence = obj._rawSequence;
-
-		if (this->_rawSequence.size())
-			this->_rawSequence.clear();
-		this->_rawSequence = obj._rawSequence;
-
-		if (this->_mainChain.size())
-			this->_mainChain.clear();
 		this->_mainChain = obj._mainChain;
-
-		if (this->_pending.size())
-			this->_pending.clear();
 		this->_pending = obj._pending;
-
-		if (this->_hasOdd.unpaired.size())
-			this->_hasOdd.unpaired.clear();
+		this->_count = obj._count;
 		this->_hasOdd.flag = obj._hasOdd.flag;
 		this->_hasOdd.unpaired = obj._hasOdd.unpaired;
 	}
@@ -112,26 +101,30 @@ value     = (2) (9) (6)
 
 *suite de Jacobsthal = ...1, 3, 5, 11, 21, 43, 85, 171...
 
-iterator high = _mainChain.begin() + (it->first - 1) <--- avant dans binarySearch()
+		{
+			size_t index = 1;
+			for (size_t index = 1; index < orderSize; index++)
+			{
+				for (iterator it = c.begin(); it )
+				{
+					size_t inserted = 0;
+					size_t maxToInsert = order[index] - order[index - 1];
+
+					for (iterator it = c.begin(); inserted < maxToInsert && it >= c.begin(); ++it)
+					{
+						setCount((index > 1 && !inserted ? order[index - 1] - order[index - 2] : 0), it);
+						insertValue(binarySearch(it), it);
+						++inserted;
+					}
+				}
 
 */
-
-template <typename T>
-size_t	PmergeMe<T>::getNewInsertionIndex(size_t currentIndex) const
-{
-	static size_t insertionIndex = currentIndex;
-
-
-	// reste a gerer le cas ou il y a un unpaired solo donc soit le meme index que le dernier soit * 2
-
-	return insertionIndex < currentIndex ? insertionIndex+=1 : insertionIndex = currentIndex;
-}
 
 template <typename T>
 typename PmergeMe<T>::iterator	PmergeMe<T>::binarySearch(typename PmergeMe<T>::iterator it)
 {
  	iterator low = _mainChain.begin();
-	iterator high = _mainChain.begin() + getNewInsertionIndex(it->first - 1);
+	iterator high = _mainChain.begin() + (it->first - 1) + _count;
 
 	while (low < high)
 	{
@@ -144,6 +137,14 @@ typename PmergeMe<T>::iterator	PmergeMe<T>::binarySearch(typename PmergeMe<T>::i
 	}
 
 	return low;
+}
+
+template <typename T>
+void	PmergeMe<T>::setCount(size_t i, typename PmergeMe<T>::iterator it)
+{
+	_count = (_hasOdd.unpaired.size() == 1
+				&& _hasOdd.unpaired[0].second == it->second ?
+				_mainChain.size() - 1 : _count + i);
 }
 
 template <typename T>
@@ -170,15 +171,15 @@ void	PmergeMe<T>::getJacobsthalOrder(std::vector<size_t>& order, size_t size)
 	else
 	{
 		index = jacobsthal(2);
-		for (size_t i = 3; index <= size + 2; i++)
+		for (size_t i = 3; index < size; i++)
 		{
 			order.insert(order.end(), index);
 			index = jacobsthal(i);
 		}
+		if (order.back() != size)
+			order.insert(order.end(), size);
 	}
 
-	if (order.back() != size + 2)
-		order.insert(order.end(), size + 2);
 }
 
 template <typename T>
@@ -194,8 +195,6 @@ void	PmergeMe<T>::insertPending()
 {
 	T& c = _pending;
 
-	insertValue(_mainChain.begin(), c.begin());
-	
 	std::vector<size_t> order;
 	getJacobsthalOrder(order, c.size());
 
@@ -204,31 +203,43 @@ void	PmergeMe<T>::insertPending()
 		size_t orderSize = order.size();
 
 		if (orderSize == 1)
+		{
+			setCount(0, c.begin());
 			insertValue(binarySearch(c.begin()), c.begin());
+		}
 		else
 		{
-			for (size_t index = 1; index < orderSize; index++)
+			printOrder(order); // DEBUG
+			printPending(); // DEBUG
+			printMainChain(); // DEBUG
+
+			for (size_t index = 0; index < orderSize; index++)
 			{
+				std::cout << "index  = " << index << std::endl;
 				size_t inserted = 0;
-				size_t maxToInsert = order[index] - order[index - 1];
-	
-				for (iterator it = c.end() - 1; inserted < maxToInsert && it >= c.begin(); --it)
+				size_t maxToInsert = (!index ? 1 : order[index] - order[index - 1]);
+
+				for (iterator it = c.begin() + (maxToInsert - 1); inserted < maxToInsert; --it)
 				{
+
+					std::cout << "it->second = " << it->second << std::endl; // DEBUG
+					
+					size_t count = (!index ? 1 : order[index - 1] - order[index - 2]);
+					setCount((index > 1 && !inserted ? count : 0), it);
 					insertValue(binarySearch(it), it);
 					++inserted;
 				}
 			}
 		}
-		
+
 		if (_hasOdd.flag)
 		{
 			c = _hasOdd.unpaired;
+			printPending(); // DEBUG
 			getJacobsthalOrder(order, c.size());
 			_hasOdd.flag = false;
 		}
 	}
-
-	printMainChain(); // DEBUG
 }
 
 template <typename T>
@@ -286,7 +297,7 @@ void	PmergeMe<T>::mergeInsertSort(e_Mode mode, size_t size, size_t start, size_t
 				break ;
 
 			case HANDLE_MIN:
-				_pending.push_back(std::make_pair(_mainChain[i].first, _mainChain[i].second));
+				_pending.push_back(_mainChain[i]);
 				_mainChain.erase(_mainChain.begin() + i);
 		}
 	}

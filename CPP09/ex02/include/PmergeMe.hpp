@@ -96,6 +96,8 @@ private:
 	T                      _mainChain;
 	T                      _pending;
 
+	size_t                 _count;
+
 	HasOdd<T>              _hasOdd;
 
 //	====================== Typedefs =============================
@@ -117,7 +119,7 @@ private:
 
 	void             handleUnpaired(size_t, size_t);
 	void             setInsertionIndexes(T& c);
-	size_t           getNewInsertionIndex(size_t) const;
+	void             setCount(size_t, iterator);
 
 	                 // DEBUG FUNCTIONS
 	void             printMainChain() const;
