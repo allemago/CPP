@@ -14,6 +14,7 @@
 # include <limits>
 # include <sys/time.h>
 # include <cmath>
+# include <unistd.h>
 
 # define BOLD "\033[1m"
 # define RED "\033[1;31m"
@@ -96,8 +97,6 @@ private:
 	T                      _mainChain;
 	T                      _pending;
 
-	size_t                 _count;
-
 	HasOdd<T>              _hasOdd;
 
 //	====================== Typedefs =============================
@@ -111,15 +110,15 @@ private:
 
 	void             mergeInsertSort(e_Mode, size_t, size_t, size_t);
 	void             insertPending();
-	void             insertValue(iterator, iterator);
+	void             insertValue(iterator, size_t);
 	
-	void             getJacobsthalOrder(std::vector<size_t>&, size_t);
+	void             getOrder(std::vector<size_t>&, size_t);
 	size_t           jacobsthal(size_t) const;
 	iterator         binarySearch(iterator);
 
 	void             handleUnpaired(size_t, size_t);
 	void             setInsertionIndexes(T& c);
-	void             setCount(size_t, iterator);
+	iterator         findByKey(T&, size_t);
 
 	                 // DEBUG FUNCTIONS
 	void             printMainChain() const;

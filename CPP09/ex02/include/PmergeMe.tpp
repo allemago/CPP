@@ -1,11 +1,12 @@
 #include "../include/PmergeMe.hpp"
 
 template <typename T>
-PmergeMe<T>::PmergeMe() : _rawSequence("") { parseSequence(); }
+PmergeMe<T>::PmergeMe() : _rawSequence("")
+{ parseSequence(); }
 
 template <typename T>
-PmergeMe<T>::PmergeMe(const std::string& raw) : _rawSequence(raw),
-												_count(0) { parseSequence(); _hasOdd.flag = false; }
+PmergeMe<T>::PmergeMe(const std::string& raw) : _rawSequence(raw)
+{ _hasOdd.flag = false; parseSequence(); }
 
 template <typename T>
 PmergeMe<T>::PmergeMe(const PmergeMe& obj) { *this = obj; }
@@ -21,7 +22,6 @@ PmergeMe<T>&	PmergeMe<T>::operator=(const PmergeMe<T>& obj)
 		this->_rawSequence = obj._rawSequence;
 		this->_mainChain = obj._mainChain;
 		this->_pending = obj._pending;
-		this->_count = obj._count;
 		this->_hasOdd.flag = obj._hasOdd.flag;
 		this->_hasOdd.unpaired = obj._hasOdd.unpaired;
 	}
@@ -64,6 +64,7 @@ void	PmergeMe<T>::parseSequence()
 		if (_mainChain.size() == MAX_SIZE)
 			throw std::runtime_error(MAX_SIZE_REACHED);
 	}
+	setInsertionIndexes(_mainChain);
 }
 
 /*
@@ -79,52 +80,36 @@ mainChain avant trie des paires
 
 mainChain apres trie des paires: petit a gauche, grand a droite
 (1, 12) (2, 15) (6, 558) (9, 85)
- 0  1    2  3    4  5     6  7
+ 0  0    1  1    2  2     3  3
 
 mainChain apres extraction des min (_pending), reste les grands + ajout du petit
-(1)  (12) (15) (85) (558)
- 0    1    2    3    4
+(12) (15) (558) (85)
+ 0    1    2     3
 
 _pending apres HANDLE_MIN
-index key =  3   4   5
-value     = (2) (9) (6)
-
-1- [OK]	Inserer dans mainChain le tout premier element de pending (index key = 1) -> (value = 1).
-
-2- [..]	Ensuite, inserer les elements de pending aux (indices de Jacobsthal)* dans l'odre decroissant,
-		pending size = 4, indices utiles de Jacobsthal = (1, 3, 5), car size <= 5 de la suite,
-		-> inserer _pending[index key 5], puis _pending[index key 3] et enfin _pending[index key 1],
-		puis inserer tous les autres restants dans l'ordre croissant donc -> _pending[index key 4].
-
-4- [..]	Inserer unpaired.
-
+(1) (2) (6) (9)
+ 0   1   2   3
 
 *suite de Jacobsthal = ...1, 3, 5, 11, 21, 43, 85, 171...
-
-		{
-			size_t index = 1;
-			for (size_t index = 1; index < orderSize; index++)
-			{
-				for (iterator it = c.begin(); it )
-				{
-					size_t inserted = 0;
-					size_t maxToInsert = order[index] - order[index - 1];
-
-					for (iterator it = c.begin(); inserted < maxToInsert && it >= c.begin(); ++it)
-					{
-						setCount((index > 1 && !inserted ? order[index - 1] - order[index - 2] : 0), it);
-						insertValue(binarySearch(it), it);
-						++inserted;
-					}
-				}
 
 */
 
 template <typename T>
+typename PmergeMe<T>::iterator	PmergeMe<T>::findByKey(T& c, size_t key)
+{
+	for (iterator target = c.begin(); target != c.end(); ++target)
+	{
+		if (target->first == key)
+			return target;
+	}
+
+	return c.end();
+}
+template <typename T>
 typename PmergeMe<T>::iterator	PmergeMe<T>::binarySearch(typename PmergeMe<T>::iterator it)
 {
  	iterator low = _mainChain.begin();
-	iterator high = _mainChain.begin() + (it->first - 1) + _count;
+	iterator high = findByKey(_mainChain, it->first);
 
 	while (low < high)
 	{
@@ -140,14 +125,6 @@ typename PmergeMe<T>::iterator	PmergeMe<T>::binarySearch(typename PmergeMe<T>::i
 }
 
 template <typename T>
-void	PmergeMe<T>::setCount(size_t i, typename PmergeMe<T>::iterator it)
-{
-	_count = (_hasOdd.unpaired.size() == 1
-				&& _hasOdd.unpaired[0].second == it->second ?
-				_mainChain.size() - 1 : _count + i);
-}
-
-template <typename T>
 size_t	PmergeMe<T>::jacobsthal(size_t n) const
 {
 	if (n == 0)
@@ -160,7 +137,7 @@ size_t	PmergeMe<T>::jacobsthal(size_t n) const
 }
 
 template <typename T>
-void	PmergeMe<T>::getJacobsthalOrder(std::vector<size_t>& order, size_t size)
+void	PmergeMe<T>::getOrder(std::vector<size_t>& order, size_t size)
 {
 	if (order.size())
 		order.clear();
@@ -183,60 +160,44 @@ void	PmergeMe<T>::getJacobsthalOrder(std::vector<size_t>& order, size_t size)
 }
 
 template <typename T>
-void	PmergeMe<T>::insertValue(typename PmergeMe<T>::iterator pos,
-								typename PmergeMe<T>::iterator toInsert)
+void	PmergeMe<T>::insertValue(typename PmergeMe<T>::iterator it, size_t max)
 {
-	_mainChain.insert(pos, std::make_pair(toInsert->first, toInsert->second));
-	_pending.erase(toInsert);
+	size_t inserted = 0;
+
+	while (inserted < max && it >= _pending.begin())
+	{
+		_mainChain.insert(binarySearch(it), *it);
+		++inserted;
+		--it;
+	}
+
+	it = _pending.begin();
+	std::advance(it, max);
+	_pending.erase(_pending.begin(), it);
 }
 
 template <typename T>
 void	PmergeMe<T>::insertPending()
 {
-	T& c = _pending;
-
 	std::vector<size_t> order;
-	getJacobsthalOrder(order, c.size());
+	getOrder(order, _pending.size());
 
-	while (c.size())
+	while (_pending.size())
 	{
 		size_t orderSize = order.size();
 
-		if (orderSize == 1)
+		for (size_t index = 0; index < orderSize; index++)
 		{
-			setCount(0, c.begin());
-			insertValue(binarySearch(c.begin()), c.begin());
-		}
-		else
-		{
-			printOrder(order); // DEBUG
-			printPending(); // DEBUG
-			printMainChain(); // DEBUG
+			size_t max = (order[index] > 1 ? order[index] - order[index - 1] : 1);
+			size_t start = max - 1;
 
-			for (size_t index = 0; index < orderSize; index++)
-			{
-				std::cout << "index  = " << index << std::endl;
-				size_t inserted = 0;
-				size_t maxToInsert = (!index ? 1 : order[index] - order[index - 1]);
-
-				for (iterator it = c.begin() + (maxToInsert - 1); inserted < maxToInsert; --it)
-				{
-
-					std::cout << "it->second = " << it->second << std::endl; // DEBUG
-					
-					size_t count = (!index ? 1 : order[index - 1] - order[index - 2]);
-					setCount((index > 1 && !inserted ? count : 0), it);
-					insertValue(binarySearch(it), it);
-					++inserted;
-				}
-			}
+			insertValue(_pending.begin() + start, max);
 		}
 
 		if (_hasOdd.flag)
 		{
-			c = _hasOdd.unpaired;
-			printPending(); // DEBUG
-			getJacobsthalOrder(order, c.size());
+			_pending = _hasOdd.unpaired;
+			getOrder(order, _pending.size());
 			_hasOdd.flag = false;
 		}
 	}
@@ -255,7 +216,7 @@ void	PmergeMe<T>::setInsertionIndexes(T& c)
 	}
 
 	if (_hasOdd.flag)
-		_hasOdd.unpaired[0].first = c.back().first;
+		_hasOdd.unpaired[0].first = c.back().first + 2;
 }
 
 template <typename T>
@@ -304,9 +265,9 @@ void	PmergeMe<T>::mergeInsertSort(e_Mode mode, size_t size, size_t start, size_t
 
 	if (mode == HANDLE_MAX)
 	{
-		if (pairs == 2)
+		if (pairs == 2 && _pending.empty())
 			setInsertionIndexes(_mainChain);
-
+		
 		mergeInsertSort(HANDLE_MAX, size, start + pairs * 2, pairs * 2);
 	}
 	else if (mode == HANDLE_MIN)
