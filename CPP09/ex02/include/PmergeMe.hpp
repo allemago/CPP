@@ -33,6 +33,8 @@
 
 # define MAX_SIZE 5000
 # define MICRO_SEC 1000000.0
+# define MIN_ODD 0
+# define MAX_ODD 1
 # define WHITESPACE "\t\n\v\f\r "
 
 template <typename T>
@@ -51,8 +53,8 @@ enum	e_Type
 
 enum	e_Mode
 {
-	HANDLE_MAX = 1,
-	HANDLE_MIN = 2
+	HANDLE_MIN = 1,
+	HANDLE_MAX = 2
 };
 
 // TYPE TRAITS
@@ -78,8 +80,9 @@ struct	ContainerTypeTraits< std::vector< std::pair<size_t, int> > >
 template <typename T>
 struct	HasOdd
 {
-	bool    flag;
-	T       unpaired;
+	bool    pendingFlag;
+	bool	mainFlag;
+	T       unpaired[2];
 };
 
 template <typename T>
@@ -96,6 +99,7 @@ private:
 
 	T                      _mainChain;
 	T                      _pending;
+	T                      _mainPending;
 
 	HasOdd<T>              _hasOdd;
 
@@ -108,15 +112,16 @@ private:
 	void             parseSequence();
 	bool             isSequenceEmpty() const;
 
-	void             mergeInsertSort(e_Mode, size_t, size_t, size_t);
+	void             mergeInsertSort(e_Mode, size_t);
 	void             insertPending();
 	void             insertValue(iterator, size_t);
+	void             insertErase(T&, iterator);
+	void             checkOdd(e_Mode, size_t);
 	
 	void             getOrder(std::vector<size_t>&, size_t);
 	size_t           jacobsthal(size_t) const;
 	iterator         binarySearch(iterator);
 
-	void             handleUnpaired(size_t, size_t);
 	void             setInsertionIndexes(T& c);
 	iterator         findByKey(T&, size_t);
 
