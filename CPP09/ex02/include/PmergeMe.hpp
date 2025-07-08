@@ -111,18 +111,18 @@ private:
 	void             parseSequence();
 	bool             isSequenceEmpty() const;
 
-	void             mergeInsertSort(e_Mode, size_t);
-	void             insertPending(T&, e_Mode);
+	void             mergeInsertSort(size_t);
+	void             insertPending(T&);
 	void             handleInsert(T&);
 	void             insertValue(T&, iterator, size_t);
 	void             insertErase(T&, iterator);
-	bool             isOdd(e_Mode, size_t);
+	bool             isOdd(size_t);
 	
 	void             getOrder(std::vector<size_t>&, size_t);
 	size_t           jacobsthal(size_t) const;
 	iterator         binarySearch(iterator);
 
-	void             setInsertionIndexes(T&, e_Mode);
+	void             setInsertionIndexes(T&);
 	iterator         findByKey(T&, int);
 
 	                 // DEBUG FUNCTIONS

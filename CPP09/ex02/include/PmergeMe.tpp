@@ -64,7 +64,6 @@ void	PmergeMe<T>::parseSequence()
 		if (_mainChain.size() == MAX_SIZE)
 			throw std::runtime_error(MAX_SIZE_REACHED);
 	}
-	setInsertionIndexes(_mainChain, HANDLE_MAX);
 }
 
 /*
@@ -118,7 +117,7 @@ typename PmergeMe<T>::iterator	PmergeMe<T>::binarySearch(typename PmergeMe<T>::i
 		if (mid->second < it->second)
 			low = mid + 1;
 		else
-			high = mid;
+			high = mid;		
 	}
 
 	return low;
@@ -173,7 +172,7 @@ void	PmergeMe<T>::insertValue(T& c, typename PmergeMe<T>::iterator it, size_t ma
 
 	it = c.begin();
 	std::advance(it, max);
-	c.erase(c.begin(), it);
+	c.erase(c.begin(), it);	
 }
 
 template <typename T>
@@ -194,45 +193,30 @@ void	PmergeMe<T>::handleInsert(T& c)
 }
 
 template <typename T>
-void	PmergeMe<T>::insertPending(T& c, e_Mode mode)
+void	PmergeMe<T>::insertPending(T& c)
 {
 	handleInsert(c);
 
-	if (mode == HANDLE_MAX && !_hasOdd.unpaired[MAX_ODD].empty())
+	if (!_hasOdd.unpaired[MAX_ODD].empty())
 		handleInsert(_hasOdd.unpaired[MAX_ODD]);
-
-	else if (mode == HANDLE_MIN && !_hasOdd.unpaired[MIN_ODD].empty())
-		handleInsert(_hasOdd.unpaired[MIN_ODD]);
 }
 
 template <typename T>
-void	PmergeMe<T>::setInsertionIndexes(T& c, e_Mode mode)
+void	PmergeMe<T>::setInsertionIndexes(T& c)
 {
-	size_t start = (mode == HANDLE_MIN ? 0 : (c.size() -  _mainChain.size()));
+	size_t start = (c.size() -  _mainChain.size());
 	size_t end = _mainChain.size();
 	size_t i = 0;
 
 	while (start < end)
 	{
-		switch (mode)
-		{
-			case HANDLE_MIN:
-				_mainChain[start].first = c[start].second;
-				c[start].first = _mainChain[start].second;
-				break;
-			
-			case HANDLE_MAX:
-				c[start].first = _mainChain[i++].second;
-		}
+		c[start].first = _mainChain[i++].second;
 
 		start++;
 	}
 
-	if (mode == HANDLE_MAX && !_hasOdd.unpaired[MAX_ODD].empty())
+	if (!_hasOdd.unpaired[MAX_ODD].empty())
 		_hasOdd.unpaired[MAX_ODD].back().first = c.back().first + 1;
-
-	else if (mode == HANDLE_MIN && _hasOdd.flag)
-		_hasOdd.unpaired[MIN_ODD].back().first = c.back().first + 1;
 }
 
 template <typename T>
@@ -243,52 +227,44 @@ void	PmergeMe<T>::insertErase(T& c, typename PmergeMe<T>::iterator it)
 }
 
 template <typename T>
-bool	PmergeMe<T>::isOdd(e_Mode mode, size_t size)
+bool	PmergeMe<T>::isOdd(size_t size)
 {
-	if (mode == HANDLE_MIN && (_hasOdd.flag = size % 2 != 0))
-		return insertErase(_hasOdd.unpaired[MIN_ODD], _mainChain.end() - 1), true;
-	else if (mode == HANDLE_MAX && size % 2 != 0)
+	if (size % 2 != 0)
 		return insertErase(_hasOdd.unpaired[MAX_ODD], _mainChain.end() - 1), true;
 
 	return false;
 }
 
 template <typename T>
-void	PmergeMe<T>::mergeInsertSort(e_Mode mode, size_t size)
+void	PmergeMe<T>::mergeInsertSort(size_t size)
 {
 	if (size <= 1)
 	{
-		std::cout << "ici" << std::endl;
+		printMainChain(); // DEBUG
 		return ;
 	}
 
-	T& c = (mode == HANDLE_MIN ? _pending : _mainPending);
-
-	if (isOdd(mode, size))
+	if (isOdd(size))
 		size = _mainChain.size();
 
 	for (size_t i = 0; i < size / 2; i++)
 	{
 		_mainChain[0].second < _mainChain[1].second ?
-		insertErase(c, _mainChain.begin()) : insertErase(c, _mainChain.begin() + 1);
+		insertErase(_pending, _mainChain.begin()) : insertErase(_pending, _mainChain.begin() + 1);
 	}
 	
-	if (mode == HANDLE_MAX)
-	{
-		setInsertionIndexes(c, HANDLE_MAX);
-		mergeInsertSort(HANDLE_MAX, _mainChain.size());
+	setInsertionIndexes(_pending);
 
-		insertPending(c, HANDLE_MAX);
-	}
+	mergeInsertSort(_mainChain.size());
+	printMainChain(); // DEBUG
+
+	insertPending(_pending);
 }
 
 template <typename T>
 void	PmergeMe<T>::process()
 {
-	mergeInsertSort(HANDLE_MIN, _mainChain.size());
-	setInsertionIndexes(_pending, HANDLE_MIN);
-	mergeInsertSort(HANDLE_MAX, _mainChain.size());
-	insertPending(_pending, HANDLE_MIN);
+	mergeInsertSort(_mainChain.size());
 }
 
 template <typename T>

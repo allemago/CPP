@@ -51,7 +51,6 @@ fclean: clean
 re: fclean all
 
 test: $(NAME)
-	@clear
-	@./PmergeMe $$(shuf -i 0-99 -n 23)
+	@./PmergeMe $$(shuf -i 0-99 -n 26)
 
 .PHONY: all clean fclean re
