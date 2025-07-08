@@ -57,6 +57,14 @@ enum	e_Mode
 	HANDLE_MAX = 2
 };
 
+// STRUCTURES
+template <typename T>
+struct	HasOdd
+{
+	bool    flag;
+	T       unpaired[2];
+};
+
 // TYPE TRAITS
 template <typename T>
 struct	ContainerTypeTraits
@@ -76,15 +84,6 @@ struct	ContainerTypeTraits< std::vector< std::pair<size_t, int> > >
 	static const e_Type value = VECTOR_TYPE;
 };
 
-// TEMPLATE STRUCTURES
-template <typename T>
-struct	HasOdd
-{
-	bool    pendingFlag;
-	bool	mainFlag;
-	T       unpaired[2];
-};
-
 template <typename T>
 class PmergeMe
 {
@@ -98,8 +97,8 @@ private:
 	std::string            _rawSequence;
 
 	T                      _mainChain;
-	T                      _pending;
 	T                      _mainPending;
+	T                      _pending;
 
 	HasOdd<T>              _hasOdd;
 
@@ -113,17 +112,18 @@ private:
 	bool             isSequenceEmpty() const;
 
 	void             mergeInsertSort(e_Mode, size_t);
-	void             insertPending();
-	void             insertValue(iterator, size_t);
+	void             insertPending(T&, e_Mode);
+	void             handleInsert(T&);
+	void             insertValue(T&, iterator, size_t);
 	void             insertErase(T&, iterator);
-	void             checkOdd(e_Mode, size_t);
+	bool             isOdd(e_Mode, size_t);
 	
 	void             getOrder(std::vector<size_t>&, size_t);
 	size_t           jacobsthal(size_t) const;
 	iterator         binarySearch(iterator);
 
-	void             setInsertionIndexes(T& c);
-	iterator         findByKey(T&, size_t);
+	void             setInsertionIndexes(T&, e_Mode);
+	iterator         findByKey(T&, int);
 
 	                 // DEBUG FUNCTIONS
 	void             printMainChain() const;
