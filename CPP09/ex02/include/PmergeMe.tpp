@@ -174,7 +174,6 @@ void	PmergeMe<T>::insertValue(typename PmergeMe<T>::iterator it, size_t max)
 
 	if (_pending.empty() && !_leftover.empty())
 	{
-		std::cout << "value = " << _leftover[0].second << std::endl;
 		_mainChain.insert(binarySearch(_leftover.begin()), _leftover[0]);
 		_leftover.clear();
 	}
@@ -184,9 +183,6 @@ template <typename T>
 void	PmergeMe<T>::insertPending()
 {
 	getOrder();
-
-	printOrder(); // DEBUG
-	printPending(); // DEBUG
 
 	size_t orderSize = _order.size();
 
@@ -202,18 +198,22 @@ void	PmergeMe<T>::insertPending()
 template <typename T>
 void	PmergeMe<T>::setInsertionIndexes()
 {
-	size_t start = (_pending.size() -  _mainChain.size());
+	std::cout << "pending size = " << _pending.size() << ", main size = " << _mainChain.size() << std::endl;
+	size_t start = (_pending.size() - _mainChain.size());
+	std::cout << "start = " << start << std::endl;
+	printMainChain(); // DEBUG
 	size_t end = _mainChain.size();
+	std::cout << "end = " << end << std::endl;
 	size_t i = 0;
 
-	while (start < end)
+	while (i < end)
 	{
 		_pending[start].first = _mainChain[i++].second;
 		start++;
 	}
 
 	if (!_leftover.empty())
-		_leftover.back().first = _pending.back().first + 1;
+		_leftover.back().first = _mainChain.back().second;
 }
 
 template <typename T>
@@ -228,8 +228,7 @@ bool	PmergeMe<T>::isOdd(size_t size)
 {
 	if (size % 2 != 0)
 	{
-		if (_leftover.empty())
-			insertErase(_leftover, _mainChain.end() - 1);
+		insertErase(_leftover, _mainChain.end() - 1);
 
 		return true;
 	}
@@ -249,6 +248,9 @@ void	PmergeMe<T>::mergeInsertSort(size_t size)
 
 	if (isOdd(size))
 		size = _mainChain.size();
+
+	std::cout << "\n*******************\n" << std::endl;
+	printMainChain(); // DEBUG
 
 	for (size_t i = 0; i < size / 2; i++)
 	{
@@ -350,19 +352,23 @@ template <typename T>
 const std::string	PmergeMe<T>::isSorted() const
 {
 	bool sorted = true;
-	if (_mainChain.size() != _size)
-		std::cout << CYAN << "\nsize before = " << _size << ", size after = " << _mainChain.size() << RESET, sorted = false;
-	else
+	
+	for (size_t i = 0; i < _mainChain.size() - 1; i++)
 	{
-		for (size_t i = 0; i < _mainChain.size() - 1; i++)
+		if (_mainChain[i].second > _mainChain[i + 1].second)
 		{
-			if (_mainChain[i].second > _mainChain[i + 1].second)
-			{
-				sorted = false;
-				break ;
-			}
+			sorted = false;
+			break ;
 		}
 	}
+
+	if (_mainChain.size() != _size)
+	{
+		std::cout << "\n" BOLD << _size - _mainChain.size() << " elements are missing ❌" RESET << std::endl;
+		std::cout << BOLD << "Before = " GREEN << _size << " elements\n" RESET;
+		std::cout << BOLD "After = " RED << _mainChain.size() << " elements" << RESET;
+	}
+
 	return sorted ? "\nSequence is sorted ✅\n" : "\nSequence is not sorted ❌\n";
 }
 
