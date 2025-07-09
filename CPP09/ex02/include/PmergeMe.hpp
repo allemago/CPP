@@ -85,6 +85,7 @@ private:
 	static const e_Type    _type = ContainerTypeTraits<T>::value;
 
 	std::string            _rawSequence;
+	size_t                 _size;
 
 	T                      _mainChain;
 	T                      _pending;

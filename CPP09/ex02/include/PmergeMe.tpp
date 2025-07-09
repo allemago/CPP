@@ -64,6 +64,7 @@ void	PmergeMe<T>::parseSequence()
 		if (_mainChain.size() == MAX_SIZE)
 			throw std::runtime_error(MAX_SIZE_REACHED);
 	}
+	_size = _mainChain.size();
 }
 
 /*
@@ -161,8 +162,6 @@ void	PmergeMe<T>::getOrder()
 template <typename T>
 void	PmergeMe<T>::insertValue(typename PmergeMe<T>::iterator it, size_t max)
 {
-	printPending(); // DEBUG
-
 	while (it >= _pending.begin())
 	{	
 		_mainChain.insert(binarySearch(it), *it);
@@ -225,8 +224,8 @@ bool	PmergeMe<T>::isOdd(size_t size)
 {
 	if (size % 2 != 0)
 	{
-		if (!_leftover.empty())
-			_leftover.clear();
+		/* if (!_leftover.empty())
+			_leftover.clear(); */
 
 		return insertErase(_leftover, _mainChain.end() - 1), true;
 	}
@@ -281,6 +280,9 @@ void	PmergeMe<T>::printAfter() const
 	std::cout << " elements with " << getContainerType() << " : ";
 	std::cout << std::fixed << std::setprecision(5) << duration << " us\n";
 
+	printPending(); // DEBUG
+	printOdd(); // DEBUG
+
 	std::cout << isSorted();
 }
 
@@ -328,7 +330,8 @@ template <typename T>
 void	PmergeMe<T>::printOdd() const
 {
 	std::cout << BLUE "\nleftover:\n" RESET;
-	std::cout << "index = " << _leftover[0].first << BOLD ", value = " << _leftover[0].second << "\n\n" RESET;
+	if (!_leftover.empty())
+		std::cout << "index = " << _leftover[0].first << BOLD ", value = " << _leftover[0].second << "\n\n" RESET;
 }
 
 template <typename T>
@@ -345,12 +348,17 @@ template <typename T>
 const std::string	PmergeMe<T>::isSorted() const
 {
 	bool sorted = true;
-	for (size_t i = 0; i < _mainChain.size() - 1; i++)
+	if (_mainChain.size() != _size)
+		std::cout << CYAN << "\nsize before = " << _size << ", size after = " << _mainChain.size() << RESET, sorted = false;
+	else
 	{
-		if (_mainChain[i].second > _mainChain[i + 1].second)
+		for (size_t i = 0; i < _mainChain.size() - 1; i++)
 		{
-			sorted = false;
-			break ;
+			if (_mainChain[i].second > _mainChain[i + 1].second)
+			{
+				sorted = false;
+				break ;
+			}
 		}
 	}
 	return sorted ? "\nSequence is sorted ✅\n" : "\nSequence is not sorted ❌\n";
