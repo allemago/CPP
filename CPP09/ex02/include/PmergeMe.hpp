@@ -33,8 +33,6 @@
 
 # define MAX_SIZE 5000
 # define MICRO_SEC 1000000.0
-# define MIN_ODD 0
-# define MAX_ODD 1
 # define WHITESPACE "\t\n\v\f\r "
 
 template <typename T>
@@ -55,14 +53,6 @@ enum	e_Mode
 {
 	HANDLE_MIN = 1,
 	HANDLE_MAX = 2
-};
-
-// STRUCTURES
-template <typename T>
-struct	HasOdd
-{
-	bool    flag;
-	T       unpaired[2];
 };
 
 // TYPE TRAITS
@@ -97,10 +87,10 @@ private:
 	std::string            _rawSequence;
 
 	T                      _mainChain;
-	T                      _mainPending;
 	T                      _pending;
+	T                      _leftover;
 
-	HasOdd<T>              _hasOdd;
+	std::vector<size_t>    _order;
 
 //	====================== Typedefs =============================
 
@@ -108,55 +98,50 @@ private:
 
 //	==================== Private Methods ========================
 
-	void             parseSequence();
-	bool             isSequenceEmpty() const;
+	void                 parseSequence();
+	bool                 isSequenceEmpty() const;
 
-	void             mergeInsertSort(size_t);
-	void             insertPending(T&);
-	void             handleInsert(T&);
-	void             insertValue(T&, iterator, size_t);
-	void             insertErase(T&, iterator);
-	bool             isOdd(size_t);
+	void                 insertPending();
+	void                 insertValue(iterator, size_t);
+	void                 insertErase(T&, iterator);
+	bool                 isOdd(size_t);
 	
-	void             getOrder(std::vector<size_t>&, size_t);
-	size_t           jacobsthal(size_t) const;
-	iterator         binarySearch(iterator);
+	void                 getOrder();
+	size_t               jacobsthal(size_t) const;
+	iterator             binarySearch(iterator);
 
-	void             setInsertionIndexes(T&);
-	iterator         findByKey(T&, int);
+	void                 setInsertionIndexes();
+	iterator             findByKey(T&, int);
+	double               getDuration() const;
+	const std::string    getContainerType() const;
+	
+//	===================== Debug Methods =========================
 
-	                 // DEBUG FUNCTIONS
-	void             printMainChain() const;
-	void             printPending() const;
-	void             printOdd() const;
-	void             printOrder(const std::vector<size_t>&) const;
+	void                 printMainChain() const;
+	void                 printPending() const;
+	void                 printOdd() const;
+	void                 printOrder() const;
+	const std::string    isSorted() const;
 
 /*****************
 *     PUBLIC     *
 *****************/
 public:
-//	==================== Canonical Form =========================
 
 	PmergeMe();
+	PmergeMe(const std::string&);
 	PmergeMe(const PmergeMe<T>&);
 	~PmergeMe();
-	PmergeMe<T>&	operator=(const PmergeMe<T>&);
-	
-//	==================== Custom Constructors ====================
-
-	PmergeMe(const std::string&);
+	PmergeMe<T>&         operator=(const PmergeMe<T>&);
 
 //	==================== Public Methods =========================
 
+	void                 mergeInsertSort(size_t);
+
 	void                 printBefore() const;
-	void                 process();
+	void                 printAfter() const;
 
-	double               getDuration() const;
-	const T&             getContainer() const;
-	const std::string    getContainerType() const;
-
-	// DEBUG FUNCTIONS
-	const std::string    isSorted() const;
+	size_t               getSize() const;
 };
 
 # include "PmergeMe.tpp"
