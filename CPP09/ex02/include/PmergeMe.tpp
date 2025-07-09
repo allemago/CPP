@@ -172,8 +172,9 @@ void	PmergeMe<T>::insertValue(typename PmergeMe<T>::iterator it, size_t max)
 	std::advance(it, max);
 	_pending.erase(_pending.begin(), it);
 
-	if (!_leftover.empty())
+	if (_pending.empty() && !_leftover.empty())
 	{
+		std::cout << "value = " << _leftover[0].second << std::endl;
 		_mainChain.insert(binarySearch(_leftover.begin()), _leftover[0]);
 		_leftover.clear();
 	}
@@ -183,6 +184,9 @@ template <typename T>
 void	PmergeMe<T>::insertPending()
 {
 	getOrder();
+
+	printOrder(); // DEBUG
+	printPending(); // DEBUG
 
 	size_t orderSize = _order.size();
 
@@ -224,10 +228,10 @@ bool	PmergeMe<T>::isOdd(size_t size)
 {
 	if (size % 2 != 0)
 	{
-		/* if (!_leftover.empty())
-			_leftover.clear(); */
+		if (_leftover.empty())
+			insertErase(_leftover, _mainChain.end() - 1);
 
-		return insertErase(_leftover, _mainChain.end() - 1), true;
+		return true;
 	}
 
 	return false;
@@ -237,23 +241,24 @@ template <typename T>
 void	PmergeMe<T>::mergeInsertSort(size_t size)
 {
 	if (size <= 1)
+	{
+		if (!_pending.empty())
+			insertPending();	
 		return ;
+	}
 
 	if (isOdd(size))
 		size = _mainChain.size();
 
 	for (size_t i = 0; i < size / 2; i++)
 	{
-		_mainChain[0].second < _mainChain[1].second ?
-		insertErase(_pending, _mainChain.begin()) : insertErase(_pending, _mainChain.begin() + 1);
+		_mainChain[i].second < _mainChain[i + 1].second ?
+		insertErase(_pending, _mainChain.begin() + i) : insertErase(_pending, _mainChain.begin() + (i + 1));
 	}
 	
 	setInsertionIndexes();
 
 	mergeInsertSort(_mainChain.size());
-
-	if (!_pending.empty())
-		insertPending();
 }
 
 template <typename T>
@@ -279,9 +284,6 @@ void	PmergeMe<T>::printAfter() const
 	std::cout << "\nTime to process a range of\t" << size;
 	std::cout << " elements with " << getContainerType() << " : ";
 	std::cout << std::fixed << std::setprecision(5) << duration << " us\n";
-
-	printPending(); // DEBUG
-	printOdd(); // DEBUG
 
 	std::cout << isSorted();
 }
