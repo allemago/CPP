@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 17:21:42 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/04 15:33:52 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/10 15:18:29 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,13 @@ private:
 *****************/
 public:
 
-//	==================== Canonical Form =========================
-
 	Array();
+	Array(size_t);
 	Array(const Array<T>&);
 	~Array();
 	Array<T>&	operator=(const Array<T>&);
 
-//	==================== Custom Constructors ====================
-
-	Array(size_t);
-
-// ============== Additional Operator Overloads =================
+// ==================== Operator Overloads ======================
 
 	T&	operator[](size_t) const;
 	

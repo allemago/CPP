@@ -8,6 +8,7 @@ int main()
 {
     // Various tests
     {
+        std::cout << BOLD "Various tests" RESET << std::endl;
         MutantStack<int> s1;
         std::cout << "is s1 empty? " << (s1.empty() ? "yes" : "no") << std::endl;
 
@@ -53,11 +54,18 @@ int main()
 
     // MutantStack<int> with std::vector
     {
-        MutantStack< int, std::vector<int> >;
+        std::cout << BOLD "\nMutantStack with std::vector" RESET << std::endl;
+        MutantStack< int, std::vector<int> > mstack;
+
+        mstack.push(42);
+        mstack.push(21);
+
+        std::cout << mstack.top() << std::endl;
     }
     
     // FROM SUBJECT - MutantStack
     {
+        std::cout << BOLD "\nTest from subject" RESET << std::endl;
         MutantStack<int> mstack;
 
         mstack.push(5);
@@ -90,6 +98,7 @@ int main()
 
     // FROM SUBJECT - std::list
     {   
+        std::cout << BOLD "\nTest from subject with std::list" RESET << std::endl;
         std::list<int> mstack;
 
         mstack.push_back(5);

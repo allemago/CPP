@@ -33,24 +33,18 @@ private:
 *     PUBLIC     *
 *****************/
 public:
-//	==================== Canonical Form =========================
 
 	Span();
+	Span(size_t);
 	Span(const Span&);
 	~Span();
 	Span&	operator=(const Span&);
-
-//	==================== Custom Constructors ====================
-
-	Span(size_t);
 
 //	==================== Public Methods =========================
 
 	void		addNumber(long long);
 	long long	shortestSpan();
 	long long	longestSpan();
-
-//	==================== Getters / Setters ======================
 
 	long long	getMin() const;
 	long long	getMax() const;

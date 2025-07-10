@@ -6,6 +6,9 @@
 # include <iterator>
 # include <iostream>
 
+# define BOLD "\033[1m"
+# define RESET "\033[0m"
+
 template < typename T, typename C = std::deque<T> >
 class MutantStack : public std::stack<T, C>
 {
@@ -13,7 +16,6 @@ class MutantStack : public std::stack<T, C>
 *     PUBLIC     *
 *****************/
 public:
-//	==================== Canonical Form =========================
 
 	MutantStack();
 	MutantStack(const MutantStack<T, C>&);

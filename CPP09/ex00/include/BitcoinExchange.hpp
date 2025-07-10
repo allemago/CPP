@@ -22,11 +22,12 @@
 # define ERR_INFILE_FORMAT "Error: please use correct format for input file: date | value"
 # define DATA_FILE_FORMAT "date,exchange_rate"
 # define INPUT_FILE_FORMAT "date | value"
-# define DATE_FORMAT_SIZE 10
 # define BAD_INPUT "Error: bad input => "
 # define NO_RATE_AVAILABLE "Error: no price data available."
 # define NB_NOT_POSITIVE "Error: not a positive number."
 # define NB_TOO_LARGE "Error: too large a number."
+
+# define DATE_FORMAT_SIZE 10
 
 enum	e_Months
 {

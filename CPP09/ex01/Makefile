@@ -35,7 +35,7 @@ $(NAME): $(OBJ)
 	@printf "   ░█▀▀░▄▀▄░█░█░░█░\n"
 	@printf "   ░▀▀▀░▀░▀░▀▀▀░▀▀▀\n"
 	@printf "\n\n${RESET}"
-	@printf "   \033[1musage: ./RPN\033[0m"
+	@printf "   \033[1musage: ./RPN [expression]\033[0m"
 	@printf "\n\n"
 
 clean:
