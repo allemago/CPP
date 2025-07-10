@@ -5,7 +5,6 @@
 # include <string>
 # include <vector>
 # include <deque>
-# include <map>
 # include <utility>
 # include <algorithm>
 # include <iterator>
@@ -32,7 +31,6 @@
 # define ERR_DUP_VALUES "Error: duplicate values are not allowed"
 
 # define MAX_SIZE 4000
-# define MICRO_SEC 1000000.0
 # define WHITESPACE "\t\n\v\f\r "
 
 template <typename T>
@@ -63,13 +61,13 @@ struct	ContainerTypeTraits
 };
 
 template <>
-struct	ContainerTypeTraits< std::deque< std::pair<size_t, int> > >
+struct	ContainerTypeTraits< std::deque< std::pair<int, int> > >
 {
 	static const e_Type value = DEQUE_TYPE;
 };
 
 template <>
-struct	ContainerTypeTraits< std::vector< std::pair<size_t, int> > >
+struct	ContainerTypeTraits< std::vector< std::pair<int, int> > >
 {
 	static const e_Type value = VECTOR_TYPE;
 };
@@ -85,6 +83,7 @@ private:
 	static const e_Type    _type = ContainerTypeTraits<T>::value;
 
 	std::string            _rawSequence;
+
 	size_t                 _size;
 
 	T                      _sequence;
@@ -99,17 +98,17 @@ private:
 	void                 parseSequence();
 	bool                 isSequenceEmpty() const;
 
+	void                 insertErase(T&, T&, iterator);
 	void                 insertPending(T&, T&);
 	void                 insertValue(T&, iterator, size_t);
-	void                 insertErase(T&, T&, iterator);
-	bool                 isOdd(T&, T&, size_t);
 	
+	bool                 isOdd(T&, T&, size_t);
+	void                 setInsertionIndexes(T&);
 	void                 getOrder(std::vector<size_t>&, size_t);
 	size_t               jacobsthal(size_t) const;
+	iterator             findByKey(T&, int);
 	iterator             binarySearch(iterator, iterator);
 
-	void                 setInsertionIndexes(T&);
-	iterator             findByKey(T&, int);
 	double               getDuration() const;
 	const std::string    getContainerType() const;
 	

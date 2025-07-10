@@ -1,12 +1,10 @@
 #include "../include/PmergeMe.hpp"
 
 template <typename T>
-PmergeMe<T>::PmergeMe() : _rawSequence("")
-{ parseSequence(); }
+PmergeMe<T>::PmergeMe() : _rawSequence("") { parseSequence(); }
 
 template <typename T>
-PmergeMe<T>::PmergeMe(const std::string& raw) : _rawSequence(raw)
-{ parseSequence(); }
+PmergeMe<T>::PmergeMe(const std::string& raw) : _rawSequence(raw) { parseSequence(); }
 
 template <typename T>
 PmergeMe<T>::PmergeMe(const PmergeMe& obj) { *this = obj; }
@@ -53,7 +51,7 @@ void	PmergeMe<T>::parseSequence()
 			|| nb > std::numeric_limits<int>::max())
 			throw std::runtime_error(USAGE);
 
-		std::pair<size_t, int> newPair(0, nb);
+		std::pair<int, int> newPair(0, nb);
 
 		if (find(_sequence.begin(), _sequence.end(), newPair) == _sequence.end())
 			_sequence.push_back(newPair);
@@ -283,7 +281,7 @@ void	PmergeMe<T>::printAfter() const
 template <typename T>
 double	PmergeMe<T>::getDuration() const
 {
-	return (static_cast<double>(clock() - g_startTime) / CLOCKS_PER_SEC) * MICRO_SEC;
+	return (static_cast<double>(clock() - g_startTime) / CLOCKS_PER_SEC) * 1000000.0;
 }
 
 template <typename T>

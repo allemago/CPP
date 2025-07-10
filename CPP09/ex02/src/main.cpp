@@ -21,7 +21,7 @@ int main(int argc, char **argv)
         try
         {
             std::cout << BOLD "CONTAINER: DEQUE" RESET << std::endl;
-            PmergeMe <std::deque<std::pair<size_t, int> > > sortDeque(concatSequence(argc, argv));
+            PmergeMe <std::deque<std::pair<int, int> > > sortDeque(concatSequence(argc, argv));
             sortDeque.printBefore();
             g_startTime = clock();
             sortDeque.mergeInsertSort(HANDLE_SEQUENCE);
@@ -38,7 +38,7 @@ int main(int argc, char **argv)
         try
         {
             std::cout << BOLD "\nCONTAINER: VECTOR" RESET << std::endl;
-            PmergeMe <std::vector<std::pair<size_t, int> > > sortVector(concatSequence(argc, argv));
+            PmergeMe <std::vector<std::pair<int, int> > > sortVector(concatSequence(argc, argv));
             sortVector.printBefore();
 			g_startTime = clock();
             sortVector.mergeInsertSort(HANDLE_SEQUENCE);

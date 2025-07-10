@@ -56,6 +56,6 @@ debug:
 
 test: $(NAME)
 	@clear
-	@./PmergeMe $$(shuf -i 0-100 -n 33)
+	@./PmergeMe $$(shuf -i 0-100 -n 42)
 
 .PHONY: all clean fclean re
