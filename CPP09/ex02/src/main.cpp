@@ -24,7 +24,7 @@ int main(int argc, char **argv)
             PmergeMe <std::deque<std::pair<size_t, int> > > sortDeque(concatSequence(argc, argv));
             sortDeque.printBefore();
             g_startTime = clock();
-            sortDeque.mergeInsertSort(sortDeque.getSize());
+            sortDeque.mergeInsertSort(HANDLE_SEQUENCE);
             sortDeque.printAfter();
         }
         catch(const std::exception& e)
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
             PmergeMe <std::vector<std::pair<size_t, int> > > sortVector(concatSequence(argc, argv));
             sortVector.printBefore();
 			g_startTime = clock();
-            sortVector.mergeInsertSort(sortVector.getSize());
+            sortVector.mergeInsertSort(HANDLE_SEQUENCE);
             sortVector.printAfter();
         }
         catch(const std::exception& e)

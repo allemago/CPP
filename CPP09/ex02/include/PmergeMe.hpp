@@ -28,10 +28,10 @@
 # define EMPTY "Error: empty sequence in parameter\n"
 # define USAGE "Usage: ./PmergeMe [positive integer sequence]"
 # define ERR_TYPE "Unsupported container type. Please use vector or deque"
-# define MAX_SIZE_REACHED "Maximum of 5000 integers has been reached"
+# define MAX_SIZE_REACHED "Maximum of 4000 integers has been reached"
 # define ERR_DUP_VALUES "Error: duplicate values are not allowed"
 
-# define MAX_SIZE 5000
+# define MAX_SIZE 4000
 # define MICRO_SEC 1000000.0
 # define WHITESPACE "\t\n\v\f\r "
 
@@ -51,8 +51,8 @@ enum	e_Type
 
 enum	e_Mode
 {
-	HANDLE_MIN = 1,
-	HANDLE_MAX = 2
+	HANDLE_SEQUENCE = 1,
+	HANDLE_MAINCHAIN = 2
 };
 
 // TYPE TRAITS
@@ -87,11 +87,8 @@ private:
 	std::string            _rawSequence;
 	size_t                 _size;
 
+	T                      _sequence;
 	T                      _mainChain;
-	T                      _pending;
-	T                      _leftover;
-
-	std::vector<size_t>    _order;
 
 //	====================== Typedefs =============================
 
@@ -102,26 +99,27 @@ private:
 	void                 parseSequence();
 	bool                 isSequenceEmpty() const;
 
-	void                 insertPending();
-	void                 insertValue(iterator, size_t);
-	void                 insertErase(T&, iterator);
-	bool                 isOdd(size_t);
+	void                 insertPending(T&, T&);
+	void                 insertValue(T&, iterator, size_t);
+	void                 insertErase(T&, T&, iterator);
+	bool                 isOdd(T&, T&, size_t);
 	
-	void                 getOrder();
+	void                 getOrder(std::vector<size_t>&, size_t);
 	size_t               jacobsthal(size_t) const;
-	iterator             binarySearch(iterator);
+	iterator             binarySearch(iterator, iterator);
 
-	void                 setInsertionIndexes();
+	void                 setInsertionIndexes(T&);
 	iterator             findByKey(T&, int);
 	double               getDuration() const;
 	const std::string    getContainerType() const;
 	
 //	===================== Debug Methods =========================
 
+	void                 printSequence() const;
 	void                 printMainChain() const;
-	void                 printPending() const;
-	void                 printOdd() const;
-	void                 printOrder() const;
+	void                 printPending(T&) const;
+	void                 printLeftover(T&) const;
+	void                 printOrder(std::vector<size_t>&) const;
 	const std::string    isSorted() const;
 
 /*****************
@@ -137,12 +135,10 @@ public:
 
 //	==================== Public Methods =========================
 
-	void                 mergeInsertSort(size_t);
+	void                 mergeInsertSort(e_Mode);
 
 	void                 printBefore() const;
 	void                 printAfter() const;
-
-	size_t               getSize() const;
 };
 
 # include "PmergeMe.tpp"

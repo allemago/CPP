@@ -50,8 +50,12 @@ fclean: clean
 
 re: fclean all
 
+debug:
+	@rm -rf .vscode
+	@cp -r /home/magrabko/Documents/Misc/.vscode ./.vscode
+
 test: $(NAME)
 	@clear
-	@./PmergeMe $$(shuf -i 0-500 -n 201)
+	@./PmergeMe $$(shuf -i 0-100 -n 33)
 
 .PHONY: all clean fclean re
