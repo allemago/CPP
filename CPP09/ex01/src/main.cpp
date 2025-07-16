@@ -5,7 +5,7 @@ int main(int argc, char **argv)
     if (argc != 2)
     {
         std::cerr << "Usage: ./RPN [expression]" << std::endl;
-        return (-1);
+        return -1;
     }
 
     (void)argv;
@@ -22,5 +22,5 @@ int main(int argc, char **argv)
 
     delete rpn;
 
-    return (0);
+    return 0;
 }

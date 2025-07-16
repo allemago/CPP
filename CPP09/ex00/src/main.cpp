@@ -5,7 +5,7 @@ int main(int argc, char **argv)
     if (argc != 2)
     {
         std::cerr << USAGE << std::endl;
-        return (-1);
+        return -1;
     }
 
     BitcoinExchange* btc = NULL;
@@ -21,5 +21,5 @@ int main(int argc, char **argv)
 
     delete btc;
 
-    return (0);
+    return 0;
 }

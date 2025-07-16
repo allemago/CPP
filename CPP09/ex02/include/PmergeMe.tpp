@@ -170,7 +170,7 @@ void	PmergeMe<T>::insertPending(T& pending, T& leftover)
 }
 
 template <typename T>
-void	PmergeMe<T>::setInsertionIndexes(T& pending)
+void	PmergeMe<T>::setKeys(T& pending)
 {
 	size_t start = (pending.size() - _mainChain.size());
 	size_t size = _mainChain.size();
@@ -244,7 +244,7 @@ void	PmergeMe<T>::mergeInsertSort(e_Mode mode)
 		}
 	}
 
-	setInsertionIndexes(pending);
+	setKeys(pending);
 
 	mergeInsertSort(HANDLE_MAINCHAIN);
 
@@ -273,7 +273,7 @@ void	PmergeMe<T>::printAfter() const
 	
 	std::cout << "\nTime to process a range of\t" << size;
 	std::cout << " elements with " << getContainerType() << " : ";
-	std::cout << std::fixed << std::setprecision(5) << duration << " us\n";
+	std::cout << std::fixed << std::setprecision(1) << duration << " us\n";
 
 	std::cout << BOLD << isSorted() << RESET;
 }

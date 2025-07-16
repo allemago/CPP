@@ -103,7 +103,7 @@ private:
 	void                 insertValue(T&, iterator, size_t);
 	
 	bool                 isOdd(T&, T&, size_t);
-	void                 setInsertionIndexes(T&);
+	void                 setKeys(T&);
 	void                 getOrder(std::vector<size_t>&, size_t);
 	size_t               jacobsthal(size_t) const;
 	iterator             findByKey(T&, int);
