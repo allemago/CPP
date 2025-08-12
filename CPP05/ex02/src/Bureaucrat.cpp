@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:19:57 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 11:52:20 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:26:19 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,11 @@ Bureaucrat::Bureaucrat(const std::string& name, int grade) :
 		throw GradeTooLowException();
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat& object)
-{
-	*this = object;
-}
+Bureaucrat::Bureaucrat(const Bureaucrat& object) : 
+			_name(object.getName()),
+			_grade(object.getGrade()) {}
 
 Bureaucrat::~Bureaucrat() {}
-
-Bureaucrat&	Bureaucrat::operator=(const Bureaucrat& object)
-{
-	if (this != &object)
-	{
-		this->_name = object.getName();
-		this->_grade = object.getGrade();
-	}
-	return (*this);
-}
 
 std::ostream&	operator<<(std::ostream& os, const Bureaucrat& object)
 {

@@ -6,32 +6,24 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:15:08 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 13:43:23 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:55:56 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/PresidentialPardonForm.hpp"
 
 PresidentialPardonForm::PresidentialPardonForm()
-                       : AForm("PresidentialPardonForm", 25, 5), _target("Link") {}
+                       : AForm("PresidentialPardonForm", "Link", 25, 5) {}
 
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm& object)
-                       : AForm(object), _target(object._target) {}
+                       : AForm(object) {}
 
 PresidentialPardonForm::~PresidentialPardonForm() {}
-
-PresidentialPardonForm&	PresidentialPardonForm::operator=(const PresidentialPardonForm& object)
-{
-	AForm::operator=(object);
-	return (*this);
-}
 
 void	PresidentialPardonForm::execute(const Bureaucrat& executor) const
 {
 	if (executor.getGrade() <= getMinGradeToExecute())
-	{
-		std::cout << _target << PARDONED << std::endl;
-	}
+		std::cout << getTarget() << PARDONED << std::endl;
 	else
-		std::cerr << _target << NOT_PARDONED << executor.getName() << " because: ", throw GradeTooLowException();
+		std::cerr << getTarget() << NOT_PARDONED << executor.getName() << " because: ", throw GradeTooLowException();
 }

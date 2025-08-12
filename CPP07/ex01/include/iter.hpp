@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:34:19 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/04 15:36:50 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/15 16:52:20 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ void iter(const T* array, size_t len, void (*func)(const T&))
 {
 	if (!array || !func)
 		return ;
+		
 	for (size_t i = 0; i < len; i++)
 		func(array[i]);
+}
+
+template <typename T>
+void    print(const T& p)
+{
+    std::cout << p << std::endl;
 }

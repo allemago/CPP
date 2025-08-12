@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:51:18 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/15 17:30:12 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:12:24 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ AMateria*	MateriaSource::createMateria(const std::string& type)
 			return (_learnedMaterias[i]->clone());
 		}
 	}
-	if (type == "ice" || type == "cure")
+	if (type == "ice" | type == "cure")
 		std::cout << NOTLEARNED_TYPE_MSG << std::endl;
 	else
 		std::cout << UNDEFINED_TYPE_MSG << std::endl;

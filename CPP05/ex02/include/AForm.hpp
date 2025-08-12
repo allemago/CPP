@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 10:58:50 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 15:07:54 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:46:44 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,38 +29,32 @@ class AForm
 private:
 
     const std::string	_name;
+	const std::string	_target;
 	bool				_isSigned;
 	const int			_minGradeToSign;
 	const int			_minGradeToExecute;
+
+	AForm&	operator=(const AForm&);
 
 /****************
 *    PUBLIC     *
 *****************/
 public:
 
-//	==================== Canonical Form =========================
-
 	AForm();
+	AForm(const std::string&, const std::string&, const int&, const int&);
 	AForm(const AForm&);
 	~AForm();
-	AForm&	operator=(const AForm&);
-	
-//	==================== Custom Constructors ====================
-
-	AForm(const std::string&, const int&, const int&);
-
-//	==================== Getters / Setters ======================
-
-	const std::string&	getName() const;
-	bool				getIsSigned() const;
-	const int&			getMinGradeToSign() const;
-	const int&			getMinGradeToExecute() const;
 
 //	==================== Public Methods =========================
 
 	void				beSigned(const Bureaucrat&);
-	
-//	==================== Pure Virtual Methods ===================
+
+	const std::string&	getName() const;
+	const std::string&	getTarget() const;
+	bool				getIsSigned() const;
+	const int&			getMinGradeToSign() const;
+	const int&			getMinGradeToExecute() const;
 
 	virtual void		execute(const Bureaucrat&) const = 0;
 

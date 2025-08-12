@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:16:05 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 12:32:30 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:41:50 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,16 @@ class RobotomyRequestForm : public AForm
 *****************/
 private:
 
-    std::string _target;
+	RobotomyRequestForm&	operator=(const RobotomyRequestForm&);
 
 /*****************
 *     PUBLIC     *
 *****************/
 public:
 
-//	==================== Canonical Form =========================
-
 	RobotomyRequestForm();
 	RobotomyRequestForm(const RobotomyRequestForm&);
 	~RobotomyRequestForm();
-	RobotomyRequestForm&	operator=(const RobotomyRequestForm&);
 
 //	==================== Public Methods =========================
 

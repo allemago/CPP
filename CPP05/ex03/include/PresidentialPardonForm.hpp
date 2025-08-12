@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:16:03 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 14:32:44 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:13:33 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,17 @@ class PresidentialPardonForm : public AForm
 *****************/
 private:
 
-    std::string _target;
+   PresidentialPardonForm&	operator=(const PresidentialPardonForm&);
 
 /*****************
 *     PUBLIC     *
 *****************/
 public:
 
-//	==================== Canonical Form =========================
-
 	PresidentialPardonForm();
+	PresidentialPardonForm(const std::string&);
 	PresidentialPardonForm(const PresidentialPardonForm&);
 	~PresidentialPardonForm();
-	PresidentialPardonForm&	operator=(const PresidentialPardonForm&);
-
-//	==================== Custom Constructors ====================
-	
-	PresidentialPardonForm(const std::string&);
 	
 //	==================== Public Methods =========================
 

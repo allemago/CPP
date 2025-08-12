@@ -53,6 +53,7 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
+	@find . -type f -name '*_shrubbery' -delete
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 10:58:50 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 15:13:55 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:18:00 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ private:
 	const int			_minGradeToSign;
 	const int			_minGradeToExecute;
 
+	Form&	operator=(const Form&);
+	
 /*****************
 *     PUBLIC     *
 *****************/
@@ -42,7 +44,6 @@ public:
 	Form();
 	Form(const Form&);
 	~Form();
-	Form&	operator=(const Form&);
 
 //	==================== Custom Constructors ====================
 

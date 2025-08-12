@@ -7,6 +7,7 @@
 # include <iostream>
 
 # define BOLD "\033[1m"
+# define CYAN "\033[1;36m"
 # define RESET "\033[0m"
 
 template < typename T, typename C = std::deque<T> >

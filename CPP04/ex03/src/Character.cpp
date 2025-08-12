@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:51:05 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/15 17:29:28 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:10:43 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	Character::equip(AMateria* m)
 		return ;
 	std::cout << BOLD "equip called, " RESET;
 	bool isFull = true;
-	if (_materiasCount < 4)
+	if (_materiasCount < 3)
 	{
 		isFull = false;
 		_materias[_materiasCount++] = m->clone();

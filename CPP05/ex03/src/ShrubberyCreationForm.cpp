@@ -6,28 +6,22 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:15:13 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 14:34:15 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:15:24 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ShrubberyCreationForm.hpp"
 
 ShrubberyCreationForm::ShrubberyCreationForm()
-                      : AForm("ShrubberyCreationForm", 145, 137), _target("Cocoyashi") {}
+                      : AForm("ShrubberyCreationForm", "Cocoyashi", 145, 137) {}
 
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target)
-                      : AForm("ShrubberyCreationForm", 145, 137), _target(target) {}
+                      : AForm("ShrubberyCreationForm", target, 145, 137) {}
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& object)
-                      : AForm(object), _target(object._target) {}
+                      : AForm(object) {}
 
 ShrubberyCreationForm::~ShrubberyCreationForm() {}
-
-ShrubberyCreationForm&	ShrubberyCreationForm::operator=(const ShrubberyCreationForm& object)
-{
-	AForm::operator=(object);
-	return (*this);
-}
 
 void	ShrubberyCreationForm::execute(const Bureaucrat& executor) const
 {
@@ -38,7 +32,7 @@ void	ShrubberyCreationForm::execute(const Bureaucrat& executor) const
 		if (!file)
 			std::cerr << fileName << ERR_OPEN_FILE << std::endl;
 		else
-			file << ASCII_TREES, std::cout <<  PLANT_TREES << _target << std::endl;
+			file << ASCII_TREES, std::cout <<  PLANT_TREES << getTarget() << std::endl;
 		file.close();
 	}
 	else

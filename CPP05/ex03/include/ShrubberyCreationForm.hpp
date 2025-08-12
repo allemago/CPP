@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:16:07 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 14:32:53 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:14:12 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,17 @@ class ShrubberyCreationForm : public AForm
 *****************/
 private:
 
-    std::string     _target;
+    ShrubberyCreationForm&	operator=(const ShrubberyCreationForm&);	
 
 /*****************
 *     PUBLIC     *
 *****************/
 public:
 
-//	==================== Canonical Form =========================
-
 	ShrubberyCreationForm();
+    ShrubberyCreationForm(const std::string&);
 	ShrubberyCreationForm(const ShrubberyCreationForm&);
 	~ShrubberyCreationForm();
-	ShrubberyCreationForm&	operator=(const ShrubberyCreationForm&);
-
-//	==================== Custom Constructors ====================
-	
-	ShrubberyCreationForm(const std::string&);
 
 //	==================== Public Methods =========================
 

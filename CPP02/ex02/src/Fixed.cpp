@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 09:36:17 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/01 17:30:05 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/04 12:05:23 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 const int Fixed::_bits = 8;
 
-Fixed::Fixed(void) : _value(0) {}
+Fixed::Fixed(void)
+{
+    setRawBits(0);
+}
 
 Fixed::Fixed(const int value) : _value(value << _bits) {}
 

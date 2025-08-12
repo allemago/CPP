@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:55:43 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 15:06:50 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:46:50 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,7 @@ std::string forms[3] = {	"presidential pardon",
 
 Intern::Intern() {}
 
-Intern::Intern(const Intern& object)
-{
-	*this = object;
-}
-
 Intern::~Intern() {}
-
-Intern&	Intern::operator=(const Intern& object)
-{
-	(void)object;
-	return (*this);
-}
 
 AForm*	Intern::makeForm(const std::string& name, const std::string& target)
 {
@@ -52,7 +41,14 @@ AForm*	Intern::makeForm(const std::string& name, const std::string& target)
 			}
 		}
 	}
+
+	std::cerr << name;
+	throw UnknownType();
 	
-	std::cerr << name << ": type of form does not exist" << std::endl;
-	return (NULL);
+	return NULL;
+}
+
+const char* Intern::UnknownType::what() const throw()
+{
+	return (": type of form does not exist");
 }

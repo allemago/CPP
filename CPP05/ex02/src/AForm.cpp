@@ -6,23 +6,25 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:19:57 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/28 10:54:45 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:55:38 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/AForm.hpp"
 
-AForm::AForm()
-			:	_name("form"),
-				_isSigned(false),
-				_minGradeToSign(1),
-				_minGradeToExecute(1) {}
+AForm::AForm() :
+			_name("form"),
+			_target("target"),
+			_isSigned(false),
+			_minGradeToSign(1),
+			_minGradeToExecute(1) {}
 
-AForm::AForm(const std::string& name, const int& minGradeToSign, const int& minGradeToExecute)
-			:	_name(name),
-				_isSigned(false),
-				_minGradeToSign(minGradeToSign),
-				_minGradeToExecute(minGradeToExecute)
+AForm::AForm(const std::string& name, const std::string& target, const int& minGradeToSign, const int& minGradeToExecute) :
+			_name(name),
+			_target(target),
+			_isSigned(false),
+			_minGradeToSign(minGradeToSign),
+			_minGradeToExecute(minGradeToExecute)
 {
 	if (minGradeToSign < 1)
 		std::cerr << "Minimum required to sign form: ", throw GradeTooHighException();
@@ -35,20 +37,14 @@ AForm::AForm(const std::string& name, const int& minGradeToSign, const int& minG
 		std::cerr << "Minimum required to execute form: ", throw GradeTooLowException();
 }
 
-AForm::AForm(const AForm& object)
-			:	_name(object.getName()),
-				_isSigned(object.getIsSigned()),
-				_minGradeToSign(object.getMinGradeToSign()),
-				_minGradeToExecute(object.getMinGradeToExecute()) {}
+AForm::AForm(const AForm& object) :
+			_name(object.getName()),
+			_target(object.getTarget()),
+			_isSigned(object.getIsSigned()),
+			_minGradeToSign(object.getMinGradeToSign()),
+			_minGradeToExecute(object.getMinGradeToExecute()) {}
 
 AForm::~AForm() {}
-
-AForm&	AForm::operator=(const AForm& object)
-{
-	(void)object;
-	std::cout << ERR_ASSIGN_MSG << std::endl;
-	return (*this);
-}
 
 std::ostream&	operator<<(std::ostream& os, const AForm& object)
 {
@@ -61,6 +57,11 @@ std::ostream&	operator<<(std::ostream& os, const AForm& object)
 const std::string& AForm::getName() const
 {
 	return (this->_name);
+}
+
+const std::string& AForm::getTarget() const
+{
+	return (this->_target);
 }
 
 bool	AForm::getIsSigned() const

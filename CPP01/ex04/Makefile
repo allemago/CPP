@@ -51,4 +51,15 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+test:
+	@if [ ! -f $(NAME) ]; then \
+		$(MAKE) --no-print-directory $(NAME); \
+	fi
+	@cp $(HOME)/TEST/CPP01/Poem .
+	@cat Poem
+	@printf "\n"
+	@./replace Poem "-" "TEST"
+	@printf "\n"
+	@cat Poem.replace
+
+.PHONY: all clean fclean re test

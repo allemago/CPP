@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:20:00 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 15:10:44 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:05:54 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,28 @@ class Bureaucrat
 *****************/
 private:
 
-    std::string	_name;
-	int			_grade; // 1 (highest) to 150 (lowest)
+    const std::string	_name;
+	int					_grade; // 1 (highest) to 150 (lowest)
 
-/*****************
-*     PUBLIC     *
-*****************/
-public:
-//	==================== Canonical Form =========================
-
-	Bureaucrat();
-	Bureaucrat(const Bureaucrat&);
-	~Bureaucrat();
 	Bureaucrat&	operator=(const Bureaucrat&);
 	
-//	==================== Custom Constructors ====================
-
-	Bureaucrat(const std::string&, int);
+	/*****************
+	 *     PUBLIC     *
+	 *****************/
+	public:
 	
-//	==================== Getters / Setters ======================
-
-	const std::string&	getName() const;
-	const int&			getGrade() const;
+	Bureaucrat();
+	Bureaucrat(const std::string&, int);
+	Bureaucrat(const Bureaucrat&);
+	~Bureaucrat();
 
 //	==================== Public Methods =========================
 
 	Bureaucrat&			incrementGrade(); // _grade--
 	Bureaucrat&			decrementGrade(); // _grade++
+
+	const std::string&	getName() const;
+	const int&			getGrade() const;
 	
 //	==================== Exceptions =============================
 

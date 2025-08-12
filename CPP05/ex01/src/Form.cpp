@@ -6,23 +6,23 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:19:57 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/27 19:00:25 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:23:03 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Form.hpp"
 
-Form::Form()
-			:	_name("contract"),
-				_isSigned(false),
-				_minGradeToSign(1),
-				_minGradeToExecute(1) {}
+Form::Form() :
+			_name("contract"),
+			_isSigned(false),
+			_minGradeToSign(1),
+			_minGradeToExecute(1) {}
 
-Form::Form(const std::string& name, const int& minGradeToSign, const int& minGradeToExecute)
-			:	_name(name),
-				_isSigned(false),
-				_minGradeToSign(minGradeToSign),
-				_minGradeToExecute(minGradeToExecute)
+Form::Form(const std::string& name, const int& minGradeToSign, const int& minGradeToExecute) :
+			_name(name),
+			_isSigned(false),
+			_minGradeToSign(minGradeToSign),
+			_minGradeToExecute(minGradeToExecute)
 {
 	if (minGradeToSign < 1)
 		std::cerr << "Minimum required to sign form: ", throw GradeTooHighException();
@@ -35,20 +35,13 @@ Form::Form(const std::string& name, const int& minGradeToSign, const int& minGra
 		std::cerr << "Minimum required to execute form: ", throw GradeTooLowException();
 }
 
-Form::Form(const Form& object)
-			:	_name(object.getName()),
-				_isSigned(object.getIsSigned()),
-				_minGradeToSign(object.getMinGradeToSign()),
-				_minGradeToExecute(object.getMinGradeToExecute()) {}
+Form::Form(const Form& object) :
+			_name(object.getName()),
+			_isSigned(object.getIsSigned()),
+			_minGradeToSign(object.getMinGradeToSign()),
+			_minGradeToExecute(object.getMinGradeToExecute()) {}
 
 Form::~Form() {}
-
-Form&	Form::operator=(const Form& object)
-{
-	(void)object;
-	std::cout << ERR_ASSIGN_MSG << std::endl;
-	return (*this);
-}
 
 std::ostream&	operator<<(std::ostream& os, const Form& object)
 {

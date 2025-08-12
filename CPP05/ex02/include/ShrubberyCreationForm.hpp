@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:16:07 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 11:53:12 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:50:04 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
                     "   `&%\\ ` /%&'    |.|        \\ '|8'			\n" \
                     "       |o|        | |         | |				\n" \
                     "       |.|        | |         | |				\n" \
-                    "    \\\\/ ._\\//_/__/  ,\\_//__\\\\/.  \\_//__/_"
+                    "    \\\\/ ._\\//_/__/  ,\\_//__\\\\/.  \\_//__/_\n"
 
 
 class ShrubberyCreationForm : public AForm
@@ -38,19 +38,16 @@ class ShrubberyCreationForm : public AForm
 *****************/
 private:
 
-    std::string     _target;
+    ShrubberyCreationForm&	operator=(const ShrubberyCreationForm&);
 
 /*****************
 *     PUBLIC     *
 *****************/
 public:
 
-//	==================== Canonical Form =========================
-
 	ShrubberyCreationForm();
 	ShrubberyCreationForm(const ShrubberyCreationForm&);
 	~ShrubberyCreationForm();
-	ShrubberyCreationForm&	operator=(const ShrubberyCreationForm&);
 
 //	==================== Public Methods =========================
 

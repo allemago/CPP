@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 13:59:07 by magrabko          #+#    #+#             */
-/*   Updated: 2025/06/03 09:29:44 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/14 15:15:41 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int main(int argc, char **argv)
 		std::cerr << USAGE << std::endl;
 		return (-1);	
 	}
+	
 	try
 	{
 		ScalarConverter::convert(argv[1]);
@@ -27,5 +28,6 @@ int main(int argc, char **argv)
 	{
 		std::cerr << e.what() << std::endl;
 	}
+	
     return (0);
 }

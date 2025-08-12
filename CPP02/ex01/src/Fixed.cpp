@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:27:56 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/01 17:03:27 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/05/04 12:05:08 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ const int Fixed::_bits = 8;
 
 Fixed::Fixed(void)
 {
+    setRawBits(0);
     std::cout << "Default constructor called" << std::endl;
 }
 
@@ -33,6 +34,11 @@ Fixed::Fixed(const Fixed& object)
 {
     std::cout << "Copy constructor called" << std::endl;
     *this = object;
+}
+
+Fixed::~Fixed(void)
+{
+    std::cout << "Destructor called" << std::endl;
 }
 
 Fixed&  Fixed::operator=(const Fixed& object)
@@ -69,9 +75,4 @@ float   Fixed::toFloat(void) const
 int   Fixed::toInt(void) const
 {
     return (_value / (1 << _bits));
-}
-
-Fixed::~Fixed(void)
-{
-    std::cout << "Destructor called" << std::endl;
 }

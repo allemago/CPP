@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:20:00 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 15:12:39 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:17:05 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,34 +27,29 @@ class Bureaucrat
 *****************/
 private:
 
-    std::string	_name;
-	int			_grade;
+    const std::string	_name;
+	int					_grade;
 
+	Bureaucrat&	operator=(const Bureaucrat&);
+	
 /*****************
 *     PUBLIC     *
 *****************/
 public:
-//	==================== Canonical Form =========================
 
 	Bureaucrat();
+	Bureaucrat(const std::string&, int);
 	Bureaucrat(const Bureaucrat&);
 	~Bureaucrat();
-	Bureaucrat&	operator=(const Bureaucrat&);
-
-//	==================== Custom Constructors ====================
-
-	Bureaucrat(const std::string&, int);
-
-//	==================== Getters / Setters =======================
-
-	const std::string&	getName() const;
-	const int&			getGrade() const;
 
 //	==================== Public Methods =========================
 	
 	Bureaucrat&			incrementGrade(); // _grade--
 	Bureaucrat&			decrementGrade(); // _grade++
 	void				signForm(Form&);
+
+	const std::string&	getName() const;
+	const int&			getGrade() const;
 
 //	==================== Exceptions =============================
 

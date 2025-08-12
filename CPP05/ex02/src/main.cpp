@@ -6,7 +6,7 @@
 /*   By: magrabko <magrabko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:02:08 by magrabko          #+#    #+#             */
-/*   Updated: 2025/05/29 13:50:39 by magrabko         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:07:01 by magrabko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main()
 		std::cout << GREEN "TEST 1" RESET << std::endl;
 		try
 		{
-			Bureaucrat a("Karen", 1);
+			Bureaucrat a("Martin", 1);
 			std::cout << a.getName() << ", bureaucrat grade " << a << "." << std::endl;
 			ShrubberyCreationForm form;
 			a.executeForm(form);
@@ -62,7 +62,7 @@ int	main()
 		std::cout << GREEN "TEST 3" RESET << std::endl;
 		try
 		{
-			Bureaucrat a("Karen", 1);
+			Bureaucrat a("Anne", 1);
 			std::cout << a.getName() << ", bureaucrat grade " << a << "." << std::endl;
 			PresidentialPardonForm form;
 			a.executeForm(form);
