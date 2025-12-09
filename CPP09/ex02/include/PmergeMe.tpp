@@ -201,6 +201,49 @@ bool	PmergeMe<T>::isOdd(T& leftover, T& src, size_t size)
 	return false;
 }
 
+// Exemple:
+
+// Sequence brut avant premier sort:
+// _sequence = [12 4 7 1 9 3 15 6 11 2]
+
+// Apres premier sort (Level 0)
+// _mainChain = [12, 7, 9, 15, 11]
+// pending = [4, 1, 3, 6, 2]
+
+// Apres deuxieme sort (recursion Level 1)
+// _mainChain = [12, 15] 
+// pending = [7, 9]
+// leftover = [11]
+
+// Apres troisieme sort (recursion Level 2)
+// _mainChain = [15] 
+// pending = [12]
+
+// Recursion Level 3 -> Return car _mainChain size <= 1;
+// Retour recursion
+
+// Retour a la suite du code du Level 2 -> insertPending
+// _mainChain = [15]
+// pending = [12]
+// order (Jacobsthal) = [1]
+// Apres insertPending():
+// _mainChain (apres) = [12, 15]
+
+// Retour a la suite du code du Level 1 -> insertPending
+// _mainChain = [12, 15]
+// pending = [7, 9]
+// leftover = [11]
+// order (Jacobsthal) = [1, 2]
+// Apres insertPending():
+// _mainChain (apres) = [7, 9, 11, 12, 15]
+
+// Retour a la suite du code du Level 0 -> insertPending
+// _mainChain = [7, 9, 11, 12, 15]
+// pending = [4, 1, 3, 6, 2]
+// order (Jacobsthal) = [1, 3, 5]
+// Apres insertPending():
+// _mainChain (apres) = [1, 2, 3, 4, 6, 7, 9, 11, 12, 15]
+
 template <typename T>
 void	PmergeMe<T>::mergeInsertSort(e_Mode mode)
 {
